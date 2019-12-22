@@ -21,8 +21,9 @@ require_once('./../../res/config.php');
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
      </head>
      <body>
-
           <!-- header dinamico tramite inserito su variabile globale -->
+          <?php include './../php/header.php'; ?>
+
 
           <?php include './../php/footer.php'; ?>
      </body>
