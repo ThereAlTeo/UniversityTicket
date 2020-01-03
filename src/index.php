@@ -1,1 +1,1 @@
-<?php header("Location: templates/ticketbacheca.php"); ?>
+<?php header("Location: templates/bacheca.php"); ?>
