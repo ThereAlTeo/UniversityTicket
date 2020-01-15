@@ -11,4 +11,9 @@
 
           println($item);
      }
+
+     function replaceGetMethod($value)
+     {
+          return str_replace(" ", "+", $value);
+     }
 ?>
