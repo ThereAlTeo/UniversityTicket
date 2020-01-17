@@ -1,5 +1,5 @@
 $(function() {
-     $("#register").click(function(e) {
+     $("#pippo").click(function(e) {
           submitRegistration(e);
      });
 });
@@ -7,12 +7,13 @@ $(function() {
 function submitRegistration(e) {
      clearForm();
 
-     if(document.getElementById('formValidation').checkValidity()){
+     if(document.getElementById('registrationForm').checkValidity()){
           var firstname = $('#firstname').val();
           var lastname = $('#lastname').val();
           var email = $('#email').val();
           var passwordconfirmation = $('#passwordconfirmation').val();
           var password = $('#password').val();
+          var userType = $("input[name='userType']:checked").val();
 
           e.preventDefault();
 
@@ -21,30 +22,26 @@ function submitRegistration(e) {
                return false;
           }
 
-          $.ajax({
-               url : './../templates/process.php',
-               type : 'POST',
+          $.ajax({ url : './../php/validationReg.php',
+               dataType: 'JSON',
+               type : 'POST',               
                data: { firstname: firstname,
                        lastname: lastname,
+                       userType: userType,
                        email: email,
-                       passwordconfirmation: passwordconfirmation,
-                       password: password},
-             success: function(data){
-			Swal.fire({
-						'title': 'Successful',
-						'text': data,
-						'type': 'success'
-						})
-
-                              /**Inserire rindirizzamento a login*/
-			},
-			error: function(data){
-				Swal.fire({
-						'title': 'Errors',
-						'text': 'There were errors while saving the data.',
-						'type': 'error'
-						})
-			}
+                       password: password },
+               success: function(data){
+                    if(data['error']) {
+                         Swal.fire({'title': 'Errors', 'text': data['error'], 'type': 'error'});
+                    }else{
+                         Swal.fire({'title': 'Successful',
+                                    'text': data['success'],
+                                    'type': 'success'}).then((result) => { window.location = './../templates/login.php'; });
+                    }
+               },
+               error: function(jqXHR, exception){
+                    Swal.fire({'title': 'Errors', 'text': 'There were errors while saving the data.', 'type': 'error'});
+               }
           });
      }
      else {

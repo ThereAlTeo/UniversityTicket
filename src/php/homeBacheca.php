@@ -34,6 +34,7 @@
           </div>
           <div class="m-5 mx-sm-5 mt-sm-5">
                <?php
+                    var_dump($dbh->AccountExistInDB("Prova"));
                     foreach ($dbh->getRandonEventOfCategory(2, 1) as $key => $value) {
                          $GET["category"] = $value["Name"];
                          include 'bachecaSection.php';

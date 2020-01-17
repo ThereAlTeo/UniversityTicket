@@ -16,4 +16,18 @@
      {
           return str_replace(" ", "+", $value);
      }
+
+     function parseUserPermission($value)
+     {
+          switch ($value) {
+               case "Admin":
+                    return 1;
+               case "Manager":
+                    return 2;
+               case "User":
+                    return 3;
+               default:
+                    return 0;
+          }
+     }
 ?>

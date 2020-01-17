@@ -28,7 +28,7 @@
                               <button class="btn btn-primary my-2 my-sm-0" type="submit"><i class="fa fa-search"></i> Search</button>
                          </div>
                          <div class="col-3 col-sm-3 col-md-2">
-                              <a href="login.php" class="btn btn-primary pull-right" role="button">Carrello <i class="fa fa-shopping-cart"></i></i></a>
+                              <a href="login.php" class="btn btn-primary pull-right" role="button">Carrello <i class="fa fa-shopping-cart"></i> <span class="badge badge-light">4</span></a>
                          </div>
                     </div>
                </form>
