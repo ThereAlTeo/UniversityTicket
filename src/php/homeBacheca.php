@@ -34,23 +34,25 @@
           </div>
           <div class="m-5 mx-sm-5 mt-sm-5">
                <?php
+
+                    var_dump($_SESSION["accountLog"]);
+
                     var_dump($dbh->AccountExistInDB("Prova"));
+
                     foreach ($dbh->getRandonEventOfCategory(2, 1) as $key => $value) {
-                         $GET["category"] = $value["Name"];
+                         $_GET["category"] = $value["Name"];
                          include 'bachecaSection.php';
                     }
 
                     foreach ($dbh->getRandonEventOfCategory(1, 2) as $key => $value) {
-                         $GET["category"] = $value["Name"];
+                         $_GET["category"] = $value["Name"];
                          include 'bachecaSection.php';
                     }
 
                     foreach ($dbh->getRandonEventOfCategory(1, 3) as $key => $value) {
-                         $GET["category"] = $value["Name"];
+                         $_GET["category"] = $value["Name"];
                          include 'bachecaSection.php';
                     }
-
-                    unset($GET["category"]);
                ?>
           </div>
           <!-- Main Bacheca -->

@@ -10,14 +10,14 @@ body{
 
 body::before{
   /* The image used */
-  background-image: url("./../../res/images/Back.jpg");
+  background-image: 	url("./../../res/images/BackRegistretion.jpg");
   content: "";
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   position: absolute;
   display: block;
-  top: 50px;
+  top: 100px;
   left: 0;
   width: 100%;
   height: 100%;

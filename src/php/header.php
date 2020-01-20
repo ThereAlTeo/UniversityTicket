@@ -13,12 +13,12 @@
                     </div>
                     <div class="col-6 col-sm-2">
                          <?php
-                         if(isset($GET["login"])){
-                              println('<p class="font-weight-bold font-italic text-right text-warning small">'.$GET["login"].'</p>');
-                              unset($GET["login"]);
+                         if(isset($_GET["login"])){
+                              println('<p class="font-weight-bold font-italic text-right text-warning small">'.$_GET["login"].'</p>');
+                              unset($_GET["login"]);
                          }
                          else
-                              println('<a href="login.php" class="btn btn-outline-warning btn-rounded pull-right" role="button">Accedi<i class="fa fa-user ml-3"></i></a>'); 
+                              println('<a href="login.php" class="btn btn-outline-warning btn-rounded pull-right" role="button">Accedi<i class="fa fa-user ml-3"></i></a>');
                          ?>
                     </div>
                </div>

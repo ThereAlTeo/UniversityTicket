@@ -56,5 +56,15 @@ class DatabaseHelper{
 
           return $stmt->execute();
      }
+
+     public function getAccountAccessInfo($email)
+     {
+          $stmt = $this->db->prepare("SELECT P.IDAccesso FROM persona P WHERE P.Email=?");
+          $stmt->bind_param('s', $email);
+          $stmt->execute();
+          $result = $stmt->get_result();
+
+          return $result->fetch_all(MYSQLI_ASSOC)[0]["IDAccesso"];
+     }
 }
 ?>

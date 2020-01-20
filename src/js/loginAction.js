@@ -21,7 +21,7 @@ function submitLogin(e) {
                          Swal.fire({'title': 'Errors', 'text': data['error'], 'icon': 'error'});
                     }else{
                          Swal.fire({'position': 'top-end', 'icon': 'success', 'title': data['success'], 'showConfirmButton': false, 'timer': 1500})
-                             .then((result) => { window.location = './../templates/bacheca.php'; });
+                             .then((result) => { window.location = './../templates/reservedArea.php'; });
                     }
                },
                error: function(jqXHR, exception){
