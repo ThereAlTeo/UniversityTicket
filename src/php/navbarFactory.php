@@ -13,7 +13,7 @@
                               <div class="dropdown-menu" aria-labelledby="navbarDropdown">', 5);
 
                     foreach ($_GET["barAccess"][$key] as $index => $item) {
-                         printTabln(' <a class="dropdown-item" href="'.$item[1].'">'.$item[0].'</a>', 8);
+                         printTabln(' <a class="dropdown-item" href="./../php/'.$item[1].'">'.$item[0].'</a>', 8);
                     }
 
                printTabln('      </div>

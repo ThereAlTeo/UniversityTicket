@@ -57,6 +57,15 @@ class DatabaseHelper{
           return $stmt->execute();
      }
 
+     public function enableUser($Email)
+     {
+          $query = "UPDATE persona SET AccountAbilitato = 1 WHERE Email = ?";
+          $stmt = $this->db->prepare($query);
+          $stmt->bind_param('s', $Email);
+
+          return $stmt->execute();
+     }
+
      public function getAccountAccessInfo($email)
      {
           $stmt = $this->db->prepare("SELECT P.IDAccesso FROM persona P WHERE P.Email=?");
@@ -65,6 +74,15 @@ class DatabaseHelper{
           $result = $stmt->get_result();
 
           return $result->fetch_all(MYSQLI_ASSOC)[0]["IDAccesso"];
+     }
+
+     public function getAllUsersInfo()
+     {
+          $stmt = $this->db->prepare("SELECT P.Nome, P.Cognome, P.Email, DATE_FORMAT(P.DataRegistrazione, '%d/%m/%Y ') as 'DataRegistrazione' , T.Descrizione, IF(P.AccountAbilitato, 'TRUE', 'FALSE') 'AccountAbilitato' FROM persona P INNER JOIN tipologiaaccesso T ON P.IDAccesso=T.IDAccesso");
+          $stmt->execute();
+          $result = $stmt->get_result();
+
+          return $result->fetch_all(MYSQLI_ASSOC);
      }
 }
 ?>

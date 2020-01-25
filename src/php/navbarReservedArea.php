@@ -1,7 +1,7 @@
 <?php
 switch ($_SESSION["accountLog"][1]) {
      case 1:
-          $_GET["barAccess"] = array("Aggiungi" => array(array("Locale", "#"), array("Account", "#")));
+          $_GET["barAccess"] = array("Aggiungi" => array(array("Locale", "insertLocation.php"), array("Account", "userData.php")));
           break;
      case 2:
           break;

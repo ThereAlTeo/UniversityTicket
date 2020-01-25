@@ -13,14 +13,18 @@ $config = array(
          "images" => "/../../res/images/"
     ),
     "infoCardText" => array(
-         1 => array("Earnings (Monthly)", "Earnings (Monthly)1", "Earnings (Monthly)2", "Earnings (Monthly)3"),
-         2 => array("", "", "", ""),
-         3 => array("", "", "", "")
+         1 => array("Guadagno Complessivo", "Biglietti venduti", "Nr Location", "Nr Utenti"),
+         2 => array("Guadagno Complessivo", "Eventi Creati", "Nr Artisti", "Affluenza Maggiore"),
+         3 => array("Biglietti Acquistati", "Artista Preferito", "Luogo Preferito", "Ultimo Evento")
     ),
     "infoCardIcon" => array(
-         1 => array("fa-calendar", "fa-calendar", "fa-calendar", "fa-calendar"),
-         2 => array("", "", "", ""),
-         3 => array("", "", "", "")
+         1 => array("fa-dollar", "fa-ticket", "fa-map-marker", "fa-users"),
+         2 => array("fa-dollar", "fa-calendar", "fa-address-card", "fa-map-marker"),
+         3 => array("fa-ticket", "fa-star", "fa-map-marker", "fa-eye")
+    ),
+    "chartCardHeader" => array(
+         1 => array("Non lo so", "Prova"),
+         2 => array("", "")
     ),
     "infoCardColor" => array("text-primary", "text-success", "text-info", "text-warning"),
 );

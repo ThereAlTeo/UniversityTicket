@@ -1,5 +1,8 @@
 <?php
-switch ($_SESSION["accountLog"][1]) {
+
+require 'reservedAreaDashboard.php';
+
+/*switch ($_SESSION["accountLog"][1]) {
     case 1:
           require 'adminReservedArea.php';
         break;
@@ -8,5 +11,5 @@ switch ($_SESSION["accountLog"][1]) {
     case 3:
         break;
     default: header("Location: reservedArea.php");
-}
+}*/
 ?>

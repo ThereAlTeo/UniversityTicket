@@ -1,5 +1,5 @@
           <!-- Main Bacheca -->
-          <div class="row mx-5 mx-sm-5 d-flex justify-content-center">
+          <div class="row mx-5 mx-sm-5 d-flex flex-row align-items-center justify-content-between">
                <div class="d-none d-sm-none d-md-inline col-sm-3">
                     <div class="text-center ">
                          <a href="#"><img src="18App.jpg" class="rounded d-block w-75" alt="18App"></a>
