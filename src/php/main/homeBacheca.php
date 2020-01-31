@@ -2,7 +2,7 @@
           <div class="row mx-5 mx-sm-5 d-flex flex-row align-items-center justify-content-between">
                <div class="d-none d-sm-none d-md-inline col-sm-3">
                     <div class="text-center ">
-                         <a href="#"><img src="18App.jpg" class="rounded d-block w-75" alt="18App"></a>
+                         <a href="#"><img <?php echo 'src="'.ROOT_DIR.'../res/images/18App.jpg"'; ?> class="rounded d-block w-75" alt="18App"></a>
                     </div>
                </div>
                <div class="col-12 col-sm-6">
@@ -41,17 +41,17 @@
 
                     foreach ($dbh->getRandonEventOfCategory(2, 1) as $key => $value) {
                          $_GET["category"] = $value["Name"];
-                         include 'bachecaSection.php';
+                         include FACTORY_DIR.'bachecaSection.php';
                     }
 
                     foreach ($dbh->getRandonEventOfCategory(1, 2) as $key => $value) {
                          $_GET["category"] = $value["Name"];
-                         include 'bachecaSection.php';
+                         include FACTORY_DIR.'bachecaSection.php';
                     }
 
                     foreach ($dbh->getRandonEventOfCategory(1, 3) as $key => $value) {
                          $_GET["category"] = $value["Name"];
-                         include 'bachecaSection.php';
+                         include FACTORY_DIR.'bachecaSection.php';
                     }
                ?>
           </div>

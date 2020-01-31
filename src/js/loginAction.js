@@ -2,6 +2,9 @@ $(function() {
      $("#login").click(function(e) {
           submitLogin(e);
      });
+
+     $("body").addClass("loginBackground");
+     $(".card").addClass("cardOpacity");
 });
 
 function submitLogin(e) {
@@ -11,7 +14,7 @@ function submitLogin(e) {
 
           e.preventDefault();
 
-          $.ajax({url : './../php/validationLogin.php',
+          $.ajax({url : './../api/validationLogin.php',
                type : 'POST',
                dataType: 'JSON',
                data: { email: email,
@@ -21,7 +24,7 @@ function submitLogin(e) {
                          Swal.fire({'title': 'Errors', 'text': data['error'], 'icon': 'error'});
                     }else{
                          Swal.fire({'position': 'top-end', 'icon': 'success', 'title': data['success'], 'showConfirmButton': false, 'timer': 1500})
-                             .then((result) => { window.location = './../templates/reservedArea.php'; });
+                             .then((result) => { window.location = './reservedArea.php'; });
                     }
                },
                error: function(jqXHR, exception){

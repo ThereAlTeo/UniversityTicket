@@ -18,7 +18,7 @@
                          </div>
                          <button class="btn btn-ticketBlue btn-block my-4" type="submit" id="login">Sign in</button>
                          <div class="d-flex justify-content-center links">
-                              <p>Don't have an account?<a href="userRegister.php"> Registrati</a> </p>
+                              <p>Don't have an account?<a href="registerAccount.php"> Registrati</a> </p>
                          </div>
                     </form>
                </div>

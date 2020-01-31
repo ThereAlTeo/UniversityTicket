@@ -15,5 +15,4 @@ if(isset($_SESSION["accountLog"]) && $_SESSION["accountLog"][1] == 1)
      require './../templates/ticketTemplate.php';
 else
      header("Location: logout.php");
-
 ?>

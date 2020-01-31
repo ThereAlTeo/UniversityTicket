@@ -13,7 +13,7 @@
                               <div class="dropdown-menu" aria-labelledby="navbarDropdown">', 5);
 
                     foreach ($_GET["barAccess"][$key] as $index => $item) {
-                         printTabln(' <a class="dropdown-item" href="./../php/'.$item[1].'">'.$item[0].'</a>', 8);
+                         printTabln(' <a class="dropdown-item" href="./'.$item[1].'">'.$item[0].'</a>', 8);
                     }
 
                printTabln('      </div>
@@ -27,7 +27,7 @@
                               <a class="nav-link dropdown-toggle h6 align-middle" id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                    <i class="fa fa-user mr-1"></i> <?php echo $_SESSION["accountLog"][0]; ?> </a>
                               <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
-                                   <a class="dropdown-item" href="./../php/logout.php">Log out</a>
+                                   <a class="dropdown-item" href="./logout.php">Log out</a>
                               </div>
                          </li>
                     </ul>

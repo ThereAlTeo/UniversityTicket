@@ -3,7 +3,7 @@
                <div class="row mx-3 d-flex justify-content-between align-items-center">
                     <div class="col-6 col-sm-1">
                          <a href="bacheca.php">
-                              <img src="./../../res/images/logoForse.png" width="70" height="70" class="d-inline-block align-top" alt="Logo">
+                              <img <?php echo 'src="'.ROOT_DIR.'../res/images/logoForse.png"'; ?> width="70" height="70" class="d-inline-block align-top" alt="Logo">
                          </a>
                     </div>
                     <div class="d-none d-md-inline col-sm-9">

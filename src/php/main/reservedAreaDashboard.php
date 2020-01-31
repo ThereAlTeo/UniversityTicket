@@ -14,7 +14,7 @@
                               * TODO: Veriicare se conviene creare una funzione oppure richiamare il php ...
                               */
                               $_GET["infoCard"] = array($infoCardText[$i], $infoCardColor[$i], $infoCardIcon[$i]);
-                              include './../php/factoryItem/infoCard.php';
+                              include FACTORY_DIR.'infoCard.php';
                          }
                     ?>
                </div>
@@ -28,7 +28,7 @@
 
                          for ($i=0; $i < 2; $i++) {
                               $_GET["chartCard"] = array($idValues[$i], $headerValues[$i], $heightCardValues[$i], $column[$i]);
-                              include './../php/factoryItem/infoCard.php';
+                              include FACTORY_DIR.'infoCard.php';
                          }
                     }
                     ?>

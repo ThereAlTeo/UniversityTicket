@@ -1,7 +1,10 @@
 $(function() {
-     $("#pippo").click(function(e) {
+     $("#registration").click(function(e) {
           submitRegistration(e);
      });
+
+     $("body").addClass("registrationBackground");
+     $(".card").addClass("cardOpacity");
 });
 
 function submitRegistration(e) {
@@ -24,7 +27,7 @@ function submitRegistration(e) {
 
           $.ajax({ url : './../php/validationReg.php',
                dataType: 'JSON',
-               type : 'POST',               
+               type : 'POST',
                data: { firstname: firstname,
                        lastname: lastname,
                        userType: userType,

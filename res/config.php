@@ -7,11 +7,6 @@ $config = array(
           "password" => "",
           "HOST" => "localhost"
      ),
-     "urls" => array(),
-     "paths" => array(
-         "res" => "/../../res/",
-         "images" => "/../../res/images/"
-    ),
     "infoCardText" => array(
          1 => array("Guadagno Complessivo", "Biglietti venduti", "Nr Location", "Nr Utenti"),
          2 => array("Guadagno Complessivo", "Eventi Creati", "Nr Artisti", "Affluenza Maggiore"),
@@ -27,9 +22,10 @@ $config = array(
          2 => array("", "")
     ),
     "infoCardColor" => array("text-primary", "text-success", "text-info", "text-warning"),
+    "pageIcon" => ROOT_DIR."../res/images/logoForse.png",
+    "CSS" => array(CSS_DIR."theme.css", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css", CSS_DIR."serviceStyle.css"),
 );
 
 ini_set("error_reporting", "true");
 error_reporting(E_ALL|E_STRCT);
-
 ?>

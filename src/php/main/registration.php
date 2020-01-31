@@ -47,7 +47,7 @@
 							</div>
 						</div>
 					</div>
-					<button class="btn btn-ticketBlue" type="submit" id="pippo">Sign up</button>
+					<button class="btn btn-ticketBlue" type="submit" id="registration">Sign up</button>
 					<div class="d-flex justify-content-center links mt-3">
 						<p>Hai già un account?<a href="login.php"> Accedi</a> </p>
 					</div>
