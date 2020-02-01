@@ -23,7 +23,7 @@ $config = array(
     ),
     "infoCardColor" => array("text-primary", "text-success", "text-info", "text-warning"),
     "pageIcon" => ROOT_DIR."../res/images/logoForse.png",
-    "CSS" => array(CSS_DIR."theme.css", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css", CSS_DIR."serviceStyle.css"),
+    "CSS" => array("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css", CSS_DIR."serviceStyle.css", "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css", "https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css", CSS_DIR."theme.css"),
 );
 
 ini_set("error_reporting", "true");

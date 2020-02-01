@@ -46,7 +46,7 @@ function insertLocation(e) {
                return false;
           }
 
-          $.ajax({url : './insertLocationAction.php',
+          $.ajax({url : './../api/insertLocationAction.php',
                type : 'POST',
                dataType: 'JSON',
                data: { locationName: locationName, locationAddress: locationAddress, sectorNames: sectorNames, seats: seats },
