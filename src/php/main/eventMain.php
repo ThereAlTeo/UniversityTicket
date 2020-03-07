@@ -1,51 +1,31 @@
-          <div class="mx-5">
-               <div class="my-3">
-                    <h1 class="h3 mb-2 text-ticketBlue">Eventi</h1>
-                    <p class="mb-3"><i class="font-weight-bold "> <?php echo $_SESSION["accountLog"][0] ?></i> da qui puoi monitorare l'andamento degli eventi che hai organizzato.</p>
-               </div>
+     <?php
+     $templateParams["headerPage"] = array("Eventi", "da qui puoi monitorare l'andamento degli eventi che hai organizzato.", "");
+     require(FACTORY_DIR."reservedPagesHeader.php");
+     ?>
+     <div class="row">
+          <div class="col-12 col-lg-3">
+               <?php
+               $templateParams["menuPage"] = array(array("success", "fas fa-calendar-plus", "Aggiungi Evento", "addEvent"));
+               require(FACTORY_DIR."reservedMenu.php");
+               $templateParams["modal"] = "addEvent";
+               require(FACTORY_DIR."modalItem.php");
+               ?>
                <div class="row">
-                    <div class="col-12 col-lg-4">
-                         <div class="row">
-                              <div class="col-12 content">
-                                   <div class="card shadow mb-3">
-                                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                             <h6 class="m-0 font-weight-bold text-primary">Dettagli Evento</h6>
-                                             <i class="fa font-weight-bold fa-lg text-primary arrow"></i>
-                                        </div>
-                                        <div class="card-body">
-
-                                        </div>
-                                   </div>
-                                   <div class="card shadow mb-5">
-                                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                             <h6 class="m-0 font-weight-bold text-primary">Aggiungi Evento</h6>
-                                             <a href="#exampleModalCenter" data-toggle="modal"><i class="fa font-weight-bold fa-lg text-primary"></i></a>
-                                             <!-- Modal -->
-                                             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                             <div class="modal-dialog modal-dialog-centered" role="document">
-                                             <div class="modal-content">
-                                             <div class="modal-header">
-                                             <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                             <span aria-hidden="true">&times;</span>
-                                             </button>
-                                             </div>
-                                             <div class="modal-body">
-                                             ...
-                                             </div>
-                                             <div class="modal-footer">
-                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                             <button type="button" class="btn btn-primary">Save changes</button>
-                                             </div>
-                                             </div>
-                                             </div>
-                                             </div>
-                                        </div>
-                                   </div>
-                              </div>
+                    <div class="col-12 content">
+                         <div class="card shadow my-5">
+                           <a href="#eventDetails" class="d-block card-header py-3" data-toggle="collapse" role="button">
+                             <h6 class="m-0 font-weight-bold text-primary">Dettagli Evento</h6>
+                           </a>
+                           <div class="collapse show" id="eventDetails">
+                             <div class="card-body">
+                               This is a collapsable card example using Bootstrap's built in collapse functionality. <strong>Click on the card header</strong> to see the card body collapse and expand!
+                             </div>
+                           </div>
                          </div>
                     </div>
-                    <div class="col-12 col-lg-8">
+               </div>
+          </div>
+                    <div class="col-12 col-lg-9">
                          <div class="card shadow mb-5">
                               <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                    <h6 class="m-0 font-weight-bold text-primary">Account DataTable  </h6>
@@ -73,5 +53,3 @@
                          </div>
                     </div>
                </div>
-
-          </div>

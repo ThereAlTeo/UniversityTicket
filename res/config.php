@@ -13,17 +13,17 @@ $config = array(
          3 => array("Biglietti Acquistati", "Artista Preferito", "Luogo Preferito", "Ultimo Evento")
     ),
     "infoCardIcon" => array(
-         1 => array("fa-dollar", "fa-ticket", "fa-map-marker", "fa-users"),
-         2 => array("fa-dollar", "fa-calendar", "fa-address-card", "fa-map-marker"),
-         3 => array("fa-ticket", "fa-star", "fa-map-marker", "fa-eye")
+         1 => array("fas fa-dollar-sign", "fas fa-ticket-alt", "fas fa-map-marked-alt", "fas fa-users"),
+         2 => array("fas fa-dollar-sign", "far fa-calendar-alt", "far fa-address-card", "fas fa-map-marked-alt"),
+         3 => array("fas fa-ticket-alt", "far fa-grin-hearts", "fas fa-map-marked-alt", "fas fa-eye")
     ),
     "chartCardHeader" => array(
          1 => array("Non lo so", "Prova"),
          2 => array("", "")
     ),
-    "infoCardColor" => array("text-primary", "text-success", "text-info", "text-warning"),
+    "infoCardColor" => array("primary", "success", "info", "warning"),
     "pageIcon" => ROOT_DIR."../res/images/logoForse.png",
-    "CSS" => array("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css", CSS_DIR."serviceStyle.css", "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css", "https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css", CSS_DIR."theme.css"),
+    "CSS" => array("https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css", "https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css", CSS_DIR."fontawesome-free/css/all.min.css", CSS_DIR."OfficialTheme.css", CSS_DIR."serviceStyle.css"),
 );
 
 ini_set("error_reporting", "true");

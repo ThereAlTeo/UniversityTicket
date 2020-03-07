@@ -2,9 +2,6 @@ $(function() {
      $("#login").click(function(e) {
           submitLogin(e);
      });
-
-     $("body").addClass("loginBackground");
-     $(".card").addClass("cardOpacity");
 });
 
 function submitLogin(e) {

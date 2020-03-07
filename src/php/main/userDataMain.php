@@ -1,8 +1,7 @@
-          <div class="mx-5">
-               <div class="my-3">
-                    <h1 class="h3 mb-2 text-ticketBlue">Account</h1>
-                    <p class="mb-4">Di seguito viene riportato l'elento degli account registrati al sito.</p>
-               </div>
+<?php
+$templateParams["headerPage"] = array("Account", "di seguito viene riportato l'elento degli account registrati al sito.", $dbh->getAccountRecordNumber());
+require(FACTORY_DIR."reservedPagesHeader.php");
+?>               
                <div class="row">
                     <div class="col-12">
                          <div class="card shadow mb-5">
@@ -57,4 +56,3 @@
                          </div>
                     </div>
                </div>
-          </div>

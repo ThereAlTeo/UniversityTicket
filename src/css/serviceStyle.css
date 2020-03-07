@@ -1,18 +1,17 @@
-.loginBackground, .registrationBackground{
+.registrationBackground{
   justify-content: center;
-  align-items: center;  
+  align-items: center;
 }
 
-.loginBackground::before{
+.loginBackground{
   background-image: url("./../../res/images/Back.jpg");
-  content: "";
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   position: absolute;
+  justify-content: center;
+  align-items: center;
   display: block;
-  top: 50px;
-  left: 0;
   width: 100%;
   height: 100%;
   z-index: -1;
@@ -35,20 +34,30 @@
   opacity: 0.3;
 }
 
-.cardOpacity{
-  background-color: rgba(255, 255, 255, 0.8) !important;
-}
-
-.card-header i:hover{
+.card-header>span i:hover{
      background-color:rgba(185,227,245, 0.5);
      border-radius: 50px;
      margin:-5px -10px;
      padding:5px 10px;
 }
 
-footer ul>li:hover a{ color: #FFC107; text-decoration: none;}
+.dashboardFooter ul>li:hover a,
+.footer ul>li:hover a{ color: #FFC107; text-decoration: none;}
 
-footer ul>li a {
+.footer ul>li a {
     color: #FFFFFF;
     text-decoration: none;
+}
+
+.dashboardFooter ul>li a{
+    color: #043353;
+    text-decoration: none;
+}
+
+.badge-counter {
+        position: absolute;
+        transform: scale(0.7);
+        transform-origin: top right;
+        right: .75rem;
+        margin-top: -.10rem;
 }

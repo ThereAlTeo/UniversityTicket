@@ -12,13 +12,11 @@
           println($item);
      }
 
-     function replaceGetMethod($value)
-     {
+     function replaceGetMethod($value) {
           return str_replace(" ", "+", $value);
      }
 
-     function parseUserPermission($value)
-     {
+     function parseUserPermission($value) {
           switch ($value) {
                case "Admin":
                     return 1;
@@ -28,6 +26,18 @@
                     return 3;
                default:
                     return 0;
+          }
+     }
+
+     function getMenuItem(){
+          switch ($_SESSION["accountLog"][1]) {
+               case 1:
+                    return array("Aggiungi" => array(array("Locale", "insertLocation.php", "fas fa-map-marker-alt"), array("Account", "userData.php", "fas fa-user-circle")));
+               case 2:
+                    return array("Visualizza" => array(array("Eventi", "eventBase.php", "far fa-calendar-alt"), array("Artisti", "artistBase.php", "fas fa-user-tie")));
+                    break;
+               default:
+                    return array();
           }
      }
 ?>

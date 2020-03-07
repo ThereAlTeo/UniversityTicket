@@ -1,0 +1,25 @@
+@import "variables.scss";
+
+$border-radius:     0.25rem;
+
+$theme-colors: (
+  "primary": #18A4E0,
+  "ticketBlue": #043353
+);
+
+// Import Bootstrap
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+// Custom Components
+@import "mixins.scss";
+@import "global.scss";
+@import "utilities.scss";
+
+@import "dropdowns.scss";
+//@import "navs.scss";
+@import "buttons.scss";
+@import "cards.scss";
+@import "charts.scss";
+@import "login.scss";
+@import "error.scss";
+@import "footer.scss";

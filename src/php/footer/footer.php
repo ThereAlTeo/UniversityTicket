@@ -1,37 +1,41 @@
           <!-- Footer -->
-          <footer class="page-footer p-3 bg-ticketBlue text-white mt-3">
-
+          <?php
+          if(isset($templateParams["templateType"]) && strcmp($templateParams["templateType"], "D") === 0)
+               println('<footer class="p-3 bg-white text-ticketBlue dashboardFooter">');
+          else
+               println('<footer class="p-3 bg-ticketBlue text-white footer">');
+           ?>
                <div class="row d-flex align-items-center">
-                    <div class="col-md-5">
-                         <p class="text-center text-md-left font-italic">
+                    <div class="col-md-4">
+                         <p class="text-center text-md-left font-italic <?php if(isset($templateParams["templateType"]) && strcmp($templateParams["templateType"], "D") === 0) echo " font-weight-bold"; ?>">
                               Universiticket S.r.l. - Sede: Via Cesare Pavese 50, 47521 Cesena(FC)
                          </p>
                   </div>
                   <div class="col-md-4">
-                       <p class="text-center text-md-left small font-italic">
+                       <p class="text-center small font-italic <?php if(isset($templateParams["templateType"]) && strcmp($templateParams["templateType"], "D") === 0) echo " font-weight-bold"; ?>">
                             © 2020 Copyright - Tutti i diritti riservati.
                        </p>
                   </div>
-                  <div class="col-md-3 ml-lg-0">
-                       <ul class="list-unstyled list-inline text-center">
+                  <div class="col-md-4">
+                       <ul class="list-unstyled list-inline text-center text-md-right">
                            <li class="list-inline-item">
-                                <span class="fa-stack fa-sm">
-                                  <a class="fa fa-facebook" href="https://www.facebook.com/"></a>
+                                <span class="fa-stack fa-lg">
+                                     <a class="fab fa-facebook-f" href="https://www.facebook.com/"></a>
                                 </span>
                            </li>
                            <li class="list-inline-item">
-                                <span class="fa-stack fa-sm">
-                                  <a class="fa fa-instagram" href="https://www.instagram.com/?hl=it"></a>
+                                <span class="fa-stack fa-lg">
+                                     <a class="fab fa-instagram" href="https://www.instagram.com/?hl=it"></a>
                                 </span>
                            </li>
                            <li class="list-inline-item">
-                                <span class="fa-stack fa-sm">
-                                  <a class="fa fa-twitter" href="https://twitter.com/login?lang=it"></a>
+                                <span class="fa-stack fa-lg">
+                                     <a class="fab fa-twitter" href="https://twitter.com/login?lang=it"></a>
                                 </span>
                            </li>
                            <li class="list-inline-item">
-                                <span class="fa-stack fa-sm">
-                                  <a class="fa fa-google-plus" href="https://www.google.it/"></a>
+                                <span class="fa-stack fa-lg">
+                                     <a class="fab fa-google-plus-g" href="https://www.google.it/"></a>
                                 </span>
                            </li>
                        </ul>

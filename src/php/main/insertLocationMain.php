@@ -1,9 +1,9 @@
-<div class="mx-5">
-     <div class="my-3">
-          <h1 class="h3 mb-2 text-ticketBlue">Location</h1>
-     </div>
+     <?php
+     $templateParams["headerPage"] = array("Location", "", $dbh->getLocationRecordNumber());
+     require(FACTORY_DIR."reservedPagesHeader.php");
+     ?>     
      <div class="row">
-          <div class="col-12 col-lg-5">
+          <div class="col-12 col-lg-6">
                <div class="card shadow mb-5">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                          <h6 class="m-0 font-weight-bold text-primary">Location DataTable  </h6>
@@ -20,6 +20,17 @@
                                         </tr>
                                    </thead>
                                    <tbody>
+                                   <?php
+                                   foreach ($dbh->getAllLocationInfo() as $key => $value) {
+                                        println("
+                                             <tr>");
+                                        foreach ($value as $index => $item) {
+                                             printTabln('<td class="text-center">'.$item.'</td>', 13);
+                                        }
+                                        printTabln("</tr>", 12);
+                                   }
+
+                                   ?>
                                    </tbody>
                               </table>
                          </div>
@@ -32,7 +43,7 @@
                     </div>
                </div>
           </div>
-          <div class="col-12 col-lg-7">
+          <div class="col-12 col-lg-6">
                <div class="card shadow mb-5">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                          <h6 class="m-0 font-weight-bold text-primary">Aggiungi Nuova Location </h6>
@@ -69,4 +80,3 @@
                </div>
           </div>
      </div>
-</div>

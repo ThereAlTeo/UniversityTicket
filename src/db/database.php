@@ -9,6 +9,70 @@ class DatabaseHelper{
           }
      }
 
+     public function AccountExistInDB($email){
+          $stmt = $this->db->prepare("SELECT COUNT(*) as rowNum FROM ticketuser T WHERE T.Email=?");
+          $stmt->bind_param('s', $email);
+          $stmt->execute();
+          $result = $stmt->get_result();
+
+          return $result->fetch_all(MYSQLI_ASSOC)[0]["rowNum"] > 0;
+     }
+
+     public function checkUserPassword($email, $password){
+          $stmt = $this->db->prepare("SELECT T.Password FROM ticketuser T WHERE T.Email=?");
+          $stmt->bind_param('s', $email);
+          $stmt->execute();
+          $result = $stmt->get_result();
+
+          return strcmp($result->fetch_all(MYSQLI_ASSOC)[0]["Password"], $password) == 0;
+     }
+
+     public function getAccountAccessInfo($email){
+          $stmt = $this->db->prepare("SELECT T.IDAccesso FROM ticketuser T WHERE T.Email=?");
+          $stmt->bind_param('s', $email);
+          $stmt->execute();
+          $result = $stmt->get_result();
+
+          return $result->fetch_all(MYSQLI_ASSOC)[0]["IDAccesso"];
+     }
+
+     private function getRecordInTable($table){
+         $stmt = $this->db->prepare("SELECT COUNT(*) as \"TableRows\" FROM ".$table);
+         $stmt->execute();
+         $result = $stmt->get_result();
+
+         return $result->fetch_all(MYSQLI_ASSOC)[0]["TableRows"];
+    }
+
+    public function getAccountRecordNumber()
+    {
+         return $this->getRecordInTable("ticketuser");
+    }
+
+    public function getLocationRecordNumber()
+    {
+         return $this->getRecordInTable("location");
+    }
+
+    public function getAllUsersInfo(){
+         $stmt = $this->db->prepare("SELECT P.Nome, P.Cognome, T.Email, DATE_FORMAT(T.DataRegistrazione, '%d/%m/%Y ') as 'DataRegistrazione', A.Descrizione, IF(T.AccountAbilitato, 'TRUE', 'FALSE') 'AccountAbilitato' FROM ticketuser T INNER JOIN persona P ON T.AnagraficaUtente=P.IDPersona INNER JOIN tipologiaaccesso A ON A.IDAccesso=T.IDAccesso");
+         $stmt->execute();
+         $result = $stmt->get_result();
+
+         return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+
+
+
+
+
+
+     /**
+     * Da controllare
+     */
+
+
      public function getEventType(){
           $stmt = $this->db->prepare("SELECT * FROM tipologia");
           $stmt->execute();
@@ -24,24 +88,6 @@ class DatabaseHelper{
          $result = $stmt->get_result();
 
          return $result->fetch_all(MYSQLI_ASSOC);
-     }
-
-     public function AccountExistInDB($email){
-          $stmt = $this->db->prepare("SELECT COUNT(*) as rowNum FROM persona P WHERE P.Email=?");
-          $stmt->bind_param('s', $email);
-          $stmt->execute();
-          $result = $stmt->get_result();
-
-          return $result->fetch_all(MYSQLI_ASSOC)[0]["rowNum"] > 0;
-     }
-
-     public function checkUserPassword($email, $password){
-          $stmt = $this->db->prepare("SELECT P.Password FROM persona P WHERE P.Email=?");
-          $stmt->bind_param('s', $email);
-          $stmt->execute();
-          $result = $stmt->get_result();
-
-          return strcmp($result->fetch_all(MYSQLI_ASSOC)[0]["Password"], $password) == 0;
      }
 
      public function insertNewUser($nome, $cognome, $Email, $password, $userType){
@@ -60,17 +106,12 @@ class DatabaseHelper{
           return $stmt->execute();
      }
 
-     public function getAccountAccessInfo($email){
-          $stmt = $this->db->prepare("SELECT P.IDAccesso FROM persona P WHERE P.Email=?");
-          $stmt->bind_param('s', $email);
-          $stmt->execute();
-          $result = $stmt->get_result();
 
-          return $result->fetch_all(MYSQLI_ASSOC)[0]["IDAccesso"];
-     }
 
-     public function getAllUsersInfo(){
-          $stmt = $this->db->prepare("SELECT P.Nome, P.Cognome, P.Email, DATE_FORMAT(P.DataRegistrazione, '%d/%m/%Y ') as 'DataRegistrazione' , T.Descrizione, IF(P.AccountAbilitato, 'TRUE', 'FALSE') 'AccountAbilitato' FROM persona P INNER JOIN tipologiaaccesso T ON P.IDAccesso=T.IDAccesso");
+
+
+     public function getAllLocationInfo(){
+          $stmt = $this->db->prepare("SELECT L.Nome, L.Indirizzo, ROUND(RAND()*100) AS \"NrEventi\", ROUND(RAND()*100) AS \"NrBiglietti\" FROM location L");
           $stmt->execute();
           $result = $stmt->get_result();
 
@@ -102,5 +143,7 @@ class DatabaseHelper{
 
          return $stmt->execute();
     }
+
+
 }
 ?>
