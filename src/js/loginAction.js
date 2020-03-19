@@ -1,4 +1,5 @@
 $(function() {
+     $(".container-fluid").removeClass("container-fluid");
      $("#login").click(function(e) {
           submitLogin(e);
      });

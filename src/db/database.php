@@ -28,12 +28,12 @@ class DatabaseHelper{
      }
 
      public function getAccountAccessInfo($email){
-          $stmt = $this->db->prepare("SELECT T.IDAccesso FROM ticketuser T WHERE T.Email=?");
+          $stmt = $this->db->prepare("SELECT T.IDAccesso, T.IDUser FROM ticketuser T WHERE T.Email=?");
           $stmt->bind_param('s', $email);
           $stmt->execute();
           $result = $stmt->get_result();
 
-          return $result->fetch_all(MYSQLI_ASSOC)[0]["IDAccesso"];
+          return $result->fetch_all(MYSQLI_ASSOC)[0];
      }
 
      private function getRecordInTable($table){
@@ -44,13 +44,11 @@ class DatabaseHelper{
          return $result->fetch_all(MYSQLI_ASSOC)[0]["TableRows"];
     }
 
-    public function getAccountRecordNumber()
-    {
+    public function getAccountRecordNumber(){
          return $this->getRecordInTable("ticketuser");
     }
 
-    public function getLocationRecordNumber()
-    {
+    public function getLocationRecordNumber(){
          return $this->getRecordInTable("location");
     }
 
@@ -62,16 +60,50 @@ class DatabaseHelper{
          return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function nameExistInDB($name, $surname){
+         $stmt = $this->db->prepare("SELECT COUNT(*) as rowNum FROM persona P WHERE P.Nome=? AND P.Cognome=?");
+         $stmt->bind_param('ss', $name, $surname);
+         $stmt->execute();
+         $result = $stmt->get_result();
 
+         return $result->fetch_all(MYSQLI_ASSOC)[0]["rowNum"] == 0;
+    }
 
+    public function insertNewUser($name, $surname, $cf, $birth){
+         $query = "INSERT INTO"." persona(IDPersona, Nome, Cognome".(strcmp($cf, "") == 0 ? "" : ", CF").(strcmp($birth, "") == 0 ? "" : ", DataNasciata").") VALUES (IDPersona, ?, ?";
 
+         if(strcmp($cf, "") != 0)
+              $query = $query.",\"".$cf."\"";
+         if(strcmp($birth, "") != 0)
+              $query = $query.", \"".$birth."\"";
 
+         $stmt = $this->db->prepare($query.")");
+         $stmt->bind_param('ss', $name, $surname);
+         $stmt->execute();
 
+         $stmt = $this->db->prepare("SELECT IDPersona FROM persona WHERE Nome = ? AND Cognome = ?");
+         $stmt->bind_param('ss', $name, $surname);
+         $stmt->execute();
+         $result = $stmt->get_result();
 
-     /**
-     * Da controllare
-     */
+         return $result->fetch_all(MYSQLI_ASSOC)[0]["IDPersona"];
+    }
 
+    public function insertNewArtist($name, $surname, $cf, $birth, $bio, $artName, $IDReferente){
+          $idPerson = $this->insertNewUser($name, $surname, $cf, $birth);
+          $stmt = $this->db->prepare("INSERT INTO artista(IDArtista, AnagraficaArtista, NomeDArte, IDReferente, Biografia) VALUES (IDArtista, ?, ?, ?, ?)");
+          $stmt->bind_param('isis', $idPerson, $artName, $IDReferente, $bio);
+          return $stmt->execute();
+     }
+
+     public function getArtistByManager($Manager){
+          $stmt = $this->db->prepare("SELECT A.IDArtista, P.Nome, P.Cognome, A.NomeDArte FROM artista A INNER JOIN persona P ON A.AnagraficaArtista=P.IDPersona WHERE A.IDReferente=?");
+          $stmt->bind_param('i', $Manager);
+          $stmt->execute();
+          $result = $stmt->get_result();
+
+          return $result->fetch_all(MYSQLI_ASSOC);
+     }
 
      public function getEventType(){
           $stmt = $this->db->prepare("SELECT * FROM tipologia");
@@ -80,6 +112,44 @@ class DatabaseHelper{
 
           return $result->fetch_all(MYSQLI_ASSOC);
      }
+
+     /***
+     cambiare nome della funzione per renderlo può aderente a quanto compie
+     */
+     public function getKindOfMusicByType($musicType) {
+          $stmt = $this->db->prepare("SELECT G.IDGenere, G.Name FROM genere G INNER JOIN tipologia T ON G.IDTipologia=T.IDTipologia WHERE T.IDTipologia=?");
+          $stmt->bind_param('i', $musicType);
+          $stmt->execute();
+          $result = $stmt->get_result();
+
+          return $result->fetch_all(MYSQLI_ASSOC);
+     }
+
+     public function getAllLocation() {
+          $stmt = $this->db->prepare("SELECT IDLocation, Nome FROM location");
+          $stmt->execute();
+          $result = $stmt->get_result();
+
+          return $result->fetch_all(MYSQLI_ASSOC);
+     }
+
+     public function getSectorByLocationID($idLocation) {
+          $stmt = $this->db->prepare("SELECT IDSettore, Nome, Capienza FROM settore WHERE IDLocation = ?");
+          $stmt->bind_param('i', $idLocation);
+          $stmt->execute();
+          $result = $stmt->get_result();
+
+          return $result->fetch_all(MYSQLI_ASSOC);
+     }
+
+
+
+     /**
+     * Da controllare
+     */
+
+
+
 
      public function getRandonEventOfCategory($ValueNum, $Category){
          $stmt = $this->db->prepare("SELECT G.Name FROM tipologia T INNER JOIN genere G ON T.IDTipologia=G.IDTipologia WHERE T.IDTipologia=? ORDER BY RAND() LIMIT ?");
@@ -90,13 +160,7 @@ class DatabaseHelper{
          return $result->fetch_all(MYSQLI_ASSOC);
      }
 
-     public function insertNewUser($nome, $cognome, $Email, $password, $userType){
-          $query = "INSERT INTO persona(IDPersona, Nome, Cognome, Email, Password, DataRegistrazione, IDAccesso) VALUES (IDPersona, ?, ?, ?, ?, CURDATE(), ?)";
-          $stmt = $this->db->prepare($query);
-          $stmt->bind_param('ssssi',$nome, $cognome, $Email, $password, $userType);
 
-          return $stmt->execute();
-     }
 
      public function enableUser($Email){
           $query = "UPDATE persona SET AccountAbilitato = 1 WHERE Email = ?";

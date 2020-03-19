@@ -37,7 +37,7 @@
 
                     var_dump($_SESSION["accountLog"]);
 
-                    var_dump($dbh->AccountExistInDB("Prova"));
+                    var_dump($dbh->getKindOfMusicByType(1));
 
                     foreach ($dbh->getRandonEventOfCategory(2, 1) as $key => $value) {
                          $_GET["category"] = $value["Name"];

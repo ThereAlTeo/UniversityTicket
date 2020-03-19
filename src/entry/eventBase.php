@@ -8,8 +8,9 @@ $templateParams["main"] = "eventMain.php";
 $templateParams["navbar"] = "navbarFactory.php";
 $templateParams["footer"] = "footer.php";
 $templateParams["templateType"] = "D";
-$templateParams["js"] = array(JS_DIR."jquery-3.4.1.min.js", "https://cdn.jsdelivr.net/npm/sweetalert2@9", "https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js", "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js", "https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js", "https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js", JS_DIR."userDataTable.js", JS_DIR."event.js");
+$templateParams["js"] = array(JS_DIR."jquery-3.4.1.min.js", "https://cdn.jsdelivr.net/npm/sweetalert2@9", "https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js", "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js", "https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js", "https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js", "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js", "https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js", JS_DIR."userDataTable.js", JS_DIR."modal.js", JS_DIR."event.js");
 
+array_push($config["CSS"], "https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css");
 if(isset($_SESSION["accountLog"]) && $_SESSION["accountLog"][1] == 2)
      require TEMPLATE_DIR.'ticketTemplate.php';
 else

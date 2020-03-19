@@ -7,7 +7,10 @@ if(isset($_POST)){
 	$password = sha1($_POST['password']);
 
      if ($dbh->AccountExistInDB($email) && $dbh->checkUserPassword($email, $password)) {
-          $_SESSION["accountLog"] = array($email, $dbh->getAccountAccessInfo($email));
+          $_SESSION["accountLog"] = array($email);
+          foreach ($dbh->getAccountAccessInfo($email) as $key => $value)
+               array_push($_SESSION["accountLog"], $value);
+               
           $msg = array("success"=>"Bentornato ".$email."!");
      }
      else {
