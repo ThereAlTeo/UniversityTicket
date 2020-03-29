@@ -9,18 +9,15 @@ if(isset($_POST)){
 	$email = $_POST['email'];
 	$password = sha1($_POST['password']);
 	$userType = $_POST['userType'];
+	$fiscalCode = strcmp($_POST['fiscalCode'], "") == 0 ? null : $_POST['fiscalCode'];
+	$birth = sqlFormatDatetime($_POST['birth']);
 
-	$msg = array("error"=>"The account is already registered.");
-
-	if($dbh->AccountExistInDB($email)){
-		$msg = array("error"=>"The account is already registered.");
-	}
-	elseif ($dbh->insertNewUser($firstname, $lastname, $email, $password, parseUserPermission($userType))) {
-		$msg = array("success"=>"The account was successfully created. It is possible to use it.");
-	}
-	else {
-		$msg = array("error"=>"We're sorry. The account could not be created.");
-	}
+	if($dbh->AccountExistInDB($email))
+		$msg = array("error"=>"L'account esiste già.");
+	elseif ($dbh->insertNewTicketUser($firstname, $lastname, $fiscalCode, $birth, $email, $password, parseUserPermission($userType)))
+		$msg = array("success"=>"L'account è stato creato correttamente.\nE' possibile utilizzarlo.");
+	else
+		$msg = array("error"=>"Ci scusiamo. Non è stato possibile creare correttamente l'account.");
 }else{
 	$msg = array("error"=>"It is not possible to access the data entered.");
 }

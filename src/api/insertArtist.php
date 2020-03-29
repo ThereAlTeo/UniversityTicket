@@ -6,12 +6,7 @@ if(isset($_POST)){
      $name = ucfirst($_POST['name']);
      $surname = ucfirst($_POST['surname']);
      $cf = strtoupper($_POST['cf']);
-     $birth = $_POST['birth'];
-     if(strlen($birth) > 8){
-          $arr = explode('-', $birth);
-          $birth = $arr[2].'-'.$arr[1].'-'.$arr[0];
-     }
-
+     $birth = sqlFormatDatetime($_POST['birth']);     
      $bio = $_POST['bio'];
      $artName = ucfirst($_POST['artName']);
 

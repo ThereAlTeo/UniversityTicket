@@ -11,9 +11,10 @@ define("TEMPLATE_DIR", ROOT_DIR."templates/");
 define("JS_DIR", ROOT_DIR."js/");
 define("CSS_DIR", ROOT_DIR."css/");
 define("FACTORY_DIR", "./factoryItem/");
+define("ROOT_PAHT", substr(__DIR__, 0, strrpos(__DIR__, '\\', -1)));
 
 require_once(ROOT_DIR.'../res/config.php');
-require_once(ROOT_DIR."utilities/generalFunctions.php");
 require_once(ROOT_DIR."db/database.php");
 $dbh = new DatabaseHelper("localhost", "root", "", "ticket");
+require_once(ROOT_DIR."utilities/generalFunctions.php");
 ?>

@@ -6,6 +6,7 @@ class ModalHead{
           this.ProgressLineIncrement = this.ProgressLineIncrement.toFixed(2);
           this.ActualProgressLine = this.ProgressLineIncrement / 2;
           this.ActualProgressLine = this.ActualProgressLine.toFixed(2);
+          this.goNext = false;
      }
 
      getActualIndex() { return this.actualIndex; }
@@ -19,6 +20,8 @@ class ModalHead{
           this.ActualProgressLine = parseFloat(this.ActualProgressLine) - parseFloat(this.ProgressLineIncrement);
           this.actualIndex--;
      }
+     setGoToNext(Value) { this.goNext = Value; }
+     canGoToNext() { return this.goNext; }
 }
 
 $(function() {
@@ -26,29 +29,7 @@ $(function() {
      $("fieldset").hide();
      $(".fieldSet fieldset:nth-child(" + modal.getActualIndex() + ")").show();
      showActualFieldset();
-     $('.btnNext').click(function(e) {
-          var parentFieldset = $(this).parents('fieldset');
-          var nextStep = true;
-          var currentActiveStep = $(this).parents('.modalStyle').find('.modalStep.active');
 
-          parentFieldset.find('input[type="text"], textarea').filter('[required]').each(function() {
-               if($(this).val() == "") {
-                    $(this).addClass('border border-danger');
-                    nextStep = false;
-               }
-               else
-                    $(this).removeClass('border border-danger');
-          });
-
-          if(nextStep) {
-               parentFieldset.fadeOut(400, function() {
-                    currentActiveStep.removeClass('active').addClass('activated').next().addClass('active');
-                    modal.incActualProgressLine();
-                    showActualFieldset();
-                    $(this).next().fadeIn(400);
-               });
-          }
-     });
      $('.btnPrevious').click(function(e) {
          	var currentActiveStep = $(this).parents('.modalStyle').find('.modalStep.active');
 
@@ -60,6 +41,29 @@ $(function() {
          	});
      });
 });
+
+function nextFieldset(element) {
+     if(modal.canGoToNext()){
+          $(element).parents('fieldset').fadeOut(400, function() {
+               $(element).parents('.modalStyle').find('.modalStep.active').removeClass('active').addClass('activated').next().addClass('active');
+               modal.incActualProgressLine();
+               showActualFieldset();
+               $(this).next().fadeIn(400);
+          });
+     }
+}
+
+function consumerCheckElement(Value, Element, MaxOf = 0) {
+     $(Element).removeClass('border border-danger border-warning');
+
+     if(Value == "") {
+          $(Element).addClass('border border-danger');
+          modal.setGoToNext(false);
+     }else if (MaxOf != 0 && Value > MaxOf) {
+          $(Element).addClass('border border-warning');
+          modal.setGoToNext(false);
+     }          
+}
 
 function showActualFieldset() {
      $(".modalProgressLine").css({ "width": modal.getActualProgressLine() + "%" });

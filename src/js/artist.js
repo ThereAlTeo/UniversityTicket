@@ -31,4 +31,12 @@ $(function() {
                }
           });
      });
+
+     $('.btnNext').click(function(e) {
+          modal.setGoToNext(true);
+          $(this).parents('fieldset').find('input[type="text"], textarea').filter('[required]').each(function() {
+               consumerCheckElement($(this).val(), this);
+          });
+          nextFieldset(this);
+     });
 });

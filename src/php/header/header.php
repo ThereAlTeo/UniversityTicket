@@ -1,7 +1,7 @@
 <!-- Header -->
-          <header class="p-3 bg-ticketBlue text-white">
+          <header class="py-3 bg-ticketBlue text-white">
                <div class="row mx-3 d-flex justify-content-between align-items-center">
-                    <div class="col-6 col-sm-1">
+                    <div class="col-6 col-sm-1 text-left">
                          <a href="bacheca.php">
                               <img <?php echo 'src="'.ROOT_DIR.'../res/images/logoForse.png"'; ?> width="70" height="70" class="d-inline-block align-top" alt="Logo">
                          </a>
@@ -11,7 +11,7 @@
                               Biglietti, Concerti, Spettacolo, Sport & Cultura
                          </p>
                     </div>
-                    <div class="col-6 col-sm-2">
+                    <div class="col-6 col-sm-2 text-right">
                          <?php
                          if(isset($_GET["login"])){
                               println('<p class="font-weight-bold font-italic text-right text-warning small">'.$_GET["login"].'</p>');

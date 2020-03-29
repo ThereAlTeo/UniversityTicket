@@ -70,19 +70,19 @@
                        <fieldset>
                             <h5 class="text-left">Informazioni Generali Evento</h5>
                             <div class="form-group">
-                                 <input type="text" placeholder="Inserisci Titolo" class="form-control" id="artistName" required/>
+                                 <input type="text" placeholder="Inserisci Titolo" class="form-control" id="eventTitle" required/>
                             </div>
                             <div class="input-group input-group-sm mb-3">
-                                <input type="text" placeholder="Inserisci Sottotitolo" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" id="artistName" required/>
+                                <input type="text" placeholder="Inserisci Sottotitolo" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" id="eventSubTitle" required/>
                             </div>
                             <div class="row text-left">
-                                 <div class="col-12 form-group mb-3 ">
-                                      <label>Scelti tipologia d'evento</label></br>
+                                 <div class="col-12 form-group mb-3" id="typeEvent">
+                                      <label>Scegli tipologia d'evento</label></br>
                                       <div class="btn-group btn-group-toggle d-flex flex-wrap" data-toggle="buttons">
                                            <?php
                                              foreach ($dbh->getEventType() as $key => $value) { ?>
                                                   <label class="btn btn-ticketBlue my-1">
-                                                      <input type="radio" name="options" id="option<?php echo $value["IDTipologia"] ?>" autocomplete="off"> <?php echo $value["Nome"] ?>
+                                                      <input type="radio" name="typeEventOptions" id="option<?php echo $value["IDTipologia"] ?>" autocomplete="off"> <?php echo $value["Nome"] ?>
                                                  </label>
                                        <?php } ?>
                                      </div>
@@ -90,7 +90,7 @@
                             </div>
                             <div class="row text-left" id="optionalInfo">
                                  <div class="col-12 col-md-6 form-group mb-3">
-                                     <label>Scegli Tipologia Evento</label>
+                                     <label>Scegli genere d'vento</label>
                                      <select class="custom-select" id="kindMusicSelect">
                                         <optgroup label="">
                                         </optgroup>
@@ -112,10 +112,9 @@
                             </div>
                             <div class="input-group text-left mb-3">
                                 <div class="custom-file">
-                                     <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01"  placeholder="Inserisci Sottotitolo"required>
-                                     <label class="custom-file-label" for="inputGroupFile01">Carica Locandina</label>
+                                     <input type="file" class="custom-file-input" id="locandinaImage" accept="image/*" name="locandinaImage" required>
+                                     <label class="custom-file-label" for="locandinaImage">Carica Locandina</label>
                                 </div>
-
                             </div>
                             <div class="text-right">
                                  <button type="button" class="btn btn-info btnNext">Next</button>
@@ -138,15 +137,15 @@
                             </div>
                             <div class="f1-buttons text-right">
                                  <button type="button" class="btn btn-light btnPrevious">Previous</button>
-                                 <button type="button" class="btn btn-info btnNext">Next</button>
+                                 <button type="button" class="btn btn-info nextFieldset">Next</button>
                             </div>
                        </fieldset>
                        <fieldset>
-                            <h5 class="text-left">Informazioni Location</h5>
+                            <h5 class="text-left">Informazioni Aggiuntive</h5>
                          <div class="form-row">
                               <div class="col-md-4 mb-3">
                                    <div class="input-group date" id="startDatePicker" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input"  placeholder="Data Inizio" data-target="#startDatePicker"/>
+                                        <input type="text" class="form-control datetimepicker-input"  placeholder="Data Inizio" data-target="#startDatePicker" required/>
                                          <div class="input-group-append" data-target="#startDatePicker" data-toggle="datetimepicker">
                                              <div class="input-group-text"><i class="fas fa-calendar-day"></i></div>
                                          </div>
@@ -154,7 +153,7 @@
                               </div>
                               <div class="col-md-4 mb-3">
                                    <div class="input-group date" id="endDatePicker" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input"  placeholder="Data Fine" data-target="#endDatePicker"/>
+                                        <input type="text" class="form-control datetimepicker-input"  placeholder="Data Fine" data-target="#endDatePicker" required/>
                                          <div class="input-group-append" data-target="#endDatePicker" data-toggle="datetimepicker">
                                              <div class="input-group-text"><i class="fas fa-calendar-day"></i></div>
                                          </div>
@@ -170,7 +169,7 @@
                               </div>
                          </div>
                          <div class="form-group">
-                             <textarea placeholder="Inserisci Biografia." class="form-control" id="artistBiografia"></textarea>
+                             <textarea placeholder="Inserisci descrizione evento." class="form-control" id="eventDescription"></textarea>
                          </div>
                          <div class="f1-buttons text-right">
                               <button type="button" class="btn btn-light btnPrevious">Previous</button>

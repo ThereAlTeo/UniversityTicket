@@ -40,4 +40,24 @@
                     return array();
           }
      }
+
+     function getPairEventElement(){
+         return array(array(1, 8), array(4, 8), array(2, 8), array(3, 8));
+     }
+
+     function copyFileInOtherDir($tmpFile, $newPathFile){
+         return move_uploaded_file($tmpFile, $newPathFile);
+     }
+
+     function sqlFormatDatetime($input){
+         if(strlen($input) > 8){
+             $datetime = explode(" ", $input);
+             $date = explode("-", $datetime[0]);
+             $sqlFormat = $date[2]."-".$date[1]."-".$date[0];
+
+             return $sqlFormat.(count($datetime) == 2 ? " ".$datetime[1].":00" : "");
+         }
+
+         return null;
+     }
 ?>

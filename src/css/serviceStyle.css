@@ -1,32 +1,34 @@
-.registrationBackground{
+.bgLoginImage{
+    background-image: url("./../../res/images/BackRegistretion.jpg");
+    background-position: center;
+    background-size: cover;
+}
+
+.formControlUser {
+  font-size: 0.9rem;
+  border-radius: 10rem;
+  padding: 1.5rem 1rem;
+}
+
+.formBtnUser {
+  font-size: 0.8rem;
+  border-radius: 10rem;
+  padding: 0.75rem 1rem;
+}
+
+.stallsBackground{
   justify-content: center;
   align-items: center;
 }
 
-.loginBackground{
-  background-image: url("./../../res/images/Back.jpg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  position: absolute;
-  justify-content: center;
-  align-items: center;
-  display: block;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  opacity: 0.3;
-}
-
-.registrationBackground::before{
-  background-image: 	url("./../../res/images/BackRegistretion.jpg");
+.stallsBackground::before{
+  background-image: url("./../../res/images/BackRegistretion.jpg");
   content: "";
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   position: absolute;
   display: block;
-  top: 100px;
   left: 0;
   width: 100%;
   height: 100%;

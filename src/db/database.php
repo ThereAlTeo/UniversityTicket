@@ -69,28 +69,23 @@ class DatabaseHelper{
          return $result->fetch_all(MYSQLI_ASSOC)[0]["rowNum"] == 0;
     }
 
-    public function insertNewUser($name, $surname, $cf, $birth){
-         $query = "INSERT INTO"." persona(IDPersona, Nome, Cognome".(strcmp($cf, "") == 0 ? "" : ", CF").(strcmp($birth, "") == 0 ? "" : ", DataNasciata").") VALUES (IDPersona, ?, ?";
+    private function insertNewPerson($name, $surname, $cf, $birth){
+        $stmt = $this->db->prepare("INSERT INTO persona(IDPersona, Nome, Cognome, CF, DataNasciata) VALUES (IDPersona, ?, ?, ?, ?)");
+        $stmt->bind_param('ssss', $name, $surname, $cf, $birth);
+        $stmt->execute();
 
-         if(strcmp($cf, "") != 0)
-              $query = $query.",\"".$cf."\"";
-         if(strcmp($birth, "") != 0)
-              $query = $query.", \"".$birth."\"";
+        return $stmt->insert_id;
+    }
 
-         $stmt = $this->db->prepare($query.")");
-         $stmt->bind_param('ss', $name, $surname);
-         $stmt->execute();
-
-         $stmt = $this->db->prepare("SELECT IDPersona FROM persona WHERE Nome = ? AND Cognome = ?");
-         $stmt->bind_param('ss', $name, $surname);
-         $stmt->execute();
-         $result = $stmt->get_result();
-
-         return $result->fetch_all(MYSQLI_ASSOC)[0]["IDPersona"];
+    public function insertNewTicketUser($name, $surname, $cf, $birth, $email, $password, $userPermission){
+        $idPerson = $this->insertNewPerson($name, $surname, $cf, $birth);
+        $stmt = $this->db->prepare("INSERT INTO ticketuser(IDUser, AnagraficaUtente, Email, Password, DataRegistrazione, AccountAbilitato, IDAccesso) VALUES (IDUser, ?, ?, ?, NOW(), 0, ?)");
+        $stmt->bind_param('issi', $idPerson, $email, $password, $userPermission);
+        return $stmt->execute();
     }
 
     public function insertNewArtist($name, $surname, $cf, $birth, $bio, $artName, $IDReferente){
-          $idPerson = $this->insertNewUser($name, $surname, $cf, $birth);
+          $idPerson = $this->insertNewPerson($name, $surname, $cf, $birth);
           $stmt = $this->db->prepare("INSERT INTO artista(IDArtista, AnagraficaArtista, NomeDArte, IDReferente, Biografia) VALUES (IDArtista, ?, ?, ?, ?)");
           $stmt->bind_param('isis', $idPerson, $artName, $IDReferente, $bio);
           return $stmt->execute();
@@ -113,16 +108,26 @@ class DatabaseHelper{
           return $result->fetch_all(MYSQLI_ASSOC);
      }
 
-     /***
-     cambiare nome della funzione per renderlo può aderente a quanto compie
-     */
-     public function getKindOfMusicByType($musicType) {
-          $stmt = $this->db->prepare("SELECT G.IDGenere, G.Name FROM genere G INNER JOIN tipologia T ON G.IDTipologia=T.IDTipologia WHERE T.IDTipologia=?");
-          $stmt->bind_param('i', $musicType);
-          $stmt->execute();
-          $result = $stmt->get_result();
+     public function getBachecaSectionInfoByKindID($musicType) {
+         if(count($musicType) < 2)
+            return array();
 
-          return $result->fetch_all(MYSQLI_ASSOC);
+         $query = "SELECT E.IDEvento, T.Nome, A.NomeDArte, E.Locandina, P.Nome, P.Cognome, MAX(E.Recommendation) AS 'Recommendation', MIN(TA.Prezzounitario) AS 'Prezzounitario'
+                                    FROM tipologia T INNER JOIN genere G ON T.IDTipologia=G.IDTipologia INNER JOIN evento E ON E.IDGenere=G.IDGenere
+                                                     INNER JOIN tariffario TA ON TA.IDEvento=E.IDEvento
+                                                     INNER JOIN artista A ON A.IDArtista=E.IDArtista
+                                                     INNER JOIN persona P ON P.IDPersona=A.AnagraficaArtista
+                                     WHERE T.IDTipologia=?
+                                     GROUP BY A.IDArtista";
+
+         if($musicType[1] != 0)
+             $query = $query." LIMIT ".$musicType[1];
+         $stmt = $this->db->prepare($query);
+         $stmt->bind_param('i', $musicType[0]);
+         $stmt->execute();
+         $result = $stmt->get_result();
+
+         return $result->fetch_all(MYSQLI_ASSOC);
      }
 
      public function getAllLocation() {
@@ -142,7 +147,83 @@ class DatabaseHelper{
           return $result->fetch_all(MYSQLI_ASSOC);
      }
 
+     public function getKindOfMusicByType($IDMusicKind){
+         $stmt = $this->db->prepare("SELECT G.IDGenere, G.Name FROM tipologia T INNER JOIN genere G ON T.IDTipologia=G.IDTipologia
+                                     WHERE T.IDTipologia = ?");
+         $stmt->bind_param('i', $IDMusicKind);
+         $stmt->execute();
+         $result = $stmt->get_result();
 
+         return $result->fetch_all(MYSQLI_ASSOC);
+     }
+
+     public function getKindOfMusicInfo($IDKind){
+         $stmt = $this->db->prepare("SELECT T.IDTipologia, G.Name FROM genere G INNER JOIN tipologia T ON G.IDTipologia=T.IDTipologia WHERE G.IDGenere = ?");
+         $stmt->bind_param('i', $IDKind);
+         $stmt->execute();
+         $result = $stmt->get_result();
+
+         return $result->fetch_all(MYSQLI_ASSOC)[0];
+     }
+
+     public function getArtistPublicName($IDArtista){
+         $stmt = $this->db->prepare("SELECT P.Nome, P.Cognome, A.NomeDArte FROM artista A INNER JOIN persona P ON P.IDPersona=A.AnagraficaArtista WHERE A.IDArtista = ?");
+         $stmt->bind_param('i', $IDArtista);
+         $stmt->execute();
+         $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC)[0];
+
+         if(is_null($result['NomeDArte']) || strcmp($result['NomeDArte'], "") == 0)
+             return $result['Nome']." ".$result['Cognome'];
+         else
+             return $result['NomeDArte'];
+     }
+
+    public function getResImageName($IDGenere, $IDArtista, $eventID){
+        $IDTipologia = $this->getKindOfMusicInfo($IDGenere);
+        $name = "";
+        if($IDTipologia["IDTipologia"] != 2){
+            $name = $this->getArtistPublicName($IDArtista);
+        } else
+            $name = $eventID.$IDTipologia["Name"];
+
+        return preg_replace("/[^a-zA-Z0-9]+/", "", $name);
+    }
+
+    public function upgradeEventImage($eventID, $locandinaName){
+        $query = "UPDATE evento SET Locandina = ? WHERE IDEvento = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('si', $locandinaName, $eventID);
+
+        return $stmt->execute();
+    }
+
+     public function insertEvent($eventTitle, $eventSubTitle, $IDArtista, $IDLocation, $IDGenere, $eventDescription, $startEvent, $endEvent, $publicedDateEvent){
+         $formatStartEvent = sqlFormatDatetime($startEvent);
+         $formatEndEvent = sqlFormatDatetime($endEvent);
+         $formatPublicedEvent = sqlFormatDatetime($publicedDateEvent);
+         $recommendation = rand(35, 50) / 10;
+         $eventDescription = strlen($eventDescription) > 0 ? $eventDescription : null;
+         $query = "INSERT INTO evento(IDEvento, Titolo, Sottotitolo, Locandina, IDOrganizzatore, IDArtista, IDLocation, IDGenere, Info, DataInizio, DataFine, DataPubblicazione, Recommendation)
+                   VALUES (IDEvento, ?, ?, '', ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+         $stmt = $this->db->prepare($query);
+         $stmt->bind_param('ssiiiissssd', $eventTitle, $eventSubTitle, $_SESSION["accountLog"][2], $IDArtista, $IDLocation, $IDGenere, $eventDescription, $formatStartEvent, $formatEndEvent, $formatPublicedEvent, $recommendation);
+         $stmt->execute();
+
+         return $stmt->insert_id;
+    }
+
+    public function insertTariffarioEvento($eventID, $IDsectors, $IDLocation, $unitaryPrice, $sectorCapacity){
+        $query = "INSERT INTO tariffario(IDEvento, IDSettore, IDLocation, Prezzounitario, Disponibilita) VALUES (?, ?, ?, ?, ?)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('iiidi', $eventID, $IDsectors, $IDLocation, $unitaryPrice, $sectorCapacity);
+        return $stmt->execute();
+    }
+
+    public function deleteEventByID($eventID = 0){
+        $stmt = $this->db->prepare("DELETE FROM evento WHERE IDEvento = ?");
+        $stmt->bind_param('i', $eventID);
+        return $stmt->execute();
+    }
 
      /**
      * Da controllare
