@@ -225,6 +225,14 @@ class DatabaseHelper{
         return $stmt->execute();
     }
 
+    public function enableUser($Email){
+         $query = "UPDATE ticketuser SET AccountAbilitato = 1 WHERE Email = ?";
+         $stmt = $this->db->prepare($query);
+         $stmt->bind_param('s', $Email);
+
+         return $stmt->execute();
+    }
+
      /**
      * Da controllare
      */
@@ -241,15 +249,6 @@ class DatabaseHelper{
          return $result->fetch_all(MYSQLI_ASSOC);
      }
 
-
-
-     public function enableUser($Email){
-          $query = "UPDATE persona SET AccountAbilitato = 1 WHERE Email = ?";
-          $stmt = $this->db->prepare($query);
-          $stmt->bind_param('s', $Email);
-
-          return $stmt->execute();
-     }
 
 
 

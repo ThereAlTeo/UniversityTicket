@@ -1,7 +1,7 @@
 <?php
 $templateParams["headerPage"] = array("Account", "di seguito viene riportato l'elento degli account registrati al sito.", $dbh->getAccountRecordNumber());
 require(FACTORY_DIR."reservedPagesHeader.php");
-?>               
+?>
                <div class="row">
                     <div class="col-12">
                          <div class="card shadow mb-5">
@@ -10,7 +10,7 @@ require(FACTORY_DIR."reservedPagesHeader.php");
                               </div>
                               <div class="card-body">
                                    <div class="table-responsive">
-                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <table class="table table-bordered table-striped table-hover" id="dataTable" width="100%" cellspacing="0">
                                              <thead>
                                                   <tr>
                                                        <th class="text-center">Nome</th>

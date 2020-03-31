@@ -3,6 +3,7 @@ $(function() {
           e.preventDefault();
           $(".locationSector").append(getSectorPart());
      });
+     
      $("#insertLocation").click(function(e) {
           insertLocation(e);
      });
