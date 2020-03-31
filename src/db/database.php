@@ -233,12 +233,37 @@ class DatabaseHelper{
          return $stmt->execute();
     }
 
+    public function LocationExistInDB($location){
+         $stmt = $this->db->prepare("SELECT COUNT(*) as rowNum FROM location WHERE Nome = ?");
+         $stmt->bind_param('s', $location);
+         $stmt->execute();
+         $result = $stmt->get_result();
+
+         return $result->fetch_all(MYSQLI_ASSOC)[0]["rowNum"] > 0;
+    }
+
+    public function insertSectorbyLocation($nome, $idLocation, $capienza){
+         $query = "INSERT INTO settore(IDSettore, Nome, IDLocation, Capienza) VALUES (IDSettore, ?, ?, ?)";
+         $stmt = $this->db->prepare($query);
+         $stmt->bind_param('sii',$nome, $idLocation, $capienza);
+
+         return $stmt->execute();
+    }
+
      /**
      * Da controllare
      */
 
 
 
+     public function insertLocation($locationName, $locationAddress){
+        $query = "INSERT INTO location(IDLocation, Nome, Indirizzo) VALUES (IDLocation, ?, ?)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('ss', $locationName, $locationAddress);
+        $stmt->execute();
+
+        return $stmt->insert_id;
+    }
 
      public function getRandonEventOfCategory($ValueNum, $Category){
          $stmt = $this->db->prepare("SELECT G.Name FROM tipologia T INNER JOIN genere G ON T.IDTipologia=G.IDTipologia WHERE T.IDTipologia=? ORDER BY RAND() LIMIT ?");
@@ -262,31 +287,9 @@ class DatabaseHelper{
           return $result->fetch_all(MYSQLI_ASSOC);
      }
 
-     public function LocationExistInDB($location){
-          $stmt = $this->db->prepare("SELECT COUNT(*) as rowNum FROM location WHERE Nome = ?");
-          $stmt->bind_param('s', $location);
-          $stmt->execute();
-          $result = $stmt->get_result();
 
-          return $result->fetch_all(MYSQLI_ASSOC)[0]["rowNum"] > 0;
-     }
 
-     public function insertLocation($locationName, $locationAddress){
-        $query = "INSERT INTO location(IDLocation, Nome, Indirizzo) VALUES (IDLocation, ?, ?)";
-        $stmt = $this->db->prepare($query);
-        $stmt->bind_param('ss', $locationName, $locationAddress);
-        $stmt->execute();
 
-        return $stmt->insert_id;
-    }
-
-    public function insertSectorbyLocation($nome, $idLocation, $capienza){
-         $query = "INSERT INTO settore(IDSettore, Nome, IDLocation, Capienza) VALUES (IDSettore, ?, ?, ?)";
-         $stmt = $this->db->prepare($query);
-         $stmt->bind_param('sii',$nome, $idLocation, $capienza);
-
-         return $stmt->execute();
-    }
 
 
 }

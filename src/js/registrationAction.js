@@ -15,12 +15,7 @@ $(function() {
             submitRegistration(e);
         $("#registrationForm").addClass('was-validated');
     });
-
-    $('#registrationForm').find('input').each(function () {
-        if ($(this).prop("pattern") || $(this).prop("required"))
-            $(this).parent().find("div").append($(this).attr("title"));
-    });
-
+    
     $("body").addClass("stallsBackground");
 });
 

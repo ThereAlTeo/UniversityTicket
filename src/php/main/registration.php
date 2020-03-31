@@ -6,7 +6,7 @@
                         <div class="row bgLoginImage">
 							<div class="col-md-6 bg-light">
                                 <div class="p-5">
-									<form class="text-center py-md-5 text-ticketBlue needs-validation" id="registrationForm" action="" method="POST" novalidate="">
+									<form class="text-center py-md-5 text-ticketBlue needs-validation formInvalidFB" id="registrationForm" action="" method="POST" novalidate="">
 									    <h3 class="text-center">Registrazione</h3>
 									    <hr class="mb-3">
 									    <div class="row text-left">
