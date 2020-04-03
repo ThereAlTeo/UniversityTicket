@@ -12,7 +12,7 @@
                                              $types = $dbh->getEventType();
 
                                              for ($x = 0; $x < count($types); $x++) {
-                                                  echo('<a class="dropdown-item" href="#">'.$types[$x]["Nome"].'</a>');
+                                                  echo('<a class="dropdown-item" href="./kindSection.php?IDType='.$types[$x]["IDTipologia"].'">'.$types[$x]["Nome"].'</a>');
                                                   if($x != count($types) - 1){
                                                        echo ('<div class="dropdown-divider"></div>');
                                                   }

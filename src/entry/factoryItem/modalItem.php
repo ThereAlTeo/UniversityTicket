@@ -14,19 +14,21 @@
                                    <h5 class="text-left">Informazioni Personali</h5>
                                    <div class="row">
                                         <div class="col-6 form-group">
-                                             <input type="text" placeholder="Inserisci Nome" class="form-control" id="artistName" required/>
+                                             <input type="text" placeholder="Inserisci Nome" class="form-control formControlUser" id="artistName" pattern=".{2,}" title="Campo di almeno 2 caratteri" required/>
+                                             <div class="invalid-feedback"></div>
                                         </div>
                                         <div class="col-6 form-group">
-                                             <input type="text" placeholder="Inserisci Cognome" class="form-control" id="artistCognome" required/>
+                                             <input type="text" placeholder="Inserisci Cognome" class="form-control formControlUser" id="artistCognome" required/>
+                                             <div class="invalid-feedback"></div>
                                         </div>
                                    </div>
                                    <div class="row">
                                         <div class="col-6 form-group">
-                                             <input type="text" placeholder="Inserisci Codice Fiscale" class="form-control" id="artistCF"/>
+                                             <input type="text" placeholder="Inserisci Codice Fiscale" class="form-control formControlUser" id="artistCF"/>
                                         </div>
                                         <div class="col-6 form-group">
                                              <div class="input-group date" id="birthDatePicker" data-target-input="nearest">
-                                                  <input type="text" class="form-control datetimepicker-input"  placeholder="Data di Nascita" data-target="#birthDatePicker"/>
+                                                  <input type="text" class="form-control datetimepicker-input formControlUser"  placeholder="Data di Nascita" data-target="#birthDatePicker"/>
                                                    <div class="input-group-append" data-target="#birthDatePicker" data-toggle="datetimepicker">
                                                        <div class="input-group-text"><i class="fas fa-calendar-day"></i></div>
                                                    </div>
@@ -51,7 +53,7 @@
                                    <h5 class="text-left">Informazioni Professionali</h5>
                                    <div class="form-group">
                                         <div class="form-group">
-                                             <input type="text" placeholder="Inserisci Nome D'arte" class="form-control" id="artistArtName">
+                                             <input type="text" placeholder="Inserisci Nome D'arte" class="form-control formControlUser" id="artistArtName">
                                         </div>
                                    </div>
                                    <div class="f1-buttons text-right">
@@ -70,11 +72,8 @@
                        <fieldset>
                             <h5 class="text-left">Informazioni Generali Evento</h5>
                             <div class="form-group">
-                                 <input type="text" placeholder="Inserisci Titolo" class="form-control" id="eventTitle" required/>
-                            </div>
-                            <div class="input-group input-group-sm mb-3">
-                                <input type="text" placeholder="Inserisci Sottotitolo" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" id="eventSubTitle" required/>
-                            </div>
+                                 <input type="text" placeholder="Inserisci Titolo" class="form-control formControlUser" id="eventTitle" required/>
+                            </div>                            
                             <div class="row text-left">
                                  <div class="col-12 form-group mb-3" id="typeEvent">
                                       <label>Scegli tipologia d'evento</label></br>
@@ -145,7 +144,7 @@
                          <div class="form-row">
                               <div class="col-md-4 mb-3">
                                    <div class="input-group date" id="startDatePicker" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input"  placeholder="Data Inizio" data-target="#startDatePicker" required/>
+                                        <input type="text" class="form-control datetimepicker-input formControlUser"  placeholder="Data Inizio" data-target="#startDatePicker" required/>
                                          <div class="input-group-append" data-target="#startDatePicker" data-toggle="datetimepicker">
                                              <div class="input-group-text"><i class="fas fa-calendar-day"></i></div>
                                          </div>
@@ -153,7 +152,7 @@
                               </div>
                               <div class="col-md-4 mb-3">
                                    <div class="input-group date" id="endDatePicker" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input"  placeholder="Data Fine" data-target="#endDatePicker" required/>
+                                        <input type="text" class="form-control datetimepicker-input formControlUser"  placeholder="Data Fine" data-target="#endDatePicker" required/>
                                          <div class="input-group-append" data-target="#endDatePicker" data-toggle="datetimepicker">
                                              <div class="input-group-text"><i class="fas fa-calendar-day"></i></div>
                                          </div>
@@ -161,7 +160,7 @@
                               </div>
                               <div class="col-md-4 mb-3">
                                    <div class="input-group date" id="publicedDatePicker" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input"  placeholder="Data Pubblicazione" data-target="#publicedDatePicker"/>
+                                        <input type="text" class="form-control datetimepicker-input formControlUser"  placeholder="Data Pubblicazione" data-target="#publicedDatePicker"/>
                                          <div class="input-group-append" data-target="#publicedDatePicker" data-toggle="datetimepicker">
                                              <div class="input-group-text"><i class="fas fa-calendar-day"></i></div>
                                          </div>

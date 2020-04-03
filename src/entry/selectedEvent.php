@@ -1,12 +1,13 @@
 <?php
-if(!isset($_GET["ID"]))
+require_once './../bootFiles.php';
+
+if(!isset($_GET["IDEvento"]))
     header("Location: bacheca.php");
 
-require_once './../bootFiles.php';
 //Base Template
 $templateParams["title"] = "University Ticket";
 $templateParams["header"] = "header.php";
-$templateParams["main"] = "artistMainPage.php";
+$templateParams["main"] = "artistMainEvent.php";
 $templateParams["navbar"] = "navbar.php";
 $templateParams["footer"] = "footer.php";
 $templateParams["templateType"] = "C";

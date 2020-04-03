@@ -24,12 +24,10 @@
                                    foreach ($dbh->getAllLocationInfo() as $key => $value) {
                                         println("
                                              <tr>");
-                                        foreach ($value as $index => $item) {
+                                        foreach ($value as $index => $item)
                                              printTabln('<td class="text-center">'.$item.'</td>', 13);
-                                        }
                                         printTabln("</tr>", 12);
                                    }
-
                                    ?>
                                    </tbody>
                               </table>
@@ -56,17 +54,28 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="firstName">Nome</label>
-                                                <input type="text" class="form-control formControlUser" id="name" placeholder="Stadio San Siro" pattern=".{3,}" title="Campo Nome Obbligatorio" required>
+                                                <input type="text" class="form-control formControlUser text-capitalize" id="name" placeholder="Stadio San Siro" pattern=".{3,}" title="Campo Nome Obbligatorio" required>
                                                 <div class="invalid-feedback"></div>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="address">Indirizzo</label>
-                                                <input type="text" class="form-control formControlUser" id="address" placeholder="Piazzale Angelo Moratti, 20151" pattern=".{3,}" title="Campo Indirizzo Obbligatorio" required>
+                                                <input type="text" class="form-control formControlUser text-capitalize" id="address" placeholder="Piazzale Angelo Moratti, 20151" pattern=".{3,}" title="Campo Indirizzo Obbligatorio" required>
                                                 <div class="invalid-feedback"></div>
                                             </div>
                                         </div>
+                                   </div>
+                                   <div class="row">
+                                       <div class="col-12">
+                                           <div class="form-group">
+                                               <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" id="locationImage" accept="image/*" name="locationImage" title="Campo Obbligatorio" required>
+                                                    <label class="custom-file-label" for="locationImage">Carica foto del luogo</label>
+                                                    <div class="invalid-feedback"></div>
+                                               </div>
+                                           </div>
+                                       </div>
                                    </div>
                                    <hr class="my-2">
                                    <h4 class="mb-3">Informazioni Settori</h4>

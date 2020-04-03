@@ -12,13 +12,13 @@
 									    <div class="row text-left">
 									        <div class="col-md-6">
 												<div class="form-group">
-													<input class="form-control formControlUser" id="firstname" type="text" name="firstname" placeholder="Inserisci nome" required pattern=".{2,}" title="Nome di almeno 2 caratteri">
+													<input class="form-control formControlUser" id="firstname" type="text" name="firstname" placeholder="Inserisci nome" pattern=".{2,}" title="Nome di almeno 2 caratteri" required>
 													<div class="invalid-feedback"></div>
 												</div>
 									        </div>
 									        <div class="col-md-6">
 									            <div class="form-group">
-									                <input class="form-control formControlUser" id="lastname"  type="text" name="lastname" placeholder="Inserisci cognome" required pattern=".{2,}" title="Cognome di almeno 2 caratteri">
+									                <input class="form-control formControlUser" id="lastname"  type="text" name="lastname" placeholder="Inserisci cognome" pattern=".{2,}" title="Cognome di almeno 2 caratteri" required>
 													<div class="invalid-feedback"></div>
 									            </div>
 									        </div>
@@ -44,7 +44,7 @@
 									    <div class="row text-left">
 									        <div class="col-md-6">
 									            <div class="form-group">
-									                <input class="form-control formControlUser" id="email"  type="email" name="email" placeholder="Inserisci E-mail" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="La mail deve rispettare le convenzioni internazionali">
+									                <input class="form-control formControlUser" id="email"  type="email" name="email" placeholder="Inserisci E-mail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="La mail deve rispettare le convenzioni internazionali" required>
 													<div class="invalid-feedback"></div>
 												</div>
 									        </div>
@@ -62,13 +62,13 @@
 									    <div class="row text-left">
 									        <div class="col-md-6">
 									            <div class="form-group">
-									                <input type="password" name="password" id="password" class="form-control formControlUser" placeholder="Inserisci Password" required pattern=".{6,}" title="La password deve contenere almeno 7 caratteri per motivi di sicurezza">
+									                <input type="password" name="password" id="password" class="form-control formControlUser" placeholder="Inserisci Password" pattern=".{6,}" title="La password deve contenere almeno 7 caratteri per motivi di sicurezza" required>
 													<div class="invalid-feedback"></div>
 												</div>
 									        </div>
 									        <div class="col-md-6">
 									            <div class="form-group">
-									                <input type="password" name="passwordconfirmation" id="passwordconfirmation" class="form-control formControlUser" placeholder="Conferma Password" required title="Le password devo coincidere">
+									                <input type="password" name="passwordconfirmation" id="passwordconfirmation" class="form-control formControlUser" placeholder="Conferma Password" title="Le password devo coincidere" required>
 													<div class="invalid-feedback"></div>
 												</div>
 									        </div>

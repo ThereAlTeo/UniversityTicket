@@ -42,7 +42,7 @@
      }
 
      function getPairEventElement(){
-         return array(array(1, 8), array(4, 8), array(2, 8), array(3, 8));
+         return array(array(1, 6), array(4, 6), array(2, 6), array(3, 6));
      }
 
      function copyFileInOtherDir($tmpFile, $newPathFile){
@@ -59,5 +59,36 @@
          }
 
          return null;
+     }
+
+     function clearNameForPathValue($value){
+         preg_replace("/[^a-zA-Z0-9]+/", "", $value);
+     }
+
+     function getCorrectArtistName($item){
+         return isset($item["NomeDArte"]) ? $item["NomeDArte"] : $item["Nome"].$item["Cognome"];
+     }
+
+     function convertNumberInMonth($value){
+         switch (intval($value)) {
+             case 1: return "Gen";
+             case 2: return "Feb";
+             case 3: return "Mar";
+             case 4: return "Apr";
+             case 5: return "Mag";
+             case 6: return "Giu";
+             case 7: return "Lug";
+             case 8: return "Ago";
+             case 9: return "Set";
+             case 10: return "Ott";
+             case 11: return "Nov";
+             case 12: return "Dic";
+             default: throw new Exception("Error Processing Request", 1);
+         }
+     }
+
+     function getEventDate($value) {
+         $date = explode(" ", $value);
+         return $date[2]." ".convertNumberInMonth($date[1])." ".$date[0]." ".$date[3];
      }
 ?>

@@ -32,16 +32,14 @@ $(function() {
                $('fieldset:nth-child(2)').find(".localSectorInfo").filter(function( index ) {
                     return $(this).find(".sectorButton").hasClass("btn-info");
                }).each(function(index) {
-                    sectorValue += $(this).attr("value") + "-" + $(this).find(".sectorCapacity").val() + "-" + $(this).find(".unitaryPrice").val() + "&";
+                   formData.append('sectors[]', $(this).attr("value") + "-" + $(this).find(".sectorCapacity").val() + "-" + $(this).find(".unitaryPrice").val());
                });
 
                formData.append('mode', "insertEvent");
                formData.append('eventTitle', $('#eventTitle').val());
-               formData.append('eventSubTitle', $('#eventSubTitle').val());
                formData.append('IDGenere', $("select#kindMusicSelect option:selected").val());
                formData.append('IDArtista', $("select#ArtistSelect option:selected").val());
                formData.append('IDLocation', $("select#locationSelect option:selected").val());
-               formData.append('sectors', sectorValue);
                formData.append('startEvent', $('#startDatePicker input').val());
                formData.append('endEvent', $('#endDatePicker input').val());
                formData.append('publicedDateEvent', $('#publicedDatePicker input').val());
@@ -114,10 +112,6 @@ $(function() {
           }
 
           nextFieldset(this);
-     });
-
-     $(".custom-file-input").on("change", function() {
-          $(this).parent().find("label").addClass("selected").html($(this).val().split("\\").pop());
      });
 
      $(document).on("click", ".sectorButton", function () {
@@ -202,7 +196,7 @@ function changeSectorsSelect() {
                                         '<div class="input-group-prepend">' +
                                              '<span class="input-group-text"><i class="fas fa-street-view"></i></span>' +
                                         '</div>' +
-                                        '<input type="number" class="form-control sectorCapacity" min="1" max="'+ item.Capienza +'" data-bind="value:replyNumber" placeholder="Max '+ item.Capienza +'">' +
+                                        '<input type="number" class="form-control formControlUser sectorCapacity" min="1" max="'+ item.Capienza +'" data-bind="value:replyNumber" placeholder="Max '+ item.Capienza +'">' +
                                    '</div>' +
                               '</div>' +
                               '<div class="col-6 text-center">' +
@@ -210,7 +204,7 @@ function changeSectorsSelect() {
                                         '<div class="input-group-prepend">' +
                                              '<span class="input-group-text"><i class="fas fa-file-invoice-dollar"></i></span>' +
                                         '</div>' +
-                                        '<input type="number" class="form-control unitaryPrice" min="1" max="1000" step=0.05 data-bind="value:replyNumber" placeholder="Prezzo unitario">' +
+                                        '<input type="number" class="form-control formControlUser unitaryPrice" min="1" max="1000" step=0.05 data-bind="value:replyNumber" placeholder="Prezzo unitario">' +
                                    '</div>' +
                               '</div>' +
                          '</div>' +

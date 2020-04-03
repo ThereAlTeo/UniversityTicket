@@ -14,7 +14,6 @@ class DatabaseHelper{
           $stmt->bind_param('s', $email);
           $stmt->execute();
           $result = $stmt->get_result();
-
           return $result->fetch_all(MYSQLI_ASSOC)[0]["rowNum"] > 0;
      }
 
@@ -23,7 +22,6 @@ class DatabaseHelper{
           $stmt->bind_param('s', $email);
           $stmt->execute();
           $result = $stmt->get_result();
-
           return strcmp($result->fetch_all(MYSQLI_ASSOC)[0]["Password"], $password) == 0;
      }
 
@@ -32,7 +30,6 @@ class DatabaseHelper{
           $stmt->bind_param('s', $email);
           $stmt->execute();
           $result = $stmt->get_result();
-
           return $result->fetch_all(MYSQLI_ASSOC)[0];
      }
 
@@ -40,7 +37,6 @@ class DatabaseHelper{
          $stmt = $this->db->prepare("SELECT COUNT(*) as \"TableRows\" FROM ".$table);
          $stmt->execute();
          $result = $stmt->get_result();
-
          return $result->fetch_all(MYSQLI_ASSOC)[0]["TableRows"];
     }
 
@@ -56,7 +52,6 @@ class DatabaseHelper{
          $stmt = $this->db->prepare("SELECT P.Nome, P.Cognome, T.Email, DATE_FORMAT(T.DataRegistrazione, '%d/%m/%Y ') as 'DataRegistrazione', A.Descrizione, IF(T.AccountAbilitato, 'TRUE', 'FALSE') 'AccountAbilitato' FROM ticketuser T INNER JOIN persona P ON T.AnagraficaUtente=P.IDPersona INNER JOIN tipologiaaccesso A ON A.IDAccesso=T.IDAccesso");
          $stmt->execute();
          $result = $stmt->get_result();
-
          return $result->fetch_all(MYSQLI_ASSOC);
     }
 
@@ -65,7 +60,6 @@ class DatabaseHelper{
          $stmt->bind_param('ss', $name, $surname);
          $stmt->execute();
          $result = $stmt->get_result();
-
          return $result->fetch_all(MYSQLI_ASSOC)[0]["rowNum"] == 0;
     }
 
@@ -73,7 +67,6 @@ class DatabaseHelper{
         $stmt = $this->db->prepare("INSERT INTO persona(IDPersona, Nome, Cognome, CF, DataNasciata) VALUES (IDPersona, ?, ?, ?, ?)");
         $stmt->bind_param('ssss', $name, $surname, $cf, $birth);
         $stmt->execute();
-
         return $stmt->insert_id;
     }
 
@@ -96,7 +89,6 @@ class DatabaseHelper{
           $stmt->bind_param('i', $Manager);
           $stmt->execute();
           $result = $stmt->get_result();
-
           return $result->fetch_all(MYSQLI_ASSOC);
      }
 
@@ -104,21 +96,33 @@ class DatabaseHelper{
           $stmt = $this->db->prepare("SELECT * FROM tipologia");
           $stmt->execute();
           $result = $stmt->get_result();
-
           return $result->fetch_all(MYSQLI_ASSOC);
+     }
+
+     public function getTipologiaInfo($IDTipologia){
+         $query = "SELECT COUNT(*) as 'EventNum', T.Nome FROM tipologia T INNER JOIN genere G ON G.IDTipologia=T.IDTipologia
+                                                         INNER JOIN evento E ON E.IDGenere=G.IDGenere
+                   WHERE T.IDTipologia = ?";
+
+         $stmt = $this->db->prepare($query);
+         $stmt->bind_param('i', $IDTipologia);
+         $stmt->execute();
+         $result = $stmt->get_result();
+         return $result->fetch_all(MYSQLI_ASSOC)[0];
      }
 
      public function getBachecaSectionInfoByKindID($musicType) {
          if(count($musicType) < 2)
             return array();
 
-         $query = "SELECT E.IDEvento, T.Nome, A.NomeDArte, E.Locandina, P.Nome, P.Cognome, MAX(E.Recommendation) AS 'Recommendation', MIN(TA.Prezzounitario) AS 'Prezzounitario'
+         $query = "SELECT E.IDEvento, A.NomeDArte, E.Locandina, P.Nome, P.Cognome, MAX(E.Recommendation) AS 'Recommendation', MIN(TA.Prezzounitario) AS 'Prezzounitario'
                                     FROM tipologia T INNER JOIN genere G ON T.IDTipologia=G.IDTipologia INNER JOIN evento E ON E.IDGenere=G.IDGenere
                                                      INNER JOIN tariffario TA ON TA.IDEvento=E.IDEvento
                                                      INNER JOIN artista A ON A.IDArtista=E.IDArtista
                                                      INNER JOIN persona P ON P.IDPersona=A.AnagraficaArtista
                                      WHERE T.IDTipologia=?
-                                     GROUP BY A.IDArtista";
+                                     GROUP BY A.IDArtista
+                                     ORDER BY RAND()";
 
          if($musicType[1] != 0)
              $query = $query." LIMIT ".$musicType[1];
@@ -126,7 +130,6 @@ class DatabaseHelper{
          $stmt->bind_param('i', $musicType[0]);
          $stmt->execute();
          $result = $stmt->get_result();
-
          return $result->fetch_all(MYSQLI_ASSOC);
      }
 
@@ -134,7 +137,6 @@ class DatabaseHelper{
           $stmt = $this->db->prepare("SELECT IDLocation, Nome FROM location");
           $stmt->execute();
           $result = $stmt->get_result();
-
           return $result->fetch_all(MYSQLI_ASSOC);
      }
 
@@ -143,7 +145,6 @@ class DatabaseHelper{
           $stmt->bind_param('i', $idLocation);
           $stmt->execute();
           $result = $stmt->get_result();
-
           return $result->fetch_all(MYSQLI_ASSOC);
      }
 
@@ -153,7 +154,6 @@ class DatabaseHelper{
          $stmt->bind_param('i', $IDMusicKind);
          $stmt->execute();
          $result = $stmt->get_result();
-
          return $result->fetch_all(MYSQLI_ASSOC);
      }
 
@@ -162,7 +162,6 @@ class DatabaseHelper{
          $stmt->bind_param('i', $IDKind);
          $stmt->execute();
          $result = $stmt->get_result();
-
          return $result->fetch_all(MYSQLI_ASSOC)[0];
      }
 
@@ -186,29 +185,23 @@ class DatabaseHelper{
         } else
             $name = $eventID.$IDTipologia["Name"];
 
-        return preg_replace("/[^a-zA-Z0-9]+/", "", $name);
+        return clearNameForPathValue($name);
     }
 
     public function upgradeEventImage($eventID, $locandinaName){
         $query = "UPDATE evento SET Locandina = ? WHERE IDEvento = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('si', $locandinaName, $eventID);
-
         return $stmt->execute();
     }
 
-     public function insertEvent($eventTitle, $eventSubTitle, $IDArtista, $IDLocation, $IDGenere, $eventDescription, $startEvent, $endEvent, $publicedDateEvent){
-         $formatStartEvent = sqlFormatDatetime($startEvent);
-         $formatEndEvent = sqlFormatDatetime($endEvent);
-         $formatPublicedEvent = sqlFormatDatetime($publicedDateEvent);
+     public function insertEvent($eventTitle, $IDArtista, $IDLocation, $IDGenere, $eventDescription, $startEvent, $endEvent, $publicedDateEvent){
          $recommendation = rand(35, 50) / 10;
-         $eventDescription = strlen($eventDescription) > 0 ? $eventDescription : null;
-         $query = "INSERT INTO evento(IDEvento, Titolo, Sottotitolo, Locandina, IDOrganizzatore, IDArtista, IDLocation, IDGenere, Info, DataInizio, DataFine, DataPubblicazione, Recommendation)
-                   VALUES (IDEvento, ?, ?, '', ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+         $query = "INSERT INTO evento(IDEvento, Titolo, Locandina, IDOrganizzatore, IDArtista, IDLocation, IDGenere, Info, DataInizio, DataFine, DataPubblicazione, Recommendation)
+                   VALUES (IDEvento, ?, '', ?, ?, ?, ?, ?, ?, ?, ?, ?)";
          $stmt = $this->db->prepare($query);
-         $stmt->bind_param('ssiiiissssd', $eventTitle, $eventSubTitle, $_SESSION["accountLog"][2], $IDArtista, $IDLocation, $IDGenere, $eventDescription, $formatStartEvent, $formatEndEvent, $formatPublicedEvent, $recommendation);
+         $stmt->bind_param('siiiissssd', $eventTitle, $_SESSION["accountLog"][2], $IDArtista, $IDLocation, $IDGenere, $eventDescription, $formatStartEvent, $formatEndEvent, $formatPublicedEvent, $recommendation);
          $stmt->execute();
-
          return $stmt->insert_id;
     }
 
@@ -229,7 +222,6 @@ class DatabaseHelper{
          $query = "UPDATE ticketuser SET AccountAbilitato = 1 WHERE Email = ?";
          $stmt = $this->db->prepare($query);
          $stmt->bind_param('s', $Email);
-
          return $stmt->execute();
     }
 
@@ -238,32 +230,73 @@ class DatabaseHelper{
          $stmt->bind_param('s', $location);
          $stmt->execute();
          $result = $stmt->get_result();
-
          return $result->fetch_all(MYSQLI_ASSOC)[0]["rowNum"] > 0;
     }
 
-    public function insertSectorbyLocation($nome, $idLocation, $capienza){
+    public function insertSectorbyLocation($idLocation, $nome, $capienza){
          $query = "INSERT INTO settore(IDSettore, Nome, IDLocation, Capienza) VALUES (IDSettore, ?, ?, ?)";
          $stmt = $this->db->prepare($query);
          $stmt->bind_param('sii',$nome, $idLocation, $capienza);
-
          return $stmt->execute();
     }
 
+    public function insertLocation($locationName, $locationAddress, $locationImage){
+       $query = "INSERT INTO location(IDLocation, Nome, Indirizzo) VALUES (IDLocation, ?, ?, ?)";
+       $stmt = $this->db->prepare($query);
+       $stmt->bind_param('sss', $locationName, $locationAddress, $locationImage);
+       $stmt->execute();
+       return $stmt->insert_id;
+   }
+
+   public function deleteLocation($idLocation){
+      $query = "DELETE FROM location WHERE IDLocation = ?";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('i', $idLocation);
+      return $stmt->execute();
+  }
+
+  public function selectedEventLocationInfo($eventID){
+      $stmt = $this->db->prepare("SELECT L.Nome, L.Immagine, MIN(T.Prezzounitario), ROUND(AVG(EV.Recommendation), 2)
+                                  FROM evento EV INNER JOIN location L ON EV.IDLocation=L.IDLocation
+	                              INNER JOIN settore S ON L.IDLocation=S.IDLocation
+                                  INNER JOIN tariffario T ON T.IDSettore=S.IDSettore
+                                  WHERE EV.IDLocation IN (SELECT E.IDLocation FROM evento E
+						                                  WHERE E.DataInizio > CURDATE() && E.IDArtista = (SELECT E2.IDArtista FROM evento E2 WHERE E2.IDEvento = ?))
+                                  GROUP BY EV.IDLocation");
+      $stmt->bind_param('i', $eventID);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      return $result->fetch_all(MYSQLI_ASSOC);
+  }
+
+  public function selectedEventInfo($eventID){
+      $stmt = $this->db->prepare("SELECT A.NomeDArte, A.Biografia, P.DataNasciata, P.Nome, P.Cognome, E.Locandina
+                                  FROM artista A INNER JOIN evento E ON E.IDArtista=A.IDArtista
+                                  INNER JOIN persona P ON P.IDPersona=A.AnagraficaArtista
+                                  WHERE E.IDEvento = ?");
+      $stmt->bind_param('i', $eventID);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      return $result->fetch_all(MYSQLI_ASSOC)[0];
+  }
+
+  public function selectedEventsInfo($eventID){
+      $stmt = $this->db->prepare("SELECT L.Nome AS 'LocationName', L.Indirizzo, E.DataInizio, E.IDEvento, A.NomeDArte, P.Nome, P.Cognome, MIN(T.Prezzounitario) AS 'Price'
+                                  FROM evento E INNER JOIN location L ON E.IDLocation=L.IDLocation
+				                              INNER JOIN artista A ON A.IDArtista=E.IDArtista
+                                              INNER JOIN persona P ON P.IDPersona=A.AnagraficaArtista
+                                              INNER JOIN settore S ON S.IDLocation=L.IDLocation
+                                              INNER JOIN tariffario T ON T.IDSettore=S.IDSettore
+                                  WHERE E.DataInizio > CURDATE() && E.IDArtista = (SELECT E2.IDArtista FROM evento E2 WHERE E2.IDEvento = ?)
+                                  GROUP BY E.IDEvento ORDER BY E.DataInizio");
+      $stmt->bind_param('i', $eventID);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      return $result->fetch_all(MYSQLI_ASSOC);
+  }
      /**
      * Da controllare
      */
-
-
-
-     public function insertLocation($locationName, $locationAddress){
-        $query = "INSERT INTO location(IDLocation, Nome, Indirizzo) VALUES (IDLocation, ?, ?)";
-        $stmt = $this->db->prepare($query);
-        $stmt->bind_param('ss', $locationName, $locationAddress);
-        $stmt->execute();
-
-        return $stmt->insert_id;
-    }
 
      public function getRandonEventOfCategory($ValueNum, $Category){
          $stmt = $this->db->prepare("SELECT G.Name FROM tipologia T INNER JOIN genere G ON T.IDTipologia=G.IDTipologia WHERE T.IDTipologia=? ORDER BY RAND() LIMIT ?");
@@ -274,11 +307,6 @@ class DatabaseHelper{
          return $result->fetch_all(MYSQLI_ASSOC);
      }
 
-
-
-
-
-
      public function getAllLocationInfo(){
           $stmt = $this->db->prepare("SELECT L.Nome, L.Indirizzo, ROUND(RAND()*100) AS \"NrEventi\", ROUND(RAND()*100) AS \"NrBiglietti\" FROM location L");
           $stmt->execute();
@@ -286,11 +314,5 @@ class DatabaseHelper{
 
           return $result->fetch_all(MYSQLI_ASSOC);
      }
-
-
-
-
-
-
 }
 ?>

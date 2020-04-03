@@ -18,27 +18,24 @@ if(isset($_POST)){
           case "insertEvent":
               if ($_FILES['locandinaImage']) {
                   $eventTitle = $_POST['eventTitle'];
-                  $eventSubTitle = $_POST['eventSubTitle'];
                   $IDGenere = $_POST['IDGenere'];
                   $IDArtista = $dbh->getKindOfMusicInfo($IDGenere)["IDTipologia"] != 2 ? $_POST['IDArtista'] : null;
                   $IDLocation = $_POST['IDLocation'];
-                  $sectors = explode("&", $_POST['sectors']);
-                  unset($sectors[count($sectors)-1]);
-                  $startEvent = $_POST['startEvent'];
-                  $endEvent = $_POST['endEvent'];
-                  $publicedDateEvent = $_POST['publicedDateEvent'];
-                  $eventDescription = $_POST['eventDescription'];
+                  $sectors = $_POST['sectors'];
+                  $startEvent = sqlFormatDatetime($_POST['startEvent']);
+                  $endEvent = sqlFormatDatetime($_POST['endEvent']);
+                  $publicedDateEvent = sqlFormatDatetime($_POST['publicedDateEvent']);
+                  $eventDescription = strlen($_POST['eventDescription']) > 0 ? $_POST['eventDescription'] : null;
                   $eventID = 0;
                   try {
                       /*
                       * Nella funzione c'è il Rand per gestire la Recommendation. Sostituire appena possibile
                       */
-                      $eventID = $dbh->insertEvent($eventTitle, $eventSubTitle, $IDArtista, $IDLocation, $IDGenere, $eventDescription, $startEvent, $endEvent, $publicedDateEvent);
+                      $eventID = $dbh->insertEvent($eventTitle, $IDArtista, $IDLocation, $IDGenere, $eventDescription, $startEvent, $endEvent, $publicedDateEvent);
                       if($eventID > 0){
-                          $locandinaName = "\\eventImages\\".$dbh->getResImageName($IDGenere, $IDArtista, $eventID)."."
-                                                            .pathinfo($_FILES['locandinaImage']['name'])['extension'];
+                          $locandinaName = "\\eventImages\\".$dbh->getResImageName($IDGenere, $IDArtista, $eventID).".".pathinfo($_FILES['locandinaImage']['name'])['extension'];
 
-                         if(!(copyFileInOtherDir($_FILES['locandinaImage']['tmp_name'], ROOT_PAHT."\\res\\images".$locandinaName) && $dbh->upgradeEventImage($eventID, $locandinaName))){
+                         if(!(copyFileInOtherDir($_FILES['locandinaImage']['tmp_name'], ROOT_PAHT."\\res\\images".$locandinaName) || !$dbh->upgradeEventImage($eventID, $locandinaName))){
                               $msg = array("error"=> "Non è stato possibile gestire correttamente l'immagine caricata.\nControllare e riprovare.");
                               throw new Exception('Immagine non copiata correttamente');
                           }
@@ -50,7 +47,7 @@ if(isset($_POST)){
                                       throw new Exception('Immagine non copiata correttamente');
                               }
                           }
-                          
+
                           $msg = array("success"=> "Evento creato correttamente!\n BUON LAVORO !!!");
                       } else
                         $msg = array("error"=> "Non è stato possibile creare correttamente l'evento.");
