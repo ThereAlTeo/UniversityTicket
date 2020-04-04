@@ -2,16 +2,16 @@
      <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
                <div class="modal-body">
-                    <form action="" method="POST" class="text-center modalStyle" id="<?php echo $templateParams["modal"]?>Form">
+                    <form action="" method="POST" class="text-center modalStyle needs-validation formInvalidFB" id="<?php echo $templateParams["modal"]?>Form">
                <?php
                switch ($templateParams["modal"]) {
                    case "addArtist":
                          $_GET["progressLineItems"] = array("Inserimento artista", "fas fa-info", "Info", "fas fa-wrench", "Carriera", "fas fa-audio-description", "Extra");
                          require ("modalProgressLine.php");
                    ?>
-                         <div class="fieldSet">
+                         <div class="fieldSet text-left">
                               <fieldset>
-                                   <h5 class="text-left">Informazioni Personali</h5>
+                                   <h5 class="">Informazioni Personali</h5>
                                    <div class="row">
                                         <div class="col-6 form-group">
                                              <input type="text" placeholder="Inserisci Nome" class="form-control formControlUser" id="artistName" pattern=".{2,}" title="Campo di almeno 2 caratteri" required/>
@@ -73,7 +73,7 @@
                             <h5 class="text-left">Informazioni Generali Evento</h5>
                             <div class="form-group">
                                  <input type="text" placeholder="Inserisci Titolo" class="form-control formControlUser" id="eventTitle" required/>
-                            </div>                            
+                            </div>
                             <div class="row text-left">
                                  <div class="col-12 form-group mb-3" id="typeEvent">
                                       <label>Scegli tipologia d'evento</label></br>

@@ -294,6 +294,27 @@ class DatabaseHelper{
       $result = $stmt->get_result();
       return $result->fetch_all(MYSQLI_ASSOC);
   }
+
+  public function filterLocationByValue($value){
+      $stmt = $this->db->prepare("SELECT L.IDLocation, L.Nome, COUNT(E.IDEvento) AS 'eventNum'
+                                  FROM location L LEFT JOIN evento E ON L.IDLocation=E.IDLocation
+                                  WHERE L.Nome LIKE "."'%".$value."%' OR L.Nome LIKE "."'%".ucfirst($value)."%' ".
+                                  "GROUP BY L.IDLocation ORDER BY L.Nome LIMIT 5");
+      $stmt->execute();
+      $result = $stmt->get_result();
+      return $result->fetch_all(MYSQLI_ASSOC);
+  }
+
+  public function filterArtistByValue($value){
+     $stmt = $this->db->prepare("SELECT A.NomeDArte, A.IDArtista, COUNT(E.IDEvento) AS 'eventNum', P.Nome, P.Cognome
+                                FROM artista A LEFT JOIN evento E ON A.IDArtista=E.IDArtista
+                                               INNER JOIN persona P ON A.AnagraficaArtista=P.IDPersona
+                                WHERE A.NomeDArte LIKE "."'%".$value."%' OR A.NomeDArte LIKE "."'%".ucfirst($value)."%' ".
+                                "GROUP BY A.IDArtista ORDER BY A.AnagraficaArtista LIMIT 5");
+      $stmt->execute();
+      $result = $stmt->get_result();
+      return $result->fetch_all(MYSQLI_ASSOC);
+  }
      /**
      * Da controllare
      */

@@ -8,3 +8,11 @@ $(function() {
          $(this).parent().find("label").addClass("selected").html($(this).val().split("\\").pop());
     });
 });
+
+function getKeyValueByObject(obj) {
+    return Object.keys(obj);
+}
+
+function genericErrorInAjax() {    
+    Swal.fire({'title': 'Errors', 'text': 'There were errors while saving the data.', 'icon': 'error', 'timer': 1500});
+}

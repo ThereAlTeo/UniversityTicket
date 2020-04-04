@@ -15,7 +15,7 @@ $(function() {
             submitRegistration(e);
         $("#registrationForm").addClass('was-validated');
     });
-    
+
     $("body").addClass("stallsBackground");
 });
 
@@ -48,7 +48,7 @@ function submitRegistration(e) {
             }
         },
         error: function(jqXHR, exception){
-            Swal.fire({'title': 'Errors', 'text': 'There were errors while saving the data.', 'type': 'error'});
+            genericErrorInAjax();            
         }
     });
 }

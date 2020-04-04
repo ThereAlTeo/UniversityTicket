@@ -23,10 +23,15 @@
                          </div>
                          <div class="col-6 col-sm-6 col-md-8">
                               <div class="input-group">
-                                   <input class="form-control" type="search" placeholder="Ricerca evento, artista o località ..." aria-label="Search">
+                                   <input class="form-control" type="search" placeholder="Ricerca evento, artista o località ..." aria-label="Search" id="searchInput">
                                    <div class="input-group-append">
                                         <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
                                    </div>
+                              </div>
+                              <div class="input-group">
+                                  <ul class="list-group animated--grow-in" id="searchResult">
+                                      
+                                  </ul>
                               </div>
                          </div>
                          <div class="col-3 text-right col-sm-3 col-md-2">

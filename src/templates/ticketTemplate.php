@@ -30,6 +30,9 @@ require_once(ROOT_DIR.'../res/config.php');
                <i class="fas fa-angle-up"></i>
           </a>
           <?php
+          foreach($config["DEFAULTJS"] as $scriptItem)
+               printTabln('<script src="'.$scriptItem.'" type="text/javascript" crossorigin="anonymous"></script>', 2);
+
           if(isset($templateParams["js"])){
                foreach($templateParams["js"] as $scriptItem)
                     printTabln('<script src="'.$scriptItem.'" type="text/javascript" crossorigin="anonymous"></script>', 2);

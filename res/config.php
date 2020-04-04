@@ -24,6 +24,7 @@ $config = array(
     "infoCardColor" => array("primary", "success", "info", "warning"),
     "pageIcon" => ROOT_DIR."../res/images/logoForse.png",
     "CSS" => array("https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css", "https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css", CSS_DIR."fontawesome-free/css/all.min.css", CSS_DIR."OfficialTheme.css", CSS_DIR."serviceStyle.css"),
+    "DEFAULTJS" => array("https://code.jquery.com/jquery-3.4.1.slim.min.js", JS_DIR."jquery-3.4.1.min.js", "https://cdn.jsdelivr.net/npm/sweetalert2@9", "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js", JS_DIR."generalTicketAction.js"),
 );
 
 ini_set("error_reporting", "true");

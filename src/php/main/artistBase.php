@@ -1,5 +1,5 @@
      <?php
-     $templateParams["headerPage"] = array("Artisti", "da qui puoi monitorare l'operato degli artisti scritturati.", "");
+     $templateParams["headerPage"] = array("Artisti", "da qui puoi monitorare l'operato degli artisti scritturati.", count($dbh->getArtistByManager($_SESSION["accountLog"][2])));
      require(FACTORY_DIR."reservedPagesHeader.php");
      ?>
      <div class="row">

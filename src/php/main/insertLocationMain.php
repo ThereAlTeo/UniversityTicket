@@ -1,5 +1,5 @@
      <?php
-     $templateParams["headerPage"] = array("Location", "", $dbh->getLocationRecordNumber());
+     $templateParams["headerPage"] = array("Location", "all'interno di questa sezione, potrai gestire in maniera opportuna i posti nei quali verranno svolti eventi.", $dbh->getLocationRecordNumber());
      require(FACTORY_DIR."reservedPagesHeader.php");
      ?>
      <div class="row">
