@@ -1,7 +1,7 @@
 <?php
 require_once './../bootFiles.php';
 
-if(!isset($_GET["IDEvento"]))
+if(!isset($_GET["IDTour"]))
     header("Location: bacheca.php");
 
 //Base Template

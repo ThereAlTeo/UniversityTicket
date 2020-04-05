@@ -124,7 +124,7 @@ class DatabaseHelper{
                                      GROUP BY A.IDArtista
                                      ORDER BY RAND()";
 
-         if($musicType[1] != 0)
+         if($musicType[1])
              $query = $query." LIMIT ".$musicType[1];
          $stmt = $this->db->prepare($query);
          $stmt->bind_param('i', $musicType[0]);
@@ -314,6 +314,26 @@ class DatabaseHelper{
       $stmt->execute();
       $result = $stmt->get_result();
       return $result->fetch_all(MYSQLI_ASSOC);
+  }
+
+  public function getLocationWithEvent($limit = 0){
+      $query = "SELECT L.IDLocation, L.Nome, L.Immagine, COUNT(E.IDEvento) AS 'EventNum', ROUND(AVG(E.Recommendation), 2) as 'Recommendation', MIN(T.Prezzounitario) AS 'Prezzounitario'
+                FROM location L LEFT JOIN evento E ON L.IDLocation=E.IDLocation
+				                INNER JOIN settore S ON S.IDLocation=E.IDLocation
+                                INNER JOIN tariffario T ON T.IDSettore=S.IDSettore AND T.IDEvento=E.IDEvento AND T.IDLocation=E.IDLocation
+                WHERE E.DataInizio > CURDATE()
+                GROUP BY L.IDLocation
+                ORDER BY EventNum DESC";
+
+      if ($limit)
+          $query = $query." LIMIT ".$limit;
+
+      $stmt = $this->db->prepare($query);
+
+      $stmt->execute();
+      $result = $stmt->get_result();
+      return $result->fetch_all(MYSQLI_ASSOC);
+
   }
      /**
      * Da controllare

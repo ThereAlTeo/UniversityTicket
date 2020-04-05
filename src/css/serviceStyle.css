@@ -55,6 +55,17 @@
     transform: scale(1.1);
 }
 
+.ticketInfo{
+     transition: transform .1s;
+}
+
+.ticketInfo:hover{
+    -ms-transform: scale(1.05); /* IE 9 */
+    -webkit-transform: scale(1.05); /* Safari 3-8 */
+    transform: scale(1.05);
+    background-color: #F5F7FA;
+}
+
 .card-header>span i:hover{
      background-color:rgba(185,227,245, 0.5);
      border-radius: 50px;

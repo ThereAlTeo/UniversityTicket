@@ -1,9 +1,9 @@
 <?php
 require_once './../bootFiles.php';
 
-$info = $dbh->selectedEventInfo($_GET["IDEvento"]);
+$info = $dbh->selectedEventInfo($_GET["IDTour"]);
 $name = getCorrectArtistName($info);
-$luoghi = $dbh->selectedEventLocationInfo($_GET["IDEvento"]);
+$luoghi = $dbh->selectedEventLocationInfo($_GET["IDTour"]);
 ?>
 <div class="container text-dark">
     <div class="row mb-3">
@@ -45,7 +45,7 @@ $luoghi = $dbh->selectedEventLocationInfo($_GET["IDEvento"]);
                             <h5 class="font-weight-bold">Biglietti</h5>
                         </div>
                         <?php
-                            foreach ($dbh->selectedEventsInfo($_GET["IDEvento"]) as $key => $value) {
+                            foreach ($dbh->selectedEventsInfo($_GET["IDTour"]) as $key => $value) {
                                 $_GET["ticketLocation"]["Name"] = getCorrectArtistName($value);
                                 $_GET["ticketLocation"]["Location"] = $value["LocationName"];
                                 $_GET["ticketLocation"]["Address"] = $value["Indirizzo"];

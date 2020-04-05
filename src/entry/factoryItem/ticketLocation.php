@@ -1,6 +1,6 @@
 <?php
 if (isset($_GET["ticketLocation"])) { ?>
-    <div class="row m-2 d-flex align-items-center px-1 border-bottom border-gray ticketInfo">
+    <div class="row m-2 d-flex align-items-center px-1border-gray ticketInfo">
         <div class="col-md-6">
             <div class="row align-items-center">
                 <div class="col-4">
@@ -26,5 +26,4 @@ if (isset($_GET["ticketLocation"])) { ?>
     </div>
     <?php
 }
-
 ?>

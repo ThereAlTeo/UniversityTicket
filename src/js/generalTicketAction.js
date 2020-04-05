@@ -7,12 +7,14 @@ $(function() {
     $(".custom-file-input").on("change", function() {
          $(this).parent().find("label").addClass("selected").html($(this).val().split("\\").pop());
     });
+
+    $(".cardBoxSection div.cardBoxEvent").last().parent().removeClass("border-bottom");
 });
 
 function getKeyValueByObject(obj) {
     return Object.keys(obj);
 }
 
-function genericErrorInAjax() {    
+function genericErrorInAjax() {
     Swal.fire({'title': 'Errors', 'text': 'There were errors while saving the data.', 'icon': 'error', 'timer': 1500});
 }
