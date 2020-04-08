@@ -8,6 +8,17 @@
                          $infoCardText = $config['infoCardText'][$_SESSION["accountLog"][1]];
                          $infoCardColor = $config['infoCardColor'];
                          $infoCardIcon = $config['infoCardIcon'][$_SESSION["accountLog"][1]];
+                         $infoCardValue = array();
+
+                         switch ($_SESSION["accountLog"][1]) {
+                             case 1: $infoCardValue = array("$40,000", "$40,000", $dbh->getLocationRecordNumber(), $dbh->getAccountRecordNumber());
+                                 break;
+                             case 2: $infoCardValue = array("$40,000", $dbh->getEventNumByManager($_SESSION["accountLog"][2]), $dbh->getArtistNumByManager($_SESSION["accountLog"][2]), "$40,000");
+                                 break;
+                             case 1:
+                                 break;
+                             default: throw new Exception("Error Processing Request", 1);
+                         }
 
                          for ($i=0; $i < 4; $i++) {?>
                               <div class="col-xl-3 col-sm-6 mb-4">
@@ -16,7 +27,7 @@
                                              <div class="row align-items-center">
                                                   <div class="col mr-2">
                                                        <div class="text-xs font-weight-bold text-<?php echo $infoCardColor[$i] ?> text-uppercase mb-1"><?php echo $infoCardText[$i] ?></div>
-                                                       <div class="h5 mb-0 font-weight-bold">$40,000</div>
+                                                       <div class="h5 mb-0 font-weight-bold"><?php echo $infoCardValue[$i] ?></div>
                                                   </div>
                                                   <div class="col-auto text-gray-300">
                                                        <i class="<?php echo $infoCardIcon[$i] ?> fa-2x"></i>

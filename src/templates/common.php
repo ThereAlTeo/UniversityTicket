@@ -8,6 +8,9 @@
           ?>
           <div class="container-fluid">
           <?php
+          if (isset($templateParams["jumbotron"])) {
+              require(JUMBOTRN_DIR.$templateParams["jumbotron"]);
+          }
           if(isset($templateParams["main"])){
              require(MAIN_DIR.$templateParams["main"]);
           }

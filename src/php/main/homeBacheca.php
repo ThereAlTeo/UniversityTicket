@@ -1,8 +1,6 @@
         <!-- Main Bacheca -->
         <div class="cardBoxSection">
-            <?php
-                require(JUMBOTRN_DIR.$templateParams["jumbotron"]);
-
+            <?php                
                 foreach (getPairEventElement() as $key => $value) {
                     $info =  $dbh->getTipologiaInfo($value[0]);
                     if(strcmp($info["EventNum"], "0") != 0){

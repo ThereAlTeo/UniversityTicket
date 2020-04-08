@@ -117,10 +117,12 @@ class DatabaseHelper{
 
          $query = "SELECT E.IDEvento, A.NomeDArte, E.Locandina, P.Nome, P.Cognome, MAX(E.Recommendation) AS 'Recommendation', MIN(TA.Prezzounitario) AS 'Prezzounitario'
                                     FROM tipologia T INNER JOIN genere G ON T.IDTipologia=G.IDTipologia INNER JOIN evento E ON E.IDGenere=G.IDGenere
-                                                     INNER JOIN tariffario TA ON TA.IDEvento=E.IDEvento
+                                                     INNER JOIN location L ON L.IDLocation=E.IDLocation
+                                                     INNER JOIN settore S ON L.IDLocation=S.IDLocation
+                                                     INNER JOIN tariffario TA ON TA.IDEvento=E.IDEvento AND S.IDSettore=TA.IDSettore
                                                      INNER JOIN artista A ON A.IDArtista=E.IDArtista
                                                      INNER JOIN persona P ON P.IDPersona=A.AnagraficaArtista
-                                     WHERE T.IDTipologia=?
+                                     WHERE T.IDTipologia=? AND E.DataInizio > CURDATE()
                                      GROUP BY A.IDArtista
                                      ORDER BY RAND()";
 
@@ -241,7 +243,7 @@ class DatabaseHelper{
     }
 
     public function insertLocation($locationName, $locationAddress, $locationImage){
-       $query = "INSERT INTO location(IDLocation, Nome, Indirizzo) VALUES (IDLocation, ?, ?, ?)";
+       $query = "INSERT INTO location(IDLocation, Nome, Indirizzo, Immagine) VALUES (IDLocation, ?, ?, ?)";
        $stmt = $this->db->prepare($query);
        $stmt->bind_param('sss', $locationName, $locationAddress, $locationImage);
        $stmt->execute();
@@ -287,7 +289,7 @@ class DatabaseHelper{
                                               INNER JOIN persona P ON P.IDPersona=A.AnagraficaArtista
                                               INNER JOIN settore S ON S.IDLocation=L.IDLocation
                                               INNER JOIN tariffario T ON T.IDSettore=S.IDSettore
-                                  WHERE E.DataInizio > CURDATE() && E.IDArtista = (SELECT E2.IDArtista FROM evento E2 WHERE E2.IDEvento = ?)
+                                  WHERE E.DataInizio >= CURDATE() && E.IDArtista = (SELECT E2.IDArtista FROM evento E2 WHERE E2.IDEvento = ?)
                                   GROUP BY E.IDEvento ORDER BY E.DataInizio");
       $stmt->bind_param('i', $eventID);
       $stmt->execute();
@@ -321,7 +323,7 @@ class DatabaseHelper{
                 FROM location L LEFT JOIN evento E ON L.IDLocation=E.IDLocation
 				                INNER JOIN settore S ON S.IDLocation=E.IDLocation
                                 INNER JOIN tariffario T ON T.IDSettore=S.IDSettore AND T.IDEvento=E.IDEvento AND T.IDLocation=E.IDLocation
-                WHERE E.DataInizio > CURDATE()
+                WHERE E.DataInizio >= CURDATE()
                 GROUP BY L.IDLocation
                 ORDER BY EventNum DESC";
 
@@ -334,6 +336,70 @@ class DatabaseHelper{
       $result = $stmt->get_result();
       return $result->fetch_all(MYSQLI_ASSOC);
 
+  }
+
+  public function getAllLocationInfo(){
+       $stmt = $this->db->prepare("SELECT L.Nome, L.Indirizzo, COUNT(E.IDEvento) AS \"NrEventi\", ROUND(RAND()*10000) AS \"NrBiglietti\"
+                                   FROM location L LEFT JOIN evento E ON L.IDLocation=E.IDLocation
+                                   GROUP BY L.IDLocation");
+       $stmt->execute();
+       $result = $stmt->get_result();
+
+       return $result->fetch_all(MYSQLI_ASSOC);
+  }
+
+  public function getEventNumByManager($ManagerID){
+      $stmt = $this->db->prepare("SELECT COUNT(*) as 'TableRows' FROM evento E WHERE E.IDOrganizzatore = ?");
+      $stmt->bind_param('i', $ManagerID);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      return $result->fetch_all(MYSQLI_ASSOC)[0]["TableRows"];
+  }
+
+  public function getArtistNumByManager($ManagerID){
+      $stmt = $this->db->prepare("SELECT COUNT(*) as 'TableRows' FROM artista A WHERE A.IDReferente = ?");
+      $stmt->bind_param('i', $ManagerID);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      return $result->fetch_all(MYSQLI_ASSOC)[0]["TableRows"];
+  }
+
+  public function getAllEventByLocationID($idLocation){
+      $query = "SELECT E.IDEvento, A.NomeDArte, E.Locandina, P.Nome, P.Cognome, MAX(E.Recommendation) AS 'Recommendation', MIN(TA.Prezzounitario) AS 'Prezzounitario'
+                FROM evento E INNER JOIN location L ON E.IDLocation=L.IDLocation
+			                  INNER JOIN artista A ON A.IDArtista=E.IDArtista
+                              INNER JOIN persona P ON A.AnagraficaArtista=P.IDPersona
+                              INNER JOIN settore S ON L.IDLocation=S.IDLocation
+                              INNER JOIN tariffario TA ON TA.IDEvento=E.IDEvento AND S.IDSettore=TA.IDSettore
+                WHERE L.IDLocation = ? AND E.DataInizio >= CURDATE()
+                GROUP BY A.IDArtista ORDER BY RAND()";
+
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('i', $idLocation);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      return $result->fetch_all(MYSQLI_ASSOC);
+  }
+
+  public function getLocationInfo($idLocation){
+      $stmt = $this->db->prepare("SELECT * FROM location L WHERE L.IDLocation = ?");
+      $stmt->bind_param('i', $idLocation);
+      $stmt->execute();
+      $result = $stmt->get_result();
+       return $result->fetch_all(MYSQLI_ASSOC)[0];
+  }
+
+  public function getEventLocationInfoByID($idLocation){
+      $stmt = $this->db->prepare("SELECT L.Nome, COUNT(E.IDEvento) AS 'EventNum'
+                                  FROM location L INNER JOIN evento E ON E.IDLocation=L.IDLocation
+                                  WHERE L.IDLocation = ? AND E.DataInizio >= CURDATE() GROUP BY L.IDLocation");
+      $stmt->bind_param('i', $idLocation);
+      $stmt->execute();
+      $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+      if(count($result))
+        return $result[0];
+      else
+        return array("Nome" => $this->getLocationInfo($idLocation)["Nome"], "EventNum" => "0");      
   }
      /**
      * Da controllare
@@ -348,12 +414,6 @@ class DatabaseHelper{
          return $result->fetch_all(MYSQLI_ASSOC);
      }
 
-     public function getAllLocationInfo(){
-          $stmt = $this->db->prepare("SELECT L.Nome, L.Indirizzo, ROUND(RAND()*100) AS \"NrEventi\", ROUND(RAND()*100) AS \"NrBiglietti\" FROM location L");
-          $stmt->execute();
-          $result = $stmt->get_result();
 
-          return $result->fetch_all(MYSQLI_ASSOC);
-     }
 }
 ?>

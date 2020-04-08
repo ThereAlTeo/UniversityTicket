@@ -62,7 +62,11 @@
      }
 
      function clearNameForPathValue($value){
-         preg_replace("/[^a-zA-Z0-9]+/", "", $value);
+         $values = explode(" ", $value);
+         foreach ($values as $key => $item)
+            $item = ucfirst(preg_replace("/[^a-zA-Z0-9]+/", "", $item));
+
+         return join("", $values);
      }
 
      function getCorrectArtistName($item){
