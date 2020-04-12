@@ -95,4 +95,13 @@
          $date = explode(" ", $value);
          return $date[2]." ".convertNumberInMonth($date[1])." ".$date[0]." ".$date[3];
      }
+
+     function getPathImageOrDefault($Path = NULL){
+         if(is_null($Path))
+            return DEFAULT_IMAGE;
+         elseif (!isset($Path["Locandina"]) || !file_exists(RES_DIR."images".$Path["Locandina"]))
+             return DEFAULT_IMAGE;
+         else
+            return RES_DIR."images".$Path["Locandina"];
+     }
 ?>

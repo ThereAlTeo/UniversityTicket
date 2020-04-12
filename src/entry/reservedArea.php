@@ -7,7 +7,7 @@ $templateParams["menuIndex"] = 0;
 $templateParams["main"] = "homeReservedArea.php";
 $templateParams["navbar"] = "navbarFactory.php";
 $templateParams["footer"] = "footer.php";
-$templateParams["templateType"] = "D";
+$templateParams["templateType"] = "dashboard.php";
 $templateParams["js"] = array(JS_DIR."Chart.js", "https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js");
 $templateParams["scriptPlus"] = array("chartPie.php", "chartArea.php");
 

@@ -21,10 +21,8 @@ require_once(ROOT_DIR.'../res/config.php');
      </head>
      <body id="pageTop">
           <?php
-          if(isset($templateParams["templateType"]) && strcmp($templateParams["templateType"], "C") === 0)
-               require "common.php";
-          elseif (isset($templateParams["templateType"]) && strcmp($templateParams["templateType"], "D") === 0)
-               require "dashboard.php";
+          if(isset($templateParams["templateType"]))
+               require $templateParams["templateType"];             
           ?>
           <a class="scroll-to-top rounded" href="#pageTop">
                <i class="fas fa-angle-up"></i>

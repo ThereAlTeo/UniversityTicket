@@ -19,7 +19,7 @@ if (isset($_GET["ticketLocation"])) { ?>
                 </div>
                 <div class="col-8 text-left d-flex justify-content-around align-items-center">
                     <p class="h6">Biglietti da €<?php echo $_GET["ticketLocation"]["Price"] ?></p>
-                    <a href="#"><button type="button" class="btn btn-outline-success btn-sm"><i class="fas fa-credit-card"></i></button></a>
+                    <a href="./singleEventPage.php?IDEvent=<?php echo $_GET["ticketLocation"]["IDEvent"] ?>" class="stretched-link"><button type="button" class="btn btn-outline-success btn-sm"><i class="fas fa-credit-card"></i></button></a>
                 </div>
             </div>
         </div>

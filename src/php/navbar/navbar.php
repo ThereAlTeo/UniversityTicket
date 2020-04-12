@@ -30,12 +30,12 @@
                               </div>
                               <div class="input-group">
                                   <ul class="list-group animated--grow-in" id="searchResult">
-                                      
+
                                   </ul>
                               </div>
                          </div>
                          <div class="col-3 text-right col-sm-3 col-md-2">
-                              <a href="login.php" class="btn btn-primary" role="button"><i class="fas fa-shopping-cart mr-2"></i><span class="badge badge-light">4</span></a>
+                             <a href="#" class="btn btn-primary" role="button" aria-pressed="true"><i class="fas fa-shopping-cart mr-2"></i><span class="badge badge-light">4</span></a>                            
                          </div>
                     </div>
                </form>

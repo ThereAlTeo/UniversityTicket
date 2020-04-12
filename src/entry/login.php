@@ -5,7 +5,7 @@ $templateParams["title"] = "Login - Safety Mode";
 $templateParams["header"] = "header.php";
 $_GET["login"] = "ACCESSO CONTROLLATO";
 $templateParams["main"] = "loginPrime.php";
-$templateParams["templateType"] = "C";
+$templateParams["templateType"] = "common.php";
 $templateParams["js"] = array(JS_DIR."loginAction.js", "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js");
 
 if(isset($_SESSION["accountLog"]))

@@ -8,7 +8,7 @@ if(isset($_POST["search"])){
         $locationArr = $artistArr = array();
 
          foreach ($dbh->filterArtistByValue($_POST['search']) as $key => $value)
-             array_push($artistArr, array("Text" => getCorrectArtistName($value), "PagRef" => "./selectedCardBox.php?IDTour=".$value["IDArtista"], "BadgeValue" => $value["eventNum"]));
+             array_push($artistArr, array("Text" => getCorrectArtistName($value), "PagRef" => "./selectedCardBox.php?IDArtist=".$value["IDArtista"], "BadgeValue" => $value["eventNum"]));
 
         foreach ($dbh->filterLocationByValue($_POST['search']) as $key => $value)
              array_push($locationArr, array("Text" => $value["Nome"], "PagRef" => "./selectedCardBox.php?IDLocation=".$value["IDLocation"], "BadgeValue" => $value["eventNum"]));

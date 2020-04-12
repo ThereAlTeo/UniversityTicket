@@ -1,9 +1,10 @@
 <?php
 require_once './../bootFiles.php';
 
-$info = $dbh->selectedEventInfo($_GET["IDTour"]);
+$info = $dbh->getArtistInfo($_GET["IDArtist"])[0];
 $name = getCorrectArtistName($info);
-$luoghi = $dbh->selectedEventLocationInfo($_GET["IDTour"]);
+$locandinaPath = $dbh->getLocandinaByArtist($_GET["IDArtist"]);
+$locandinaPath = !count($locandinaPath) ? getPathImageOrDefault() : getPathImageOrDefault($locandinaPath[0]);
 ?>
 <div class="container text-dark">
     <div class="row mb-3">
@@ -15,26 +16,20 @@ $luoghi = $dbh->selectedEventLocationInfo($_GET["IDTour"]);
                         <a class="font-weight-bold list-group-item list-group-item-action active" href="#ticket">Biglietti</a>
                         <a class="font-weight-bold list-group-item list-group-item-action" href="#bio">Biografia</a>
                         <a class="font-weight-bold list-group-item list-group-item-action" href="#reviews">Recensioni</a>
-                        <?php
-                        if (count($luoghi)) { ?>
-                            <a class="font-weight-bold list-group-item list-group-item-action" href="#reviews">Luoghi</a>
-                    <?php }
-                        ?>
                     </div>
                 </div>
-
             </div>
         </div>
         <div class="col-md-9 mb-3 mt-2">
             <div class="row">
-                <div class="col-3">
-                    <img class="img-fluid img-thumbnail rounded mx-auto mb-4" src="<?php echo RES_DIR."images".$info["Locandina"] ?>" alt="">
+                <div class="d-none d-sm-inline col-sm-3">
+                    <img class="img-fluid img-thumbnail rounded mx-auto mb-4" src="<?php echo $locandinaPath ?>" alt="">
                 </div>
-                <div class="col-9">
+                <div class="col-sm-9 mb-2">
                     <h2>Informazioni Generali</h2><hr>
                     <h5><small><strong>Artista/i partecipante: </strong><?php echo $name ?></small></h5>
-                    <h5><small><strong>Eventi realizzati: </strong>16</small></h5>
-                    <h5><small><strong>Luoghi con evento attualmente: </strong><?php echo count($luoghi) ?></small></h5>
+                    <h5><small><strong>Eventi realizzati: </strong><?php echo count($dbh->selectedEventNumByArtist($_GET["IDArtist"], true)) ?></small></h5>
+                    <h5><small><strong>Luoghi con evento attualmente: </strong><?php echo count($dbh->selectedEventNumByArtist($_GET["IDArtist"])) ?></small></h5>
                     <h5><small><strong>Votazione media: </strong></small><span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span></h5>
                 </div>
             </div>
@@ -45,7 +40,9 @@ $luoghi = $dbh->selectedEventLocationInfo($_GET["IDTour"]);
                             <h5 class="font-weight-bold">Biglietti</h5>
                         </div>
                         <?php
-                            foreach ($dbh->selectedEventsInfo($_GET["IDTour"]) as $key => $value) {
+                        $artistEvent = $dbh->selectedEventsInfo($_GET["IDArtist"]);
+                        if(count($artistEvent)){
+                            foreach ($artistEvent as $key => $value) {
                                 $_GET["ticketLocation"]["Name"] = getCorrectArtistName($value);
                                 $_GET["ticketLocation"]["Location"] = $value["LocationName"];
                                 $_GET["ticketLocation"]["Address"] = $value["Indirizzo"];
@@ -55,6 +52,13 @@ $luoghi = $dbh->selectedEventLocationInfo($_GET["IDTour"]);
 
                                 include FACTORY_DIR.'ticketLocation.php';
                             }
+                        }
+                        else {?>
+                            <div class="text-center text-ticketBlue m-2 p-1">
+                                <h4 class="font-weight-bolder font-italic ">L'artista <?php echo $name  ?> al momento non ha eventi in programmazione.</h4>
+                            </div>
+                    <?php
+                        }
                         ?>
                     </div>
                 </div>
@@ -71,7 +75,7 @@ $luoghi = $dbh->selectedEventLocationInfo($_GET["IDTour"]);
                     </div>
                 </div>
                 <div class="mb-4 text-ticketBlue" id="reviews">
-                    <div class="bg-white rounded-lg shadow">
+                    <div class="bg-white rounded-lg shadow cardBoxSection">
                         <div class="p-3 bg-ticketBlue text-white">
                             <h5 class="font-weight-bold">Recensioni</h5>
                         </div>

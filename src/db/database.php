@@ -167,16 +167,19 @@ class DatabaseHelper{
          return $result->fetch_all(MYSQLI_ASSOC)[0];
      }
 
-     public function getArtistPublicName($IDArtista){
-         $stmt = $this->db->prepare("SELECT P.Nome, P.Cognome, A.NomeDArte FROM artista A INNER JOIN persona P ON P.IDPersona=A.AnagraficaArtista WHERE A.IDArtista = ?");
+     public function getArtistInfo($IDArtista){
+         $stmt = $this->db->prepare("SELECT P.*, A.*
+                                     FROM artista A INNER JOIN persona P ON P.IDPersona=A.AnagraficaArtista
+                                     WHERE A.IDArtista = ?");
          $stmt->bind_param('i', $IDArtista);
          $stmt->execute();
-         $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC)[0];
+         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
+         /* sostituire con getCorrectArtistName($result) la parte sottostante
          if(is_null($result['NomeDArte']) || strcmp($result['NomeDArte'], "") == 0)
              return $result['Nome']." ".$result['Cognome'];
          else
-             return $result['NomeDArte'];
+             return $result['NomeDArte'];*/
      }
 
     public function getResImageName($IDGenere, $IDArtista, $eventID){
@@ -257,29 +260,14 @@ class DatabaseHelper{
       return $stmt->execute();
   }
 
-  public function selectedEventLocationInfo($eventID){
-      $stmt = $this->db->prepare("SELECT L.Nome, L.Immagine, MIN(T.Prezzounitario), ROUND(AVG(EV.Recommendation), 2)
-                                  FROM evento EV INNER JOIN location L ON EV.IDLocation=L.IDLocation
-	                              INNER JOIN settore S ON L.IDLocation=S.IDLocation
-                                  INNER JOIN tariffario T ON T.IDSettore=S.IDSettore
-                                  WHERE EV.IDLocation IN (SELECT E.IDLocation FROM evento E
-						                                  WHERE E.DataInizio > CURDATE() && E.IDArtista = (SELECT E2.IDArtista FROM evento E2 WHERE E2.IDEvento = ?))
-                                  GROUP BY EV.IDLocation");
-      $stmt->bind_param('i', $eventID);
+  public function selectedEventNumByArtist($IDArtista, $all = false){
+      $stmt = $this->db->prepare("SELECT E.IDEvento
+                                  FROM evento E INNER JOIN location L ON E.IDLocation=L.IDLocation
+                                  WHERE E.IDArtista = ? ".($all ? "&& E.DataInizio > CURDATE()" : ""));
+      $stmt->bind_param('i', $IDArtista);
       $stmt->execute();
       $result = $stmt->get_result();
       return $result->fetch_all(MYSQLI_ASSOC);
-  }
-
-  public function selectedEventInfo($eventID){
-      $stmt = $this->db->prepare("SELECT A.NomeDArte, A.Biografia, P.DataNasciata, P.Nome, P.Cognome, E.Locandina
-                                  FROM artista A INNER JOIN evento E ON E.IDArtista=A.IDArtista
-                                  INNER JOIN persona P ON P.IDPersona=A.AnagraficaArtista
-                                  WHERE E.IDEvento = ?");
-      $stmt->bind_param('i', $eventID);
-      $stmt->execute();
-      $result = $stmt->get_result();
-      return $result->fetch_all(MYSQLI_ASSOC)[0];
   }
 
   public function selectedEventsInfo($eventID){
@@ -289,7 +277,7 @@ class DatabaseHelper{
                                               INNER JOIN persona P ON P.IDPersona=A.AnagraficaArtista
                                               INNER JOIN settore S ON S.IDLocation=L.IDLocation
                                               INNER JOIN tariffario T ON T.IDSettore=S.IDSettore
-                                  WHERE E.DataInizio >= CURDATE() && E.IDArtista = (SELECT E2.IDArtista FROM evento E2 WHERE E2.IDEvento = ?)
+                                  WHERE E.DataInizio >= CURDATE() && E.IDArtista = ?
                                   GROUP BY E.IDEvento ORDER BY E.DataInizio");
       $stmt->bind_param('i', $eventID);
       $stmt->execute();
@@ -386,7 +374,7 @@ class DatabaseHelper{
       $stmt->bind_param('i', $idLocation);
       $stmt->execute();
       $result = $stmt->get_result();
-       return $result->fetch_all(MYSQLI_ASSOC)[0];
+      return $result->fetch_all(MYSQLI_ASSOC)[0];
   }
 
   public function getEventLocationInfoByID($idLocation){
@@ -399,7 +387,37 @@ class DatabaseHelper{
       if(count($result))
         return $result[0];
       else
-        return array("Nome" => $this->getLocationInfo($idLocation)["Nome"], "EventNum" => "0");      
+        return array("Nome" => $this->getLocationInfo($idLocation)["Nome"], "EventNum" => "0");
+  }
+
+  public function getArtstInfoByEventID($IDTour){
+      $stmt = $this->db->prepare("SELECT A.*, P.*
+                                  FROM evento E INNER JOIN artista A ON A.IDArtista=E.IDArtista
+                                                INNER JOIN persona P ON A.AnagraficaArtista=P.IDPersona
+                                  WHERE E.IDEvento = ?");
+      $stmt->bind_param('i', $IDTour);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      return $result->fetch_all(MYSQLI_ASSOC);
+  }
+
+  public function getLocandinaByArtist($IDArtist){
+      $stmt = $this->db->prepare("SELECT DISTINCT E.Locandina
+                                  FROM evento E INNER JOIN artista A ON A.IDArtista=E.IDArtista
+                                  WHERE E.IDArtista = ?
+                                  ORDER BY E.DataInizio DESC");
+      $stmt->bind_param('i', $IDArtist);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      return $result->fetch_all(MYSQLI_ASSOC);
+  }
+
+  public function exisitEvent($IDEvent){
+      $stmt = $this->db->prepare("SELECT E.* FROM evento E WHERE E.IDEvento = ? AND E.DataFine > CURDATE()");
+      $stmt->bind_param('i', $IDEvent);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      return $result->fetch_all(MYSQLI_ASSOC);
   }
      /**
      * Da controllare

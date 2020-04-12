@@ -27,10 +27,10 @@ $(function() {
         }
     });
 
-    /*$("#searchInput").focusout(function() {
+    $(".container-fluid").click(function() {
         $("#searchInput").val("");
         $('#searchResult').empty();
-    });*/
+    });
 });
 
 function createHeader(Text) {
