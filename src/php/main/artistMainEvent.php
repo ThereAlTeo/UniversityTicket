@@ -34,14 +34,15 @@ $locandinaPath = !count($locandinaPath) ? getPathImageOrDefault() : getPathImage
                 </div>
             </div>
             <div>
-                <div class="mb-4 text-ticketBlue" id="ticket">
+                <div class="mb-4 text-ticketBlue ticketPublicInfo" id="ticket">
                     <div class="bg-white rounded-lg shadow">
                         <div class="p-3 bg-info text-white">
                             <h5 class="font-weight-bold">Biglietti</h5>
                         </div>
                         <?php
                         $artistEvent = $dbh->selectedEventsInfo($_GET["IDArtist"]);
-                        if(count($artistEvent)){
+
+                        if(count($artistEvent)):
                             foreach ($artistEvent as $key => $value) {
                                 $_GET["ticketLocation"]["Name"] = getCorrectArtistName($value);
                                 $_GET["ticketLocation"]["Location"] = $value["LocationName"];
@@ -52,14 +53,11 @@ $locandinaPath = !count($locandinaPath) ? getPathImageOrDefault() : getPathImage
 
                                 include FACTORY_DIR.'ticketLocation.php';
                             }
-                        }
-                        else {?>
-                            <div class="text-center text-ticketBlue m-2 p-1">
-                                <h4 class="font-weight-bolder font-italic ">L'artista <?php echo $name  ?> al momento non ha eventi in programmazione.</h4>
-                            </div>
-                    <?php
-                        }
-                        ?>
+                    else: ?>
+                        <div class="text-center text-ticketBlue m-2 p-1">
+                            <h4 class="font-weight-bolder font-italic ">L'artista <?php echo $name  ?> al momento non ha eventi in programmazione.</h4>
+                        </div>
+                    <?php endif; ?>
                     </div>
                 </div>
                 <div class="mb-4 text-ticketBlue" id="bio">
@@ -100,6 +98,4 @@ $locandinaPath = !count($locandinaPath) ? getPathImageOrDefault() : getPathImage
         </div>
     </div>
 </div>
-<?php
-unset($_GET["IDEvento"]);
-?>
+<?php unset($_GET["IDEvento"]); ?>

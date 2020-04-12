@@ -10,6 +10,7 @@ $(function() {
 
     $(".cardBoxSection div.cardBoxEvent").last().parent().removeClass("border-bottom");
     $("#reviews div.border-bottom").last().removeClass("border-bottom");
+    $(".ticketPublicInfo div.ticketInfo.border-bottom").last().removeClass("border-bottom");
 });
 
 function getKeyValueByObject(obj) {

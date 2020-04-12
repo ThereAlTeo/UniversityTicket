@@ -12,30 +12,28 @@ require_once(ROOT_DIR.'../res/config.php');
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <title><?php echo $templateParams["title"]; ?></title>
           <link rel="icon" href="<?php echo $config["pageIcon"]; ?>">
-     <?php
-     if(isset($config["CSS"])){
-          foreach($config["CSS"] as $cssItem)
-              printTabln('<link rel="stylesheet" href="'.$cssItem.'">', 3);
-     }
-     ?>
+      <?php if (isset($config["CSS"])):
+                foreach ($config["CSS"] as $cssItem): ?>
+                    <link rel="stylesheet" href="<?php echo $cssItem ?>">
+          <?php endforeach;
+            endif; ?>
      </head>
      <body id="pageTop">
           <?php
           if(isset($templateParams["templateType"]))
-               require $templateParams["templateType"];             
+               require $templateParams["templateType"];
           ?>
           <a class="scroll-to-top rounded" href="#pageTop">
                <i class="fas fa-angle-up"></i>
           </a>
-          <?php
-          foreach($config["DEFAULTJS"] as $scriptItem)
-               printTabln('<script src="'.$scriptItem.'" type="text/javascript" crossorigin="anonymous"></script>', 2);
-
-          if(isset($templateParams["js"])){
-               foreach($templateParams["js"] as $scriptItem)
-                    printTabln('<script src="'.$scriptItem.'" type="text/javascript" crossorigin="anonymous"></script>', 2);
-          }
-
+          <?php foreach ($config["DEFAULTJS"] as $scriptItem): ?>
+              <script src="<?php echo $scriptItem ?>" type="text/javascript" crossorigin="anonymous"></script>
+          <?php endforeach;
+          if (isset($templateParams["js"])):
+              foreach ($templateParams["js"] as $scriptItem): ?>
+                  <script src="<?php echo $scriptItem ?>" type="text/javascript" crossorigin="anonymous"></script>
+              <?php endforeach;
+          endif; 
           if(isset($templateParams["scriptPlus"])){
                foreach($templateParams["scriptPlus"] as $scriptItem)
                     require(CHART_INFO_DIR.$scriptItem);

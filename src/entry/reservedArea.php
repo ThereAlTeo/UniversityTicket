@@ -1,10 +1,10 @@
 <?php
 require_once './../bootFiles.php';
-//Base Template
+
 $templateParams["title"] = "Admin - Area Riservata";
 $templateParams["menu"] = "reservedMenu.php";
 $templateParams["menuIndex"] = 0;
-$templateParams["main"] = "homeReservedArea.php";
+$templateParams["main"] = "reservedAreaDashboard.php";
 $templateParams["navbar"] = "navbarFactory.php";
 $templateParams["footer"] = "footer.php";
 $templateParams["templateType"] = "dashboard.php";

@@ -1,18 +1,17 @@
           <!-- Footer -->
-          <?php
-          if(isset($templateParams["templateType"]) && strcmp($templateParams["templateType"], "D") === 0)
-               println('<footer class="p-3 bg-white text-ticketBlue dashboardFooter">');
-          else
-               println('<footer class="p-3 bg-ticketBlue text-white footer">');
-           ?>
+          <?php if (isset($templateParams["templateType"]) && strcmp($templateParams["templateType"], "D") === 0): ?>
+              <footer class="p-3 bg-white text-ticketBlue dashboardFooter">
+          <?php else: ?>
+              <footer class="p-3 bg-ticketBlue text-white footer">
+          <?php endif; ?>
                <div class="row d-flex align-items-center">
                     <div class="col-md-4">
-                         <p class="text-center text-md-left font-italic <?php if(isset($templateParams["templateType"]) && strcmp($templateParams["templateType"], "D") === 0) echo " font-weight-bold"; ?>">
+                         <p class="text-center text-md-left font-italic <?php if(isset($templateParams["templateType"]) && strcmp($templateParams["templateType"], "dashboard.php") === 0) echo " font-weight-bold"; ?>">
                               Universiticket S.r.l. - Sede: Via Cesare Pavese 50, 47521 Cesena(FC)
                          </p>
                   </div>
                   <div class="col-md-4">
-                       <p class="text-center small font-italic <?php if(isset($templateParams["templateType"]) && strcmp($templateParams["templateType"], "D") === 0) echo " font-weight-bold"; ?>">
+                       <p class="text-center small font-italic <?php if(isset($templateParams["templateType"]) && strcmp($templateParams["templateType"], "dashboard.php") === 0) echo " font-weight-bold"; ?>">
                             © 2020 Copyright - Tutti i diritti riservati.
                        </p>
                   </div>

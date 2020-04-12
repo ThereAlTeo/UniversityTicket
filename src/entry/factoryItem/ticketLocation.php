@@ -1,6 +1,5 @@
-<?php
-if (isset($_GET["ticketLocation"])) { ?>
-    <div class="row m-2 d-flex align-items-center px-1border-gray ticketInfo">
+<?php if (isset($_GET["ticketLocation"])): ?>
+    <div class="row m-2 d-flex align-items-center px-1 border-bottom border-gray ticketInfo">
         <div class="col-md-6">
             <div class="row align-items-center">
                 <div class="col-4">
@@ -19,11 +18,9 @@ if (isset($_GET["ticketLocation"])) { ?>
                 </div>
                 <div class="col-8 text-left d-flex justify-content-around align-items-center">
                     <p class="h6">Biglietti da €<?php echo $_GET["ticketLocation"]["Price"] ?></p>
-                    <a href="./singleEventPage.php?IDEvent=<?php echo $_GET["ticketLocation"]["IDEvent"] ?>" class="stretched-link"><button type="button" class="btn btn-outline-success btn-sm"><i class="fas fa-credit-card"></i></button></a>
+                    <a href="./singleEventPage.php?IDEvent=<?php echo $_GET["ticketLocation"]["IDEvent"] ?>"><button type="button" class="btn btn-outline-success btn-sm"><i class="fas fa-credit-card"></i></button></a>
                 </div>
             </div>
         </div>
     </div>
-    <?php
-}
-?>
+<?php endif; ?>

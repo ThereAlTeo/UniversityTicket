@@ -3,7 +3,6 @@ require_once './../bootFiles.php';
 
 $msg = array("error" => "It is not possible to access the data entered.");
 if(isset($_POST["search"])){
-
      try {
         $locationArr = $artistArr = array();
 

@@ -20,15 +20,13 @@
                                         </tr>
                                    </thead>
                                    <tbody>
-                                   <?php
-                                   foreach ($dbh->getAllLocationInfo() as $key => $value) {
-                                        println("
-                                             <tr>");
-                                        foreach ($value as $index => $item)
-                                             printTabln('<td class="text-center">'.$item.'</td>', 13);
-                                        printTabln("</tr>", 12);
-                                   }
-                                   ?>
+                                   <?php foreach ($dbh->getAllLocationInfo() as $key => $value): ?>
+                                       <tr>
+                                       <?php foreach ($value as $index => $item): ?>
+                                           <td class="text-center"><?php echo $item ?></td>
+                                       <?php endforeach; ?>
+                                       </tr>
+                                   <?php endforeach; ?>
                                    </tbody>
                               </table>
                          </div>

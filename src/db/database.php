@@ -419,19 +419,24 @@ class DatabaseHelper{
       $result = $stmt->get_result();
       return $result->fetch_all(MYSQLI_ASSOC);
   }
-     /**
-     * Da controllare
-     */
 
-     public function getRandonEventOfCategory($ValueNum, $Category){
-         $stmt = $this->db->prepare("SELECT G.Name FROM tipologia T INNER JOIN genere G ON T.IDTipologia=G.IDTipologia WHERE T.IDTipologia=? ORDER BY RAND() LIMIT ?");
-         $stmt->bind_param('ii', $Category, $ValueNum);
-         $stmt->execute();
-         $result = $stmt->get_result();
+  public function getEventInfo($IDEvent){
+      $stmt = $this->db->prepare("SELECT E.IDEvento, E.Titolo, E.IDArtista, E.Locandina, E.IDLocation, E.IDGenere, E.Info, E.DataInizio, L.Nome, L.Indirizzo
+                                  FROM evento E INNER JOIN location L ON E.IDLocation=L.IDLocation
+                                  WHERE E.IDEvento = ? AND E.DataFine > CURDATE()");
+      $stmt->bind_param('i', $IDEvent);
+      $stmt->execute();
+      return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+  }
 
-         return $result->fetch_all(MYSQLI_ASSOC);
-     }
-
-
+  public function getSectorInfoByEvent($IDEvent){
+      $stmt = $this->db->prepare("SELECT T.*, S.Nome
+                                  FROM evento E INNER JOIN tariffario T ON E.IDEvento=T.IDEvento
+	                                            INNER JOIN settore S ON T.IDSettore=S.IDSettore
+                                  WHERE E.IDEvento = ? AND E.DataFine > CURDATE() ORDER BY Prezzounitario DESC");
+      $stmt->bind_param('i', $IDEvent);
+      $stmt->execute();
+      return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+  }
 }
 ?>

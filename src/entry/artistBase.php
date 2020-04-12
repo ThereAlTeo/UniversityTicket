@@ -1,6 +1,6 @@
 <?php
 require_once './../bootFiles.php';
-//Base Template
+
 $templateParams["title"] = "Admin - Area Riservata";
 $templateParams["menu"] = "reservedMenu.php";
 $templateParams["menuIndex"] = 2;

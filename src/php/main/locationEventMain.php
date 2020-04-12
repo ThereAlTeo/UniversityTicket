@@ -14,7 +14,7 @@
                                                               "QueryKey" => "IDTour"));
             }
             include FACTORY_DIR.'kindSectionFactory.php';
-        }else {
+        } else {
             $_GET["backHome"]["Section"] = $info["Nome"];
             $_GET["backHome"]["Text"] = "La location ".$info['Nome']." non contiene eventi al momenti.</br>Iscriviti alla newsletter per non perderti i prossimi in programmazione.";
             include FACTORY_DIR.'backToHome.php';

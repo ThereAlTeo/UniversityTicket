@@ -1,6 +1,6 @@
 <?php
 require_once './../bootFiles.php';
-//Base Template
+
 $templateParams["title"] = "University Ticket";
 $templateParams["header"] = "header.php";
 $templateParams["main"] = "sectionMain.php";

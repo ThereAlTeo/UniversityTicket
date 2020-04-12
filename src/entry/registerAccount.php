@@ -1,6 +1,6 @@
 <?php
 require_once './../bootFiles.php';
-//Base Template
+
 $templateParams["title"] = "Registration Account";
 $templateParams["header"] = "header.php";
 $_GET["login"] = "REGISTRAZIONE CONTROLLATA";

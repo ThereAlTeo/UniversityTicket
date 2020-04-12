@@ -1,8 +1,6 @@
 <?php
 require_once './../bootFiles.php';
-
 $msg = "";
-
 if(isset($_POST)){
 	$firstname = $_POST['firstname'];
 	$lastname = $_POST['lastname'];
@@ -18,7 +16,7 @@ if(isset($_POST)){
 		$msg = array("success"=>"L'account è stato creato correttamente.\nE' possibile utilizzarlo.");
 	else
 		$msg = array("error"=>"Ci scusiamo. Non è stato possibile creare correttamente l'account.");
-}else{
+} else{
 	$msg = array("error"=>"It is not possible to access the data entered.");
 }
 

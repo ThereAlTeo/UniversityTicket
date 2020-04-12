@@ -18,7 +18,6 @@ if(!count($dbh->getArtistInfo($_GET["IDArtist"])))
 
 unset($_GET["IDTour"]);
 
-//Base Template
 $templateParams["title"] = "University Ticket";
 $templateParams["header"] = "header.php";
 $templateParams["main"] = "artistMainEvent.php";
