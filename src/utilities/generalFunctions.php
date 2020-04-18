@@ -91,4 +91,14 @@
          else
             return RES_DIR."images".$Path["Locandina"];
      }
+
+    function getNumticketInOrder($ticket){
+        $sum = 0;
+        if (isset($ticket) && is_array($ticket)) {
+            foreach ($ticket as $key => $value)
+                $sum += count($value);
+        }
+
+        return $sum;
+    }
 ?>

@@ -15,12 +15,12 @@
                 <div class="col-6">
                     <div class="form-group d-flex align-items-center my-2">
                         <select class="form-control" id="ticketQntSelect">
-                            <option selected>Scegli quantità</option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
+                            <option selected value="und">Scegli quantità</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
                         </select>
                     </div>
                 </div>

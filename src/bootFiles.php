@@ -1,10 +1,14 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE)
+    session_start();
+
+/// Provare ad utilizzare la variabile $_SERVER per gestire la ROOT_DIR, e di conseguenza tutte le altre define, in modo migliore e più adeguato.
 define("ROOT_DIR", "./../");
 define("HEADER_DIR", ROOT_DIR."php/header/");
 define("NAVBAR_DIR", ROOT_DIR."php/navbar/");
 define("MAIN_DIR", ROOT_DIR."php/main/");
 define("MENU_DIR", ROOT_DIR."php/menu/");
+define("SUMMARY_DIR", ROOT_DIR."php/summary/");
 define("CHART_INFO_DIR", ROOT_DIR."php/chart/");
 define("FOOTER_DIR", ROOT_DIR."php/footer/");
 define("JUMBOTRN_DIR", ROOT_DIR."php/jumbotron/");

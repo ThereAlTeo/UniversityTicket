@@ -31,7 +31,11 @@
                     </div>
                 </div>
                 <div class="col-3 text-right col-sm-3 col-md-2">
-                    <a href="#" class="btn btn-primary" role="button" aria-pressed="true"><i class="fas fa-shopping-cart mr-2"></i><span class="badge badge-light">4</span></a>
+                    <a href="./checkout.php" class="btn btn-primary navCheckout" role="button" aria-pressed="true"><i class="fas fa-shopping-cart mr-2"></i>
+                    <?php if(isset($_COOKIE["checkout"])): ?>
+                        <span class="badge badge-pill badge-light"><?php echo getNumticketInOrder(unserialize($_COOKIE["checkout"])) ?></span>
+                    <?php endif; ?>
+                    </a>
                 </div>
             </div>
         </form>

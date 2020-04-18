@@ -43,3 +43,10 @@ function createResultRecord(Text, PagRef, BadgeValue) {
                                     '<span class="badge badge-primary badge-pill">' + BadgeValue + '</span>' +
                             '</li>');
 }
+
+function changeProductNumInCheckout(NumTicket) {
+    $("nav .navCheckout span").remove();
+    if(NumTicket > 0){
+        $("nav .navCheckout").append('<span class="badge badge-pill badge-light">' + NumTicket + '</span>');
+    }
+}

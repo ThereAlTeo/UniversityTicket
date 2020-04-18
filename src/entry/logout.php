@@ -1,6 +1,7 @@
 <?php
 /**
 * TODO: verificare se il Logout è corretto effettuarlo in questo modo
+*        NON è corretto !!!
 */
 
 session_start();
