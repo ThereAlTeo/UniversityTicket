@@ -438,5 +438,53 @@ class DatabaseHelper{
       $stmt->execute();
       return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
   }
+
+  public function getGeneralInfoByIDEvent($IDEvent){
+      $stmt = $this->db->prepare("SELECT E.IDEvento, E.Titolo, E.Locandina, E.DataInizio, L.Nome, T.Email, E.IDArtista
+                                  FROM evento E INNER JOIN location L ON E.IDLocation=L.IDLocation
+		                                        INNER JOIN ticketuser T ON E.IDOrganizzatore=T.IDUser
+                                  WHERE E.IDEvento = ?");
+      $stmt->bind_param('i', $IDEvent);
+      $stmt->execute();
+      return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+  }
+
+  public function getRateEvent($IDEvent, $IDSector){
+      $stmt = $this->db->prepare("SELECT S.*, T.Disponibilita, T.Prezzounitario
+                                  FROM evento E INNER JOIN location L ON E.IDLocation=L.IDLocation
+			                               INNER JOIN settore S ON L.IDLocation=S.IDLocation
+                                           INNER JOIN tariffario T ON S.IDLocation=T.IDLocation AND S.IDSettore=T.IDSettore AND E.IDEvento=T.IDEvento
+                                  WHERE T.IDSettore = ? AND E.IDEvento = ?");
+      $stmt->bind_param('ii', $IDSector, $IDEvent);
+      $stmt->execute();
+      return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+  }
+
+  public function getActualTicketSell($IDEvent, $IDSector){
+      $stmt = $this->db->prepare("SELECT COUNT(B.Matricola) AS 'NumTicket'
+                                  FROM evento E INNER JOIN location L ON E.IDLocation=L.IDLocation
+			                               INNER JOIN settore S ON L.IDLocation=S.IDLocation
+                                           INNER JOIN biglietto B ON B.IDSettore=S.IDSettore AND B.IDLocation=s.IDLocation AND B.IDEvento=E.IDEvento
+                                 WHERE S.IDSettore = ? AND E.IDEvento = ?");
+      $stmt->bind_param('ii', $IDSector, $IDEvent);
+      $stmt->execute();
+      return $stmt->get_result()->fetch_all(MYSQLI_ASSOC)[0]["NumTicket"];
+  }
+
+  public function getTicketInfoPrice($IDEvent, $IDSector, $QNT){
+      $rateInfo = $this->getRateEvent($IDEvent, $IDSector);
+      if(count($rateInfo)){
+          $rateInfo = $rateInfo[0];
+          $numTicket = $this->getActualTicketSell($IDEvent, $IDSector) + 1;
+          $arrSectorInfo = array();
+          foreach (range($numTicket, $numTicket + $QNT - 1) as $value) {
+              array_push($arrSectorInfo, array('IDSector' => $rateInfo["IDSettore"], 'SectoreName' => $rateInfo["Nome"],
+                                               'Price' => $rateInfo["Prezzounitario"], 'Seat' => $value));
+          }
+
+          return $arrSectorInfo;
+      }
+      return array();
+  }
 }
 ?>

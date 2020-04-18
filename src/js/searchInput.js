@@ -27,6 +27,26 @@ $(function() {
         }
     });
 
+    $(".navCheckout").click(function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        $.ajax({
+            url: './../api/managementCookie.php',
+            dataType: 'JSON',
+            type: 'POST',
+            data: { mode: "checkoutNum" },
+            success:function(response){
+                if(response['info'])
+                    Swal.fire({'title': 'Oopsss ..', 'text': response['info'], 'icon': 'info'});
+                else
+                    window.location = './checkout.php';                
+            },
+            error: function(jqXHR, exception){
+                genericErrorInAjax();
+            }
+        });
+    });
+
     $(".container-fluid").click(function() {
         $("#searchInput").val("");
         $('#searchResult').empty();

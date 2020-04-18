@@ -78,6 +78,19 @@
          }
      }
 
+     function convertNumberInTextualDaby($value){
+         switch (intval($value)) {
+             case 1: return "Lunedì";
+             case 2: return "Martedì";
+             case 3: return "Mercoledì";
+             case 4: return "Giovedì";
+             case 5: return "Venerdì";
+             case 6: return "Sabato";
+             case 7: return "Domenica";
+             default: throw new Exception("Error Processing Request", 1);
+         }
+     }
+
      function getEventDate($value) {
          $date = explode(" ", $value);
          return $date[2]." ".convertNumberInMonth($date[1])." ".$date[0]." ".$date[3];
@@ -100,5 +113,10 @@
         }
 
         return $sum;
+    }
+
+    function getLongDateFormat($date){
+        $date = explode(",", date_format(date_create($date), "N, d/m/Y H:i"));
+        return convertNumberInTextualDaby($date[0]).",".$date[1];
     }
 ?>

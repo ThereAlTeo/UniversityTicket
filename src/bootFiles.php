@@ -18,6 +18,7 @@ define("CSS_DIR", ROOT_DIR."css/");
 define("FACTORY_DIR", "./factoryItem/");
 define("RES_DIR", ROOT_DIR."../res/");
 define("DEFAULT_IMAGE", RES_DIR."images/DefaultArtist.png");
+define("RATE_PREVENDITA", 0.05);
 define("ROOT_PAHT", substr(__DIR__, 0, strrpos(__DIR__, '\\', -1)));
 
 require_once(ROOT_DIR.'../res/config.php');
