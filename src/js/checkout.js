@@ -7,6 +7,21 @@ $(function() {
         $(this).removeClass("fas");
         $(this).addClass("far");
     }).click(function() {
-        alert( "Handler for .click() called." );
+        var IDEvent = $(this).parents(".ticketEventInfo").attr("id");
+        var IDSector = $(this).parents("div.row").attr("id");
+        $.ajax({url : './../api/managementCookie.php',
+             type : 'POST',
+             dataType: 'JSON',
+             data: { mode: "update", IDEvent: IDEvent, IDSector: IDSector },
+             success: function(data){
+                  if(data['error']) {
+                       Swal.fire({'title': 'Errors', 'text': data['error'], 'icon': 'error'});
+                  }else
+                    window.location.reload(true); 
+             },
+             error: function(jqXHR, exception){
+                  genericErrorInAjax();
+             }
+        });
     });
 });

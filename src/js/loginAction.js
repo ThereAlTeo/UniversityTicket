@@ -16,14 +16,13 @@ function submitLogin(e) {
     $.ajax({url : './../api/validationLogin.php',
          type : 'POST',
          dataType: 'JSON',
-         data: { email: email,
-                 password: password},
+         data: { email: email, password: password, next: $('#loginForm').attr('action') },
          success: function(data){
               if(data['error']) {
                    Swal.fire({'title': 'Errors', 'text': data['error'], 'icon': 'error'});
               }else{
                    Swal.fire({'position': 'top-end', 'icon': 'success', 'title': data['success'], 'showConfirmButton': false, 'timer': 1500})
-                       .then((result) => { window.location = './reservedArea.php'; });
+                       .then((result) => { window.location = './' + $('#loginForm').attr('action') });
               }
          },
          error: function(jqXHR, exception){

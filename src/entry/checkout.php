@@ -7,17 +7,21 @@ if(!(isset($_COOKIE["checkout"]) && getNumticketInOrder(unserialize($_COOKIE["ch
 $templateParams["title"] = "University Ticket";
 $templateParams["header"] = "header.php";
 $_GET["login"] = "ORDINE SICURO";
+$templateParams["checkoutTitle"] = "Carrello";
 $templateParams["main"] = "checkout.php";
-$templateParams["summary"] = "defaultSummary.php";
+$templateParams["summary"] = "checkoutSummary.php";
 $templateParams["footer"] = "footer.php";
 $templateParams["templateType"] = "checkoutTemplate.php";
 array_unshift($config["DEFAULTJS"], "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js");
 $templateParams["js"] = array(JS_DIR."checkout.js");
 
 $ticket = unserialize($_COOKIE["checkout"]);
-//inserire anche $ticketGeneralInfo in cookie o SESSIOn
-$ticketGeneralInfo = array();
-$ticketFinalPrice = array("SubTotal" => 0);
+if(isset($_SESSION["ticketDelivery"]))
+    unset($_SESSION["ticketDelivery"]);
+if(isset($_SESSION["ticketDeliveryStreet"]))
+    unset($_SESSION["ticketDeliveryStreet"]);
+$_SESSION["ticketGeneralInfo"] = array();
+$_SESSION["ticketFinalPrice"] = array("SubTotal" => 0);
 
 foreach ($ticket as $key => $value) {
     $temp = $dbh->getGeneralInfoByIDEvent($key);
@@ -28,17 +32,17 @@ foreach ($ticket as $key => $value) {
         foreach ($value as $section)
             $ticketEventInfo["Sector"] = array_merge($ticketEventInfo["Sector"], $dbh->getTicketInfoPrice($key, $section["IDSector"], $section["QNT"]));
 
-        array_push($ticketGeneralInfo, $ticketEventInfo);
+        array_push($_SESSION["ticketGeneralInfo"], $ticketEventInfo);
     }
 }
 
-foreach ($ticketGeneralInfo as $key => $value) {
+foreach ($_SESSION["ticketGeneralInfo"] as $key => $value) {
     foreach ($value["Sector"] as $index => $item) {
-        $ticketFinalPrice["SubTotal"] += $item["Price"];
+        $_SESSION["ticketFinalPrice"]["SubTotal"] += $item["Price"];
     }
 }
 
-$ticketFinalPrice["Prevendita"] = $ticketFinalPrice["SubTotal"] * RATE_PREVENDITA;
+$_SESSION["ticketFinalPrice"]["Prevendita"] = $_SESSION["ticketFinalPrice"]["SubTotal"] * RATE_PREVENDITA;
 
 require TEMPLATE_DIR.'ticketTemplate.php';
 ?>

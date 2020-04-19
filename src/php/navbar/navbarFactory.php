@@ -13,7 +13,7 @@
             <ul class="navbar-nav m-auto text-right">
                 <li class="nav-item dropdown no-arrow active" id="navbarSupportedContent">
                     <a class="nav-link dropdown-toggle text-secondary" id="userAction" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-user mr-1"></i> <?php echo $_SESSION["accountLog"][0]; ?>
+                        <i class="fa fa-user mr-1"></i> <?php echo $_SESSION["accountLog"]["Mail"]; ?>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-info">
                         <a class="dropdown-item" href="./logout.php">Log out</a>

@@ -18,5 +18,5 @@ function getKeyValueByObject(obj) {
 }
 
 function genericErrorInAjax() {
-    Swal.fire({'title': 'Errors', 'text': 'There were errors while saving the data.', 'icon': 'error', 'timer': 1500});
+    Swal.fire({'title': 'Errors', 'text': 'Ci sono errori durante il caricamento dei dati.', 'icon': 'error', 'timer': 1500});
 }

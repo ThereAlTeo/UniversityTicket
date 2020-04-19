@@ -25,7 +25,7 @@ $(function() {
                       }
                  },
                  error: function(jqXHR, exception){
-                      Swal.fire({'title': 'Errors', 'text': 'Ci sono errori durante il caricamento dei dati.', 'icon': 'error'});
+                      genericErrorInAjax();
                  }
             });
         }

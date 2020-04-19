@@ -10,7 +10,7 @@ $templateParams["footer"] = "footer.php";
 $templateParams["templateType"] = "dashboard.php";
 $templateParams["js"] = array("https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js", "https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js", JS_DIR."userDataTable.js", JS_DIR."enableUser.js");
 
-if(isset($_SESSION["accountLog"]) && $_SESSION["accountLog"][1] == 1)
+if(isset($_SESSION["accountLog"]) && $_SESSION["accountLog"]["IDAccesso"] == 1)
      require TEMPLATE_DIR.'ticketTemplate.php';
 else
      header("Location: logout.php");

@@ -486,5 +486,25 @@ class DatabaseHelper{
       }
       return array();
   }
+
+  public function getPaymentMode(){
+      $stmt = $this->db->prepare("SELECT * FROM modalitapagamento");
+      $stmt->execute();
+      return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+  }
+
+  public function getDeliveryMode(){
+      $stmt = $this->db->prepare("SELECT * FROM modalitaconsegna");
+      $stmt->execute();
+      return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+  }
+
+  public function getDeliveryItemByID($IDDelivery){
+      foreach ($this->getDeliveryMode() as $key => $value) {
+          if($value["IDDelivery"] == $IDDelivery)
+            return $value;
+      }
+      return array();
+  }
 }
 ?>

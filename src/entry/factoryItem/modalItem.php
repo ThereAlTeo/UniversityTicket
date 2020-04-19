@@ -99,7 +99,7 @@
                                    <label>Scegli artista</label>
                                    <select class="custom-select" id="ArtistSelect">
                                         <?php
-                                             foreach ($dbh->getArtistByManager($_SESSION["accountLog"][2]) as $key => $value) {
+                                             foreach ($dbh->getArtistByManager($_SESSION["accountLog"]["IDUser"]) as $key => $value) {
                                                   if(isset($value["NomeDArte"]) && strcmp($value["NomeDArte"], "") != 0)
                                                        echo ('<option value="'.$value["IDArtista"].'">'.$value["NomeDArte"].'</option>');
                                                   else

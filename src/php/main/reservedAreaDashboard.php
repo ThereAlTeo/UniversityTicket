@@ -5,15 +5,15 @@
         </div>
         <div class="row">
         <?php
-        $infoCardText = $config['infoCardText'][$_SESSION["accountLog"][1]];
+        $infoCardText = $config['infoCardText'][$_SESSION["accountLog"]["IDAccesso"]];
         $infoCardColor = $config['infoCardColor'];
-        $infoCardIcon = $config['infoCardIcon'][$_SESSION["accountLog"][1]];
+        $infoCardIcon = $config['infoCardIcon'][$_SESSION["accountLog"]["IDAccesso"]];
         $infoCardValue = array();
 
-        switch ($_SESSION["accountLog"][1]) {
+        switch ($_SESSION["accountLog"]["IDAccesso"]) {
             case 1: $infoCardValue = array("$40,000", "$40,000", $dbh->getLocationRecordNumber(), $dbh->getAccountRecordNumber());
                 break;
-            case 2: $infoCardValue = array("$40,000", $dbh->getEventNumByManager($_SESSION["accountLog"][2]), $dbh->getArtistNumByManager($_SESSION["accountLog"][2]), "$40,000");
+            case 2: $infoCardValue = array("$40,000", $dbh->getEventNumByManager($_SESSION["accountLog"]["IDUser"]), $dbh->getArtistNumByManager($_SESSION["accountLog"]["IDUser"]), "$40,000");
                 break;
             case 1:
                 break;
@@ -40,9 +40,9 @@
         </div>
         <div class="row">
             <?php
-            if ($_SESSION["accountLog"][1] < 3):
+            if ($_SESSION["accountLog"]["IDAccesso"] < 3):
                 $idValues = array("chart-area", "chart-pie");
-                $headerValues = $config['chartCardHeader'][$_SESSION["accountLog"][1]];
+                $headerValues = $config['chartCardHeader'][$_SESSION["accountLog"]["IDAccesso"]];
                 $column = array(8, 4);
                 for ($i=0; $i < 2; $i++): ?>
                     <div class="col-12 col-md-<?php echo $column[$i] ?> p-2">

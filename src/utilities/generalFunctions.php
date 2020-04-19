@@ -17,7 +17,7 @@
      }
 
      function getMenuItem(){
-          switch ($_SESSION["accountLog"][1]) {
+          switch ($_SESSION["accountLog"]["IDAccesso"]) {
                case 1:
                     return array("Aggiungi" => array(array("Locale", "insertLocation.php", "fas fa-map-marker-alt"), array("Account", "userData.php", "fas fa-user-circle")));
                case 2:

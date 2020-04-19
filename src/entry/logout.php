@@ -1,11 +1,8 @@
 <?php
-/**
-* TODO: verificare se il Logout è corretto effettuarlo in questo modo
-*        NON è corretto !!!
-*/
-
 session_start();
-$_SESSION = array();
-session_destroy();
+
+if(isset($_SESSION["accountLog"]))
+    unset($_SESSION["accountLog"]);
+
 header("Location: bacheca.php");
 ?>
