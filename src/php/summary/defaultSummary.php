@@ -30,6 +30,20 @@
                 <p class="h6 text-right">€<?php echo $_SESSION["ticketFinalPrice"]["Prevendita"] ?></p>
             </div>
         </div>
+        <?php
+        $totalPrice = $_SESSION["ticketFinalPrice"]["SubTotal"] + $_SESSION["ticketFinalPrice"]["Prevendita"];
+        if(isset($_SESSION["ticketDelivery"])): ?>
+            <div class="row mt-4 text-muted">
+                <div class="col-9">
+                    <p class="h6"><?php echo $_SESSION["ticketDelivery"]["Nome"] ?></p>
+                </div>
+                <div class="col-3">
+                    <p class="h6 text-right">€<?php echo $_SESSION["ticketDelivery"]["Prezzo"] ?></p>
+                </div>
+            </div>
+        <?php
+        $totalPrice += $_SESSION["ticketDelivery"]["Prezzo"];
+        endif; ?>
     </div>
      <div class="card-footer text-white bg-ticketBlue">
          <div class="row">
@@ -37,12 +51,8 @@
                  <p class="h5 font-weight-bold">Totale Prezzo Biglietti</p>
              </div>
              <div class="col-4">
-                 <p class="h5 text-right font-weight-bold">€<?php echo $_SESSION["ticketFinalPrice"]["SubTotal"] + $_SESSION["ticketFinalPrice"]["Prevendita"] ?></p>
+                 <p class="h5 text-right font-weight-bold">€<?php echo $totalPrice ?></p>
              </div>
          </div>
      </div>
 </div>
-<?php
-
-
-?>

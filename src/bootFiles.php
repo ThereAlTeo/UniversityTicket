@@ -9,6 +9,7 @@ define("NAVBAR_DIR", ROOT_DIR."php/navbar/");
 define("MAIN_DIR", ROOT_DIR."php/main/");
 define("MENU_DIR", ROOT_DIR."php/menu/");
 define("SUMMARY_DIR", ROOT_DIR."php/summary/");
+define("PAYMENT_DIR", ROOT_DIR."php/payment/");
 define("CHART_INFO_DIR", ROOT_DIR."php/chart/");
 define("FOOTER_DIR", ROOT_DIR."php/footer/");
 define("JUMBOTRN_DIR", ROOT_DIR."php/jumbotron/");

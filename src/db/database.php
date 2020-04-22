@@ -506,5 +506,45 @@ class DatabaseHelper{
       }
       return array();
   }
+
+  public function getFullUserInfo($IDUser){
+      $stmt = $this->db->prepare("SELECT P.*, U.* FROM persona P INNER JOIN ticketuser U ON U.AnagraficaUtente=P.IDPersona
+                                  WHERE U.IDUser = ?");
+      $stmt->bind_param('i', $IDUser);
+      $stmt->execute();
+      return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+  }
+
+  public function insertAcquisto($IDPayment, $IDDelivery, $IDUser, $PrezzoTotale, $Data = date("Y-m-d H:i:s")){
+      $query = "INSERT INTO acquisto(IDAcquisto, IDPayment, IDDelivery, IDUser, Data, PrezzoTotale) VALUES (IDAcquisto, ?, ?, ?, ?, ?)";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('iiisd', $IDPayment, $IDDelivery, $IDUser, $Data, $PrezzoTotale);
+      $stmt->execute();
+      return $stmt->insert_id;
+  }
+
+  public function insertTicket($Matricola, $IDSettore, $IDLocation, $IDEvento){
+      $query = "INSERT INTO biglietto(Matricola, IDSettore, IDLocation, IDEvento) VALUES (?, ?, ?, ?)";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('Siii', $Matricola, $IDSettore, $IDLocation, $IDEvento);
+      $stmt->execute();
+      return $stmt->insert_id;
+  }
+
+  public function insertAcquistoMultiplo($Matricola, $IDAcquisto){
+      $query = "INSERT INTO bigliettoacquistato(Matricola, IDAcquisto) VALUES (?, ?)";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('si', $Matricola, $IDAcquisto);
+      $stmt->execute();
+      return $stmt->insert_id;
+  }
+
+  public function insertRecensione($Matricola, $IDAcquisto, $Recensione, $Recommendation){
+      $query = "INSERT INTO recensione(IDRecensione, Matricola, IDAcquisto, Recensione, Recommendation) VALUES (IDRecensione, ?, ?, ?, ?)";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('sisd', $Matricola, $IDAcquisto, $Recensione, $Recommendation);
+      $stmt->execute();
+      return $stmt->insert_id;
+  }
 }
 ?>

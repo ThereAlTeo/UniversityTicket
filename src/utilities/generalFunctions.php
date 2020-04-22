@@ -119,4 +119,13 @@
         $date = explode(",", date_format(date_create($date), "N, d/m/Y H:i"));
         return convertNumberInTextualDaby($date[0]).",".$date[1];
     }
+
+    function getPaymentFormSection($IDPayment){
+        switch ($IDPayment) {
+            case 1: return "creditCard.php";
+            case 2: return "paypal.php";
+            case 3: return "18APP.php";
+            default: throw new Exception("Error Processing Request", 1);
+        }
+    }
 ?>

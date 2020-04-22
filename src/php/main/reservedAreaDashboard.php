@@ -15,7 +15,7 @@
                 break;
             case 2: $infoCardValue = array("$40,000", $dbh->getEventNumByManager($_SESSION["accountLog"]["IDUser"]), $dbh->getArtistNumByManager($_SESSION["accountLog"]["IDUser"]), "$40,000");
                 break;
-            case 1:
+            case 3: $infoCardValue = array("$40,000", "$40,000", "$40,000", "$40,000");
                 break;
             default: throw new Exception("Error Processing Request", 1);
         }
