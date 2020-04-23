@@ -17,19 +17,19 @@ $(function() {
 
 function submitPayment(e) {
     Swal.fire({
-        title: 'Sei sicuro di voler confermare il pagamento?', icon: 'warning', showCancelButton: true,
+        title: "Confermi l'acquisto ?", icon: 'warning', showCancelButton: true,
         confirmButtonColor: '#043353', cancelButtonColor: '#dee2e6', confirmButtonText: 'CONFERMA!', cancelButtonText: "Annulla"
         }).then((result) => {
             if (result.value) {
                 $.ajax({url : './../api/paymentAPI.php',
                      type : 'POST',
                      dataType: 'JSON',
-                     data: { IDPayment: $("input[name='paymentRadio']:checked").val() },
+                     data: { IDPayment: $("input[name='paymentRadio']:checked").attr("id") },
                      success: function(data){
                           if(data['error']) {
                                Swal.fire({'title': 'Errors', 'text': data['error'], 'icon': 'error'});
                           } else {
-                              Swal.fire({ position: 'top-end', icon: 'success', title: 'Your work has been saved', timer: 2500 })
+                              Swal.fire({ icon: 'success', title: "Acquisto Completato", text: 'A breve riceverai una mail di conferma', timer: 2500 })
                                   .then((result) => { window.location = './bacheca.php'; });
                           }
                      },

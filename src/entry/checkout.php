@@ -27,8 +27,8 @@ foreach ($ticket as $key => $value) {
     $temp = $dbh->getGeneralInfoByIDEvent($key);
     if(count($temp)){
         $ticketEventInfo = array("IDEvent" => $temp[0]["IDEvento"], "Title" => $temp[0]["Titolo"], "Image" => getPathImageOrDefault($temp[0]),
-                                 "IDArtist" => $temp[0]["IDArtista"], "LocationName" => $temp[0]["Nome"], "Date" => getLongDateFormat($temp[0]["DataInizio"]),
-                                 "ManagerMail" => $temp[0]["Email"], "Sector" => array());
+                                 "IDArtist" => $temp[0]["IDArtista"], "IDLocation" => $temp[0]["IDLocation"], "LocationName" => $temp[0]["Nome"], 
+                                 "Date" => getLongDateFormat($temp[0]["DataInizio"]), "ManagerMail" => $temp[0]["Email"], "Sector" => array());
         foreach ($value as $section)
             $ticketEventInfo["Sector"] = array_merge($ticketEventInfo["Sector"], $dbh->getTicketInfoPrice($key, $section["IDSector"], $section["QNT"]));
 

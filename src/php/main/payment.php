@@ -1,3 +1,11 @@
+    <?php
+    var_dump($_SESSION["ticketGeneralInfo"]);
+    echo "string\n";
+    var_dump($_SESSION["ticketFinalPrice"]);
+    echo "afdg";
+    var_dump($_SESSION["ticketDelivery"]);
+    var_dump( $_SESSION["accountLog"]);
+    ?>
 <div class="accordion" id="accordionPayment">
     <?php foreach ($dbh->getPaymentMode() as $key => $value):
         $paymentRadioID = "paymentRadio".$value["IDPayment"];

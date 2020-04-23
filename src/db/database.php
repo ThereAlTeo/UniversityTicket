@@ -440,7 +440,7 @@ class DatabaseHelper{
   }
 
   public function getGeneralInfoByIDEvent($IDEvent){
-      $stmt = $this->db->prepare("SELECT E.IDEvento, E.Titolo, E.Locandina, E.DataInizio, L.Nome, T.Email, E.IDArtista
+      $stmt = $this->db->prepare("SELECT E.IDEvento, E.Titolo, E.Locandina, E.DataInizio, L.Nome, T.Email, E.IDArtista, L.IDLocation
                                   FROM evento E INNER JOIN location L ON E.IDLocation=L.IDLocation
 		                                        INNER JOIN ticketuser T ON E.IDOrganizzatore=T.IDUser
                                   WHERE E.IDEvento = ?");
@@ -515,7 +515,9 @@ class DatabaseHelper{
       return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
   }
 
-  public function insertAcquisto($IDPayment, $IDDelivery, $IDUser, $PrezzoTotale, $Data = date("Y-m-d H:i:s")){
+  public function insertAcquisto($IDPayment, $IDDelivery, $IDUser, $PrezzoTotale, $Data = null){
+      if(!isset($Data))
+        $Data = date("Y-m-d H:i:s");
       $query = "INSERT INTO acquisto(IDAcquisto, IDPayment, IDDelivery, IDUser, Data, PrezzoTotale) VALUES (IDAcquisto, ?, ?, ?, ?, ?)";
       $stmt = $this->db->prepare($query);
       $stmt->bind_param('iiisd', $IDPayment, $IDDelivery, $IDUser, $Data, $PrezzoTotale);
@@ -526,7 +528,7 @@ class DatabaseHelper{
   public function insertTicket($Matricola, $IDSettore, $IDLocation, $IDEvento){
       $query = "INSERT INTO biglietto(Matricola, IDSettore, IDLocation, IDEvento) VALUES (?, ?, ?, ?)";
       $stmt = $this->db->prepare($query);
-      $stmt->bind_param('Siii', $Matricola, $IDSettore, $IDLocation, $IDEvento);
+      $stmt->bind_param('siii', $Matricola, $IDSettore, $IDLocation, $IDEvento);
       $stmt->execute();
       return $stmt->insert_id;
   }
@@ -535,8 +537,7 @@ class DatabaseHelper{
       $query = "INSERT INTO bigliettoacquistato(Matricola, IDAcquisto) VALUES (?, ?)";
       $stmt = $this->db->prepare($query);
       $stmt->bind_param('si', $Matricola, $IDAcquisto);
-      $stmt->execute();
-      return $stmt->insert_id;
+      return $stmt->execute();
   }
 
   public function insertRecensione($Matricola, $IDAcquisto, $Recensione, $Recommendation){
