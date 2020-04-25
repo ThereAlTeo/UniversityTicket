@@ -128,4 +128,16 @@
             default: throw new Exception("Error Processing Request", 1);
         }
     }
+
+    function getNoticeColor($index){
+        switch ($index) {
+            case 0: return "danger";
+            case 1: return "info";
+            case 2: return "warning";
+            case 3: return "success";
+            case 4: return "primary";
+            case 5: return "ticketBlue";
+            default: throw new Exception("Error Processing Request", 1);
+        }
+    }
 ?>

@@ -547,5 +547,19 @@ class DatabaseHelper{
       $stmt->execute();
       return $stmt->insert_id;
   }
+
+  public function getMessageByIDUser($IDUser, $toRead = false){
+      $query = "SELECT * FROM segreteriamessaggi S WHERE S.IDUser = ?";
+      if ($toRead)
+          $query = $query." AND S.Lettura=0";
+
+      $query = $query." ORDER BY S.DataMessaggio DESC";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('i', $IDUser);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      return $result->fetch_all(MYSQLI_ASSOC);
+  }
+
 }
 ?>

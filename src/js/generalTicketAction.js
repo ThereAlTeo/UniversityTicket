@@ -11,6 +11,23 @@ $(function() {
     $(".cardBoxSection div.cardBoxEvent").last().parent().removeClass("border-bottom");
     $("#reviews div.border-bottom").last().removeClass("border-bottom");
     $(".ticketPublicInfo div.ticketInfo.border-bottom").last().removeClass("border-bottom");
+
+    $("#navbarToggle").on('click', function(e) {
+        $("body").toggleClass("sidebar-toggled");
+        $(".sidebar").toggleClass("toggled");
+        if ($(".sidebar").hasClass("toggled")) {
+            $('.sidebar .collapse').collapse('hide');
+        };
+    });
+
+    $(document).on('scroll', function() {
+    var scrollDistance = $(this).scrollTop();
+        if (scrollDistance > 100) {
+            $('.scroll-to-top').fadeIn();
+        } else {
+            $('.scroll-to-top').fadeOut();
+        }
+    });    
 });
 
 function getKeyValueByObject(obj) {

@@ -1,4 +1,4 @@
-    <ul class="navbar-nav bg-ticketBlue sidebar sidebar-dark">
+    <ul class="navbar-nav bg-ticketBlue sidebar sidebar-dark accordion" id="lateralMenu">
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="reservedArea.php">
             <div class="ml-2">
                 <img <?php echo 'src="'.ROOT_DIR.'../res/images/logoForse.png"'; ?> width="40" height="40" class="d-inline-block align-top" alt="Logo">

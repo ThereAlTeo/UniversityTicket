@@ -33,7 +33,7 @@ require_once(ROOT_DIR.'../res/config.php');
               foreach ($templateParams["js"] as $scriptItem): ?>
                   <script src="<?php echo $scriptItem ?>" type="text/javascript" crossorigin="anonymous"></script>
               <?php endforeach;
-          endif; 
+          endif;
           if(isset($templateParams["scriptPlus"])){
                foreach($templateParams["scriptPlus"] as $scriptItem)
                     require(CHART_INFO_DIR.$scriptItem);
