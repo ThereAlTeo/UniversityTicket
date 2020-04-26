@@ -27,8 +27,23 @@ $(function() {
         } else {
             $('.scroll-to-top').fadeOut();
         }
-    });    
+    });
+
+    $(window).resize(resizableWindow);
+
+    resizableWindow();
 });
+
+function resizableWindow() {
+    if ($(window).width() < 500) {
+        $(".sidebar").addClass("toggled")
+        $("body").addClass("sidebar-toggled");
+        $('.sidebar .collapse').collapse('hide');
+    } else {
+        $(".sidebar").removeClass("toggled")
+        $("body").removeClass("sidebar-toggled");
+    }
+}
 
 function getKeyValueByObject(obj) {
     return Object.keys(obj);

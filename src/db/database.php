@@ -9,35 +9,32 @@ class DatabaseHelper{
           }
      }
 
+     private function factoryFetchMethos($stmt){
+         $stmt->execute();
+         $result = $stmt->get_result();
+         return $result->fetch_all(MYSQLI_ASSOC);
+     }
      public function AccountExistInDB($email){
           $stmt = $this->db->prepare("SELECT COUNT(*) as rowNum FROM ticketuser T WHERE T.Email=?");
           $stmt->bind_param('s', $email);
-          $stmt->execute();
-          $result = $stmt->get_result();
-          return $result->fetch_all(MYSQLI_ASSOC)[0]["rowNum"] > 0;
+          return $this->factoryFetchMethos($stmt)[0]["rowNum"] > 0;
      }
 
      public function checkUserPassword($email, $password){
           $stmt = $this->db->prepare("SELECT T.Password FROM ticketuser T WHERE T.Email=?");
           $stmt->bind_param('s', $email);
-          $stmt->execute();
-          $result = $stmt->get_result();
-          return strcmp($result->fetch_all(MYSQLI_ASSOC)[0]["Password"], $password) == 0;
+          return strcmp($this->factoryFetchMethos($stmt)[0]["Password"], $password) == 0;
      }
 
      public function getAccountAccessInfo($email){
           $stmt = $this->db->prepare("SELECT T.IDAccesso, T.IDUser FROM ticketuser T WHERE T.Email=?");
           $stmt->bind_param('s', $email);
-          $stmt->execute();
-          $result = $stmt->get_result();
-          return $result->fetch_all(MYSQLI_ASSOC)[0];
+          return $this->factoryFetchMethos($stmt)[0];
      }
 
      private function getRecordInTable($table){
          $stmt = $this->db->prepare("SELECT COUNT(*) as \"TableRows\" FROM ".$table);
-         $stmt->execute();
-         $result = $stmt->get_result();
-         return $result->fetch_all(MYSQLI_ASSOC)[0]["TableRows"];
+         return $this->factoryFetchMethos($stmt)[0]["TableRows"];
     }
 
     public function getAccountRecordNumber(){
@@ -50,17 +47,13 @@ class DatabaseHelper{
 
     public function getAllUsersInfo(){
          $stmt = $this->db->prepare("SELECT P.Nome, P.Cognome, T.Email, DATE_FORMAT(T.DataRegistrazione, '%d/%m/%Y ') as 'DataRegistrazione', A.Descrizione, IF(T.AccountAbilitato, 'TRUE', 'FALSE') 'AccountAbilitato' FROM ticketuser T INNER JOIN persona P ON T.AnagraficaUtente=P.IDPersona INNER JOIN tipologiaaccesso A ON A.IDAccesso=T.IDAccesso");
-         $stmt->execute();
-         $result = $stmt->get_result();
-         return $result->fetch_all(MYSQLI_ASSOC);
+         return $this->factoryFetchMethos($stmt);
     }
 
     public function nameExistInDB($name, $surname){
          $stmt = $this->db->prepare("SELECT COUNT(*) as rowNum FROM persona P WHERE P.Nome=? AND P.Cognome=?");
          $stmt->bind_param('ss', $name, $surname);
-         $stmt->execute();
-         $result = $stmt->get_result();
-         return $result->fetch_all(MYSQLI_ASSOC)[0]["rowNum"] == 0;
+         return $this->factoryFetchMethos($stmt)[0]["rowNum"] == 0;
     }
 
     private function insertNewPerson($name, $surname, $cf, $birth){
@@ -87,16 +80,18 @@ class DatabaseHelper{
      public function getArtistByManager($Manager){
           $stmt = $this->db->prepare("SELECT A.IDArtista, P.Nome, P.Cognome, A.NomeDArte FROM artista A INNER JOIN persona P ON A.AnagraficaArtista=P.IDPersona WHERE A.IDReferente=?");
           $stmt->bind_param('i', $Manager);
-          $stmt->execute();
-          $result = $stmt->get_result();
-          return $result->fetch_all(MYSQLI_ASSOC);
+          return $this->factoryFetchMethos($stmt);
+     }
+
+     public function getEventByManager($Manager){
+          $stmt = $this->db->prepare("SELECT E.* FROM evento E WHERE E.IDOrganizzatore=?");
+          $stmt->bind_param('i', $Manager);
+          return $this->factoryFetchMethos($stmt);
      }
 
      public function getEventType(){
           $stmt = $this->db->prepare("SELECT * FROM tipologia");
-          $stmt->execute();
-          $result = $stmt->get_result();
-          return $result->fetch_all(MYSQLI_ASSOC);
+          return $this->factoryFetchMethos($stmt);
      }
 
      public function getTipologiaInfo($IDTipologia){
@@ -106,9 +101,7 @@ class DatabaseHelper{
 
          $stmt = $this->db->prepare($query);
          $stmt->bind_param('i', $IDTipologia);
-         $stmt->execute();
-         $result = $stmt->get_result();
-         return $result->fetch_all(MYSQLI_ASSOC)[0];
+         return $this->factoryFetchMethos($stmt)[0];
      }
 
      public function getBachecaSectionInfoByKindID($musicType) {
@@ -130,41 +123,31 @@ class DatabaseHelper{
              $query = $query." LIMIT ".$musicType[1];
          $stmt = $this->db->prepare($query);
          $stmt->bind_param('i', $musicType[0]);
-         $stmt->execute();
-         $result = $stmt->get_result();
-         return $result->fetch_all(MYSQLI_ASSOC);
+         return $this->factoryFetchMethos($stmt);
      }
 
      public function getAllLocation() {
           $stmt = $this->db->prepare("SELECT IDLocation, Nome FROM location");
-          $stmt->execute();
-          $result = $stmt->get_result();
-          return $result->fetch_all(MYSQLI_ASSOC);
+          return $this->factoryFetchMethos($stmt);
      }
 
      public function getSectorByLocationID($idLocation) {
           $stmt = $this->db->prepare("SELECT IDSettore, Nome, Capienza FROM settore WHERE IDLocation = ?");
           $stmt->bind_param('i', $idLocation);
-          $stmt->execute();
-          $result = $stmt->get_result();
-          return $result->fetch_all(MYSQLI_ASSOC);
+          return $this->factoryFetchMethos($stmt);
      }
 
      public function getKindOfMusicByType($IDMusicKind){
          $stmt = $this->db->prepare("SELECT G.IDGenere, G.Name FROM tipologia T INNER JOIN genere G ON T.IDTipologia=G.IDTipologia
                                      WHERE T.IDTipologia = ?");
          $stmt->bind_param('i', $IDMusicKind);
-         $stmt->execute();
-         $result = $stmt->get_result();
-         return $result->fetch_all(MYSQLI_ASSOC);
+         return $this->factoryFetchMethos($stmt);
      }
 
      public function getKindOfMusicInfo($IDKind){
          $stmt = $this->db->prepare("SELECT T.IDTipologia, G.Name FROM genere G INNER JOIN tipologia T ON G.IDTipologia=T.IDTipologia WHERE G.IDGenere = ?");
          $stmt->bind_param('i', $IDKind);
-         $stmt->execute();
-         $result = $stmt->get_result();
-         return $result->fetch_all(MYSQLI_ASSOC)[0];
+         return $this->factoryFetchMethos($stmt)[0];
      }
 
      public function getArtistInfo($IDArtista){
@@ -172,14 +155,7 @@ class DatabaseHelper{
                                      FROM artista A INNER JOIN persona P ON P.IDPersona=A.AnagraficaArtista
                                      WHERE A.IDArtista = ?");
          $stmt->bind_param('i', $IDArtista);
-         $stmt->execute();
-         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-
-         /* sostituire con getCorrectArtistName($result) la parte sottostante
-         if(is_null($result['NomeDArte']) || strcmp($result['NomeDArte'], "") == 0)
-             return $result['Nome']." ".$result['Cognome'];
-         else
-             return $result['NomeDArte'];*/
+         return $this->factoryFetchMethos($stmt);
      }
 
     public function getResImageName($IDGenere, $IDArtista, $eventID){
@@ -233,9 +209,7 @@ class DatabaseHelper{
     public function LocationExistInDB($location){
          $stmt = $this->db->prepare("SELECT COUNT(*) as rowNum FROM location WHERE Nome = ?");
          $stmt->bind_param('s', $location);
-         $stmt->execute();
-         $result = $stmt->get_result();
-         return $result->fetch_all(MYSQLI_ASSOC)[0]["rowNum"] > 0;
+         return $this->factoryFetchMethos($stmt)[0]["rowNum"] > 0;
     }
 
     public function insertSectorbyLocation($idLocation, $nome, $capienza){
@@ -265,9 +239,7 @@ class DatabaseHelper{
                                   FROM evento E INNER JOIN location L ON E.IDLocation=L.IDLocation
                                   WHERE E.IDArtista = ? ".($all ? "&& E.DataInizio > CURDATE()" : ""));
       $stmt->bind_param('i', $IDArtista);
-      $stmt->execute();
-      $result = $stmt->get_result();
-      return $result->fetch_all(MYSQLI_ASSOC);
+      return $this->factoryFetchMethos($stmt);
   }
 
   public function selectedEventsInfo($eventID){
@@ -280,9 +252,7 @@ class DatabaseHelper{
                                   WHERE E.DataInizio >= CURDATE() && E.IDArtista = ?
                                   GROUP BY E.IDEvento ORDER BY E.DataInizio");
       $stmt->bind_param('i', $eventID);
-      $stmt->execute();
-      $result = $stmt->get_result();
-      return $result->fetch_all(MYSQLI_ASSOC);
+      return $this->factoryFetchMethos($stmt);
   }
 
   public function filterLocationByValue($value){
@@ -290,9 +260,7 @@ class DatabaseHelper{
                                   FROM location L LEFT JOIN evento E ON L.IDLocation=E.IDLocation
                                   WHERE L.Nome LIKE "."'%".$value."%' OR L.Nome LIKE "."'%".ucfirst($value)."%' ".
                                   "GROUP BY L.IDLocation ORDER BY L.Nome LIMIT 5");
-      $stmt->execute();
-      $result = $stmt->get_result();
-      return $result->fetch_all(MYSQLI_ASSOC);
+     return $this->factoryFetchMethos($stmt);
   }
 
   public function filterArtistByValue($value){
@@ -301,9 +269,7 @@ class DatabaseHelper{
                                                INNER JOIN persona P ON A.AnagraficaArtista=P.IDPersona
                                 WHERE A.NomeDArte LIKE "."'%".$value."%' OR A.NomeDArte LIKE "."'%".ucfirst($value)."%' ".
                                 "GROUP BY A.IDArtista ORDER BY A.AnagraficaArtista LIMIT 5");
-      $stmt->execute();
-      $result = $stmt->get_result();
-      return $result->fetch_all(MYSQLI_ASSOC);
+      return $this->factoryFetchMethos($stmt);
   }
 
   public function getLocationWithEvent($limit = 0){
@@ -319,37 +285,26 @@ class DatabaseHelper{
           $query = $query." LIMIT ".$limit;
 
       $stmt = $this->db->prepare($query);
-
-      $stmt->execute();
-      $result = $stmt->get_result();
-      return $result->fetch_all(MYSQLI_ASSOC);
-
+      return $this->factoryFetchMethos($stmt);
   }
 
   public function getAllLocationInfo(){
        $stmt = $this->db->prepare("SELECT L.Nome, L.Indirizzo, COUNT(E.IDEvento) AS \"NrEventi\", ROUND(RAND()*10000) AS \"NrBiglietti\"
                                    FROM location L LEFT JOIN evento E ON L.IDLocation=E.IDLocation
                                    GROUP BY L.IDLocation");
-       $stmt->execute();
-       $result = $stmt->get_result();
-
-       return $result->fetch_all(MYSQLI_ASSOC);
+       return $this->factoryFetchMethos($stmt);
   }
 
   public function getEventNumByManager($ManagerID){
       $stmt = $this->db->prepare("SELECT COUNT(*) as 'TableRows' FROM evento E WHERE E.IDOrganizzatore = ?");
       $stmt->bind_param('i', $ManagerID);
-      $stmt->execute();
-      $result = $stmt->get_result();
-      return $result->fetch_all(MYSQLI_ASSOC)[0]["TableRows"];
+      return $this->factoryFetchMethos($stmt)[0]["TableRows"];
   }
 
   public function getArtistNumByManager($ManagerID){
       $stmt = $this->db->prepare("SELECT COUNT(*) as 'TableRows' FROM artista A WHERE A.IDReferente = ?");
       $stmt->bind_param('i', $ManagerID);
-      $stmt->execute();
-      $result = $stmt->get_result();
-      return $result->fetch_all(MYSQLI_ASSOC)[0]["TableRows"];
+      return $this->factoryFetchMethos($stmt)[0]["TableRows"];
   }
 
   public function getAllEventByLocationID($idLocation){
@@ -364,17 +319,13 @@ class DatabaseHelper{
 
       $stmt = $this->db->prepare($query);
       $stmt->bind_param('i', $idLocation);
-      $stmt->execute();
-      $result = $stmt->get_result();
-      return $result->fetch_all(MYSQLI_ASSOC);
+      return $this->factoryFetchMethos($stmt);
   }
 
   public function getLocationInfo($idLocation){
       $stmt = $this->db->prepare("SELECT * FROM location L WHERE L.IDLocation = ?");
       $stmt->bind_param('i', $idLocation);
-      $stmt->execute();
-      $result = $stmt->get_result();
-      return $result->fetch_all(MYSQLI_ASSOC)[0];
+      return $this->factoryFetchMethos($stmt)[0];
   }
 
   public function getEventLocationInfoByID($idLocation){
@@ -396,9 +347,7 @@ class DatabaseHelper{
                                                 INNER JOIN persona P ON A.AnagraficaArtista=P.IDPersona
                                   WHERE E.IDEvento = ?");
       $stmt->bind_param('i', $IDTour);
-      $stmt->execute();
-      $result = $stmt->get_result();
-      return $result->fetch_all(MYSQLI_ASSOC);
+      return $this->factoryFetchMethos($stmt);
   }
 
   public function getLocandinaByArtist($IDArtist){
@@ -407,17 +356,13 @@ class DatabaseHelper{
                                   WHERE E.IDArtista = ?
                                   ORDER BY E.DataInizio DESC");
       $stmt->bind_param('i', $IDArtist);
-      $stmt->execute();
-      $result = $stmt->get_result();
-      return $result->fetch_all(MYSQLI_ASSOC);
+      return $this->factoryFetchMethos($stmt);
   }
 
   public function exisitEvent($IDEvent){
       $stmt = $this->db->prepare("SELECT E.* FROM evento E WHERE E.IDEvento = ? AND E.DataFine > CURDATE()");
       $stmt->bind_param('i', $IDEvent);
-      $stmt->execute();
-      $result = $stmt->get_result();
-      return $result->fetch_all(MYSQLI_ASSOC);
+      return $this->factoryFetchMethos($stmt);
   }
 
   public function getEventInfo($IDEvent){
@@ -425,8 +370,7 @@ class DatabaseHelper{
                                   FROM evento E INNER JOIN location L ON E.IDLocation=L.IDLocation
                                   WHERE E.IDEvento = ? AND E.DataFine > CURDATE()");
       $stmt->bind_param('i', $IDEvent);
-      $stmt->execute();
-      return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+      return $this->factoryFetchMethos($stmt);
   }
 
   public function getSectorInfoByEvent($IDEvent){
@@ -435,8 +379,7 @@ class DatabaseHelper{
 	                                            INNER JOIN settore S ON T.IDSettore=S.IDSettore
                                   WHERE E.IDEvento = ? AND E.DataFine > CURDATE() ORDER BY Prezzounitario DESC");
       $stmt->bind_param('i', $IDEvent);
-      $stmt->execute();
-      return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+      return $this->factoryFetchMethos($stmt);
   }
 
   public function getGeneralInfoByIDEvent($IDEvent){
@@ -445,8 +388,7 @@ class DatabaseHelper{
 		                                        INNER JOIN ticketuser T ON E.IDOrganizzatore=T.IDUser
                                   WHERE E.IDEvento = ?");
       $stmt->bind_param('i', $IDEvent);
-      $stmt->execute();
-      return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+      return $this->factoryFetchMethos($stmt);
   }
 
   public function getRateEvent($IDEvent, $IDSector){
@@ -456,8 +398,7 @@ class DatabaseHelper{
                                            INNER JOIN tariffario T ON S.IDLocation=T.IDLocation AND S.IDSettore=T.IDSettore AND E.IDEvento=T.IDEvento
                                   WHERE T.IDSettore = ? AND E.IDEvento = ?");
       $stmt->bind_param('ii', $IDSector, $IDEvent);
-      $stmt->execute();
-      return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+      return $this->factoryFetchMethos($stmt);
   }
 
   public function getActualTicketSell($IDEvent, $IDSector){
@@ -467,8 +408,7 @@ class DatabaseHelper{
                                            INNER JOIN biglietto B ON B.IDSettore=S.IDSettore AND B.IDLocation=s.IDLocation AND B.IDEvento=E.IDEvento
                                  WHERE S.IDSettore = ? AND E.IDEvento = ?");
       $stmt->bind_param('ii', $IDSector, $IDEvent);
-      $stmt->execute();
-      return $stmt->get_result()->fetch_all(MYSQLI_ASSOC)[0]["NumTicket"];
+      return $this->factoryFetchMethos($stmt)[0]["NumTicket"];
   }
 
   public function getTicketInfoPrice($IDEvent, $IDSector, $QNT){
@@ -489,14 +429,12 @@ class DatabaseHelper{
 
   public function getPaymentMode(){
       $stmt = $this->db->prepare("SELECT * FROM modalitapagamento");
-      $stmt->execute();
-      return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+      return $this->factoryFetchMethos($stmt);
   }
 
   public function getDeliveryMode(){
       $stmt = $this->db->prepare("SELECT * FROM modalitaconsegna");
-      $stmt->execute();
-      return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+      return $this->factoryFetchMethos($stmt);
   }
 
   public function getDeliveryItemByID($IDDelivery){
@@ -511,8 +449,7 @@ class DatabaseHelper{
       $stmt = $this->db->prepare("SELECT P.*, U.* FROM persona P INNER JOIN ticketuser U ON U.AnagraficaUtente=P.IDPersona
                                   WHERE U.IDUser = ?");
       $stmt->bind_param('i', $IDUser);
-      $stmt->execute();
-      return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+      return $this->factoryFetchMethos($stmt);
   }
 
   public function insertAcquisto($IDPayment, $IDDelivery, $IDUser, $PrezzoTotale, $Data = null){
@@ -556,10 +493,61 @@ class DatabaseHelper{
       $query = $query." ORDER BY S.DataMessaggio DESC";
       $stmt = $this->db->prepare($query);
       $stmt->bind_param('i', $IDUser);
-      $stmt->execute();
-      $result = $stmt->get_result();
-      return $result->fetch_all(MYSQLI_ASSOC);
+      return $this->factoryFetchMethos($stmt);
   }
 
+  public function getArtistWorkInfo($IDManager){
+      $query = "SELECT P.Nome, P.Cognome, A.NomeDArte, P.DataNascita, COUNT(E.IDEvento) AS 'ConcertDone', COUNT(B.Matricola) AS 'TicketBuy'
+                FROM artista A LEFT JOIN evento E ON E.IDArtista=A.IDArtista
+			                   INNER JOIN persona P ON P.IDPersona=A.AnagraficaArtista
+                               LEFT JOIN biglietto B ON B.IDEvento=E.IDEvento
+                WHERE A.IDReferente=?
+                GROUP BY A.IDArtista";
+
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('i', $IDManager);
+      return $this->factoryFetchMethos($stmt);
+  }
+
+  public function getEventInfoReserved($IDManager){
+      $query = "SELECT E.Titolo, P.Nome, P.Cognome, A.NomeDArte, L.Nome AS 'NomeLocation', E.DataInizio, COUNT(B.Matricola) AS 'TicketBuy'
+                FROM evento E INNER JOIN location L ON L.IDLocation=E.IDLocation
+			                  INNER JOIN artista A ON A.IDArtista=E.IDArtista
+                              INNER JOIN persona P ON P.IDPersona=A.AnagraficaArtista
+                              LEFT JOIN biglietto B ON E.IDEvento=B.IDEvento
+                WHERE A.IDReferente=?
+                GROUP BY E.IDEvento";
+
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('i', $IDManager);
+      return $this->factoryFetchMethos($stmt);
+  }
+
+  public function getNumTicketSold($IDManager = null){
+      $query = "SELECT COUNT(B.Matricola) AS 'TicketBuy' FROM biglietto B";
+
+      if(isset($IDManager))
+        $query = $query." INNER JOIN evento E ON E.IDEvento=B.IDEvento WHERE E.IDOrganizzatore=".$IDManager;
+
+      $stmt = $this->db->prepare($query);
+      return $this->factoryFetchMethos($stmt)[0]["TicketBuy"];
+  }
+
+  public function getCahsTicketSold($IDManager = null){
+      $query = "SELECT SUM(A.PrezzoTotale) AS 'CashDone'
+                FROM biglietto B INNER JOIN bigliettoacquistato BA ON B.Matricola=BA.Matricola
+				                 INNER JOIN acquisto A ON BA.IDAcquisto=A.IDAcquisto";
+
+      if(isset($IDManager))
+        $query = $query." INNER JOIN evento E ON E.IDEvento=B.IDEvento WHERE E.IDOrganizzatore=".$IDManager;
+
+      $stmt = $this->db->prepare($query);
+      $row = $this->factoryFetchMethos($stmt)[0];
+
+      if (isset($row["CashDone"]))
+          return $row["CashDone"];
+      else
+          return "0,00";
+  }
 }
 ?>

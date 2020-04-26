@@ -34,10 +34,10 @@ $(function() {
 
     $('.btnNext').click(function(e) {
         modal.setGoToNext(true);
-        /*$(this).parents('fieldset').find('input[type="text"], textarea').filter('[required]').each(function() {
+        $(this).parents('fieldset').find('input[type="text"], textarea').filter('[required]').each(function() {
             consumerCheckElement($(this).val(), this);
         });
-        nextFieldset(this);*/
+        nextFieldset(this);
 
         if(!modal.canGoToNext())
             $(this).parents("form.formInvalidFB").addClass('was-validated');

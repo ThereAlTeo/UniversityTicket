@@ -54,15 +54,20 @@ function nextFieldset(element) {
 }
 
 function consumerCheckElement(Value, Element, MaxOf = 0) {
-     $(Element).removeClass('border border-danger border-warning');
+     if(Value == "" || (MaxOf != 0 && Value > MaxOf)) {
+          modal.setGoToNext(false);
+     }
+}
 
-     if(Value == "") {
-          $(Element).addClass('border border-danger');
-          modal.setGoToNext(false);
-     }else if (MaxOf != 0 && Value > MaxOf) {
-          $(Element).addClass('border border-warning');
-          modal.setGoToNext(false);
-     }          
+function consumerCheckElementSectors(Value, Element, MaxOf = 0) {
+    consumerCheckElement(Value, Element, MaxOf);
+    $(Element).removeClass('border border-danger border-warning');
+
+    if(Value == "") {
+         $(Element).addClass('border border-danger');
+    } else if (MaxOf != 0 && Value > MaxOf) {
+         $(Element).addClass('border border-warning');
+    }
 }
 
 function showActualFieldset() {

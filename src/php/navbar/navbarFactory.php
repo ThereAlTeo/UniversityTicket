@@ -13,30 +13,36 @@
                         <span class="badge badge-danger badge-counter"><?php echo $badge ?></span>
                     <?php endif; ?>
                 </a>
-                <?php
-                $message = $dbh->getMessageByIDUser($_SESSION["accountLog"]["IDUser"]);
-                if (count($message)): ?>
-                    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
-                        <h6 class="dropdown-header">
-                            Notifiche
-                        </h6>
-                        <?php foreach (range(0, 2) as $value): ?>
-                            <?php if (isset($message[$value])): ?>
-                                <a class="dropdown-item d-flex align-items-center">
-                                    <div class="mr-3">
-                                        <div class="iconCircle bg-<?php echo getNoticeColor($value) ?>">
-                                        </div>
+                <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+                    <h6 class="dropdown-header">
+                        Notifiche
+                    </h6>
+                    <?php
+                    $message = $dbh->getMessageByIDUser($_SESSION["accountLog"]["IDUser"]);
+                    if (count($message)):
+                        foreach (range(0, 2) as $value):
+                            if (isset($message[$value])): ?>
+                            <a class="dropdown-item d-flex align-items-center">
+                                <div class="mr-3">
+                                    <div class="iconCircle bg-<?php echo getNoticeColor($value) ?>">
                                     </div>
-                                    <div>
-                                        <div class="small text-gray-500"><?php echo getLongDateFormat($message[$value]["DataMessaggio"]) ?></div>
-                                        <span class="<?php echo (!$message[$value]["Lettura"]) ? "font-weight-bold" : "" ; ?>"><?php echo $message[$value]["Contenuto"] ?></span>
-                                    </div>
-                                </a>
-                            <?php endif; ?>
-                        <?php endforeach; ?>
-                        <a class="dropdown-item text-center small text-gray-500" href="./notificationCenter.php">Leggi tutti i messaggi</a>
-                    </div>
+                                </div>
+                                <div>
+                                    <div class="small text-gray-500"><?php echo getLongDateFormat($message[$value]["DataMessaggio"]) ?></div>
+                                    <span class="<?php echo (!$message[$value]["Lettura"]) ? "font-weight-bold" : "" ; ?>"><?php echo $message[$value]["Contenuto"] ?></span>
+                                </div>
+                            </a>
+                        <?php endif;
+                        endforeach; ?>
+                    <a class="dropdown-item text-center small text-gray-500" href="./notificationCenter.php">Leggi tutti i messaggi</a>
+                <?php else: ?>
+                    <a class="dropdown-item d-flex align-items-center">                        
+                        <div>
+                            <span class="font-weight-bold">Non ci sono ancora notifiche.</span>
+                        </div>
+                    </a>
                 <?php endif; ?>
+                </div>
             </li>
             <li class="nav-item dropdown no-arrow">
                 <a class="nav-link dropdown-toggle text-secondary" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

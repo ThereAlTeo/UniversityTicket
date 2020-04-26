@@ -1,21 +1,16 @@
 $(function() {
      var iconPamameter = { time: "far fa-clock", date: "fas fa-calendar-alt", up: "fas fa-arrow-up", down: "fas fa-arrow-down" };
      $("#addEvent .modal-dialog").addClass("modal-lg");
-     $("#optionalInfo").hide();
 
-     $(document).on('change', 'input:radio[id^="option"]', function (event) {
-          changeRadioValue(event, $(this).attr('id'));
-    });
+     $('select#typeEvent').on('change', function() {
+         changeSelectTypeEvent($(this).val());
+     });
+
+     changeSelectTypeEvent($('select#typeEvent').val());
 
      $('select').on('change', function() {
          $(this).parents('fieldset').find(".alert").remove();
          changeSectorsSelect();
-     });
-
-     $(".content .card .collapse").collapse('hide');
-
-     $('#newcollapseCardExample').on('show.bs.collapse', function () {
-          $(this).collapse('hide');
      });
 
      $('.btnSubmit').click(function(e) {
@@ -75,7 +70,7 @@ $(function() {
           }).each(function(index) {
                sectorSelected = true;
                $(this).find('div input[type="number"]').each(function() {
-                    consumerCheckElement($(this).val(), this, parseInt($(this).attr("max")));
+                    consumerCheckElementSectors($(this).val(), this, parseInt($(this).attr("max")));
                });
           });
 
@@ -91,27 +86,15 @@ $(function() {
      $('.btnNext').click(function(e) {
           modal.setGoToNext(true);
 
-          $(this).parents('fieldset').find('input[type="text"]').filter('[required]').each(function () {
+          $(this).parents('fieldset').find('input[type="text"], input[type="file"]').filter('[required]').each(function () {
                consumerCheckElement($(this).val(), this);
           });
 
-          $(this).parents('fieldset').find('input[type="file"]').filter('[required]').each(function () {
-              $(this).next("label").removeClass('border border-danger border-warning');
-
-              if($(this).val() == "") {
-                   $(this).next("label").addClass('border border-danger');
-                   modal.setGoToNext(false);
-              }
-          });
-
-          $("#typeEvent .alert").remove();
-
-          if (!$('input[name="typeEventOptions"]:checked').val()) {
-               $('input[name="typeEventOptions"]').parents("#typeEvent").append('<div class="alert alert-danger" role="alert"> Selezionare una tipologia di evento.</div>');
-               modal.setGoToNext(false);
-          }
-
           nextFieldset(this);
+          if(!modal.canGoToNext())
+              $(this).parents("form.formInvalidFB").addClass('was-validated');
+          else
+              $(this).parents("form.formInvalidFB").removeClass('was-validated');
      });
 
      $(document).on("click", ".sectorButton", function () {
@@ -151,22 +134,20 @@ $(function() {
       });
 });
 
-function changeRadioValue(event, idValue) {
-     $("#optionalInfo").fadeIn();
-
+function changeSelectTypeEvent(idValue) {
      $.ajax({url : './../api/eventActions.php',
           type : 'POST',
           dataType: 'JSON',
           data: { idKindMusic: idValue, mode: "changeKindOf" },
           success: function(data){
               $("#kindMusicSelect optgroup").empty();
-               data.forEach(function(item) {
-                    $("#kindMusicSelect optgroup").append("<option value=\"" + item.IDGenere + "\">" + item.Name + "</option>");
+              data.forEach(function(item) {
+                   $("#kindMusicSelect optgroup").append("<option value=\"" + item.IDGenere + "\">" + item.Name + "</option>");
                });
           }
      });
 
-     if(idValue != "option2")
+     if(idValue != "2")
           $("#optionalInfo div:nth-child(2)").fadeIn();
      else
           $("#optionalInfo div:nth-child(2)").fadeOut();

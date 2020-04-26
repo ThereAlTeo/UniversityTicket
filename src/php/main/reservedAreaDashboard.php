@@ -11,9 +11,9 @@
         $infoCardValue = array();
 
         switch ($_SESSION["accountLog"]["IDAccesso"]) {
-            case 1: $infoCardValue = array("$40,000", "$40,000", $dbh->getLocationRecordNumber(), $dbh->getAccountRecordNumber());
+            case 1: $infoCardValue = array("$".$dbh->getCahsTicketSold(), $dbh->getNumTicketSold(), $dbh->getLocationRecordNumber(), $dbh->getAccountRecordNumber());
                 break;
-            case 2: $infoCardValue = array("$40,000", $dbh->getEventNumByManager($_SESSION["accountLog"]["IDUser"]), $dbh->getArtistNumByManager($_SESSION["accountLog"]["IDUser"]), "$40,000");
+            case 2: $infoCardValue = array("$".$dbh->getCahsTicketSold($_SESSION["accountLog"]["IDUser"]), $dbh->getEventNumByManager($_SESSION["accountLog"]["IDUser"]), $dbh->getArtistNumByManager($_SESSION["accountLog"]["IDUser"]), "$40,000");
                 break;
             case 3: $infoCardValue = array("$40,000", "$40,000", "$40,000", "$40,000");
                 break;

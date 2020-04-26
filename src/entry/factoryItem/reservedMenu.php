@@ -5,5 +5,6 @@
                     <i class="<?php echo $value[1] ?> mr-1"></i> <?php echo $value[2] ?>
                 </button>
             </div>
-        <?php endforeach; ?>    
+        <?php endforeach;
+        unset($templateParams["menuPage"]);?>    
     </div>

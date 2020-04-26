@@ -6,10 +6,7 @@ $msg = array();
 if(isset($_POST)){
      switch ($_POST['mode']) {
           case "changeKindOf":
-               $idKindMusic = substr($_POST['idKindMusic'], strlen($_POST['idKindMusic']) - 1);
-
-               foreach ($dbh->getKindOfMusicByType($idKindMusic) as $key => $value)
-                   array_push($msg, array("IDGenere" => $value['IDGenere'], "Name" => $value['Name']));
+               $msg = $dbh->getKindOfMusicByType($_POST['idKindMusic']);
                break;
           case "changeLocationSectors":
                foreach ($dbh->getSectorByLocationID($_POST['IDLocation']) as $key => $value)

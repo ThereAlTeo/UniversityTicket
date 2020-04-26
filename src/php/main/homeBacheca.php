@@ -1,4 +1,4 @@
-        <!-- Main Bacheca -->    
+        <!-- Main Bacheca -->
         <div class="cardBoxSection">
             <?php
                 foreach (getPairEventElement() as $key => $value) {

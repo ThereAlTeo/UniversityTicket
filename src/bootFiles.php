@@ -2,7 +2,6 @@
 if (session_status() === PHP_SESSION_NONE)
     session_start();
 
-/// Provare ad utilizzare la variabile $_SERVER per gestire la ROOT_DIR, e di conseguenza tutte le altre define, in modo migliore e più adeguato.
 define("ROOT_DIR", "./../");
 define("HEADER_DIR", ROOT_DIR."php/header/");
 define("NAVBAR_DIR", ROOT_DIR."php/navbar/");
