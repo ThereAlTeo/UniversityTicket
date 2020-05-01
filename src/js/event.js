@@ -9,7 +9,7 @@ $(function() {
      changeSelectTypeEvent($('select#typeEvent').val());
 
      $('select#locationSelect').select2();
-     
+
      $('select#locationSelect').on('change', function() {
          $(this).parents('fieldset').find(".alert").remove();
          changeSectorsSelect();

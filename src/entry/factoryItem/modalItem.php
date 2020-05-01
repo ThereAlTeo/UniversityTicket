@@ -112,8 +112,9 @@
                             <h5 class="text-left">Informazioni Location</h5>
                             <div class="row text-left" id="locationEvent">
                                  <div class="col-12 form-group mb-3">
-                                   <label>Scegli Location</label>
-                                   <select class="custom-select" id="locationSelect">
+                                   <label for="locationSelect">Scegli Location</label>
+                                   <select class="custom-select form-control" id="locationSelect" style="width: 100%;">
+                                       <option value="none"></option>
                                    <?php foreach ($dbh->getAllLocation() as $key => $value): ?>
                                        <option value="<?php echo $value["IDLocation"] ?>"><?php echo $value["Nome"] ?></option>
                                    <?php endforeach; ?>
