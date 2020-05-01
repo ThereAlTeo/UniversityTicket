@@ -53,11 +53,11 @@ class DatabaseHelper{
     public function nameExistInDB($name, $surname){
          $stmt = $this->db->prepare("SELECT COUNT(*) as rowNum FROM persona P WHERE P.Nome=? AND P.Cognome=?");
          $stmt->bind_param('ss', $name, $surname);
-         return $this->factoryFetchMethos($stmt)[0]["rowNum"] == 0;
+         return !$this->factoryFetchMethos($stmt)[0]["rowNum"];
     }
 
     private function insertNewPerson($name, $surname, $cf, $birth){
-        $stmt = $this->db->prepare("INSERT INTO persona(IDPersona, Nome, Cognome, CF, DataNasciata) VALUES (IDPersona, ?, ?, ?, ?)");
+        $stmt = $this->db->prepare("INSERT INTO persona (IDPersona, Nome, Cognome, CF, DataNascita) VALUES (IDPersona, ?, ?, ?, ?)");
         $stmt->bind_param('ssss', $name, $surname, $cf, $birth);
         $stmt->execute();
         return $stmt->insert_id;
@@ -162,28 +162,36 @@ class DatabaseHelper{
         $IDTipologia = $this->getKindOfMusicInfo($IDGenere);
         $name = "";
         if($IDTipologia["IDTipologia"] != 2){
-            $name = $this->getArtistPublicName($IDArtista);
+            $name = getCorrectArtistName($this->getArtistInfo($IDArtista)[0]);
         } else
-            $name = $eventID.$IDTipologia["Name"];
+            $name = $eventID."-".$IDTipologia["Name"];
 
         return clearNameForPathValue($name);
     }
 
+    public function checkExistEvent($IDLocation, $startEvent, $endEvent){
+        $query = "SELECT COUNT(E.IDEvento) AS 'count' FROM evento E
+                  WHERE E.IDLocation=? AND (? BETWEEN E.DataInizio AND E.DataFine || ? BETWEEN E.DataInizio AND E.DataFine)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('iss', $IDLocation, $startEvent, $endEvent);
+        return $this->factoryFetchMethos($stmt)[0]["count"];
+    }
+
+    public function insertEvent($eventTitle, $IDArtista, $IDLocation, $IDGenere, $eventDescription, $startEvent, $endEvent, $publicedDateEvent){
+         $recommendation = rand(35, 50) / 10;
+         $query = "INSERT INTO evento(IDEvento, Titolo, IDOrganizzatore, IDArtista, IDLocation, IDGenere, Info, DataInizio, DataFine, DataPubblicazione, Recommendation)
+                   VALUES (IDEvento, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+         $stmt = $this->db->prepare($query);
+         $stmt->bind_param('siiiissssd', $eventTitle, $_SESSION["accountLog"]["IDUser"], $IDArtista, $IDLocation, $IDGenere, $eventDescription, $startEvent, $endEvent, $publicedDateEvent, $recommendation);
+         $stmt->execute();
+         return $stmt->insert_id;
+    }
+
     public function upgradeEventImage($eventID, $locandinaName){
-        $query = "UPDATE evento SET Locandina = ? WHERE IDEvento = ?";
+        $query = "UPDATE evento SET Locandina = ? WHERE evento.IDEvento = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('si', $locandinaName, $eventID);
         return $stmt->execute();
-    }
-
-     public function insertEvent($eventTitle, $IDArtista, $IDLocation, $IDGenere, $eventDescription, $startEvent, $endEvent, $publicedDateEvent){
-         $recommendation = rand(35, 50) / 10;
-         $query = "INSERT INTO evento(IDEvento, Titolo, Locandina, IDOrganizzatore, IDArtista, IDLocation, IDGenere, Info, DataInizio, DataFine, DataPubblicazione, Recommendation)
-                   VALUES (IDEvento, ?, '', ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-         $stmt = $this->db->prepare($query);
-         $stmt->bind_param('siiiissssd', $eventTitle, $_SESSION["accountLog"][2], $IDArtista, $IDLocation, $IDGenere, $eventDescription, $formatStartEvent, $formatEndEvent, $formatPublicedEvent, $recommendation);
-         $stmt->execute();
-         return $stmt->insert_id;
     }
 
     public function insertTariffarioEvento($eventID, $IDsectors, $IDLocation, $unitaryPrice, $sectorCapacity){

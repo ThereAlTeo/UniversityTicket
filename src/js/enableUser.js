@@ -30,7 +30,7 @@ function enableUserAccess(index) {
                          }
                     },
                     error: function(jqXHR, exception){
-                         Swal.fire({'title': 'Errors', 'text': 'There were errors while saving the data.', 'icon': 'error'});
+                         genericErrorInAjax();
                     }
                });
           }

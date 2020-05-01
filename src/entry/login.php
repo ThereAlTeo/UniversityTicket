@@ -7,7 +7,8 @@ $_GET["login"] = "ACCESSO CONTROLLATO";
 $templateParams["action"] = isset($_GET["next"]) ? $_GET["next"] : "reservedArea";
 $templateParams["main"] = "loginPrime.php";
 $templateParams["templateType"] = "common.php";
-$templateParams["js"] = array(JS_DIR."loginAction.js");
+
+array_push($config["DEFAULTJS"], JS_DIR."loginAction.js");
 
 if(isset($_SESSION["accountLog"]))
      header("Location: reservedArea.php");

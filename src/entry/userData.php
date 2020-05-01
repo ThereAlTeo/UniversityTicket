@@ -8,7 +8,10 @@ $templateParams["main"] = "userDataMain.php";
 $templateParams["navbar"] = "navbarFactory.php";
 $templateParams["footer"] = "footer.php";
 $templateParams["templateType"] = "dashboard.php";
-$templateParams["js"] = array("https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js", "https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js", JS_DIR."userDataTable.js", JS_DIR."enableUser.js");
+
+
+array_push($config["DEFAULTJS"], JS_DIR."userDataTable.js", JS_DIR."enableUser.js");
+array_unshift($config["HEADJS"], "https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js", "https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js");
 
 if(isset($_SESSION["accountLog"]) && $_SESSION["accountLog"]["IDAccesso"] == 1)
      require TEMPLATE_DIR.'ticketTemplate.php';

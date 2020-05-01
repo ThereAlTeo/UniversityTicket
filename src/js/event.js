@@ -8,7 +8,9 @@ $(function() {
 
      changeSelectTypeEvent($('select#typeEvent').val());
 
-     $('select').on('change', function() {
+     $('select#locationSelect').select2();
+     
+     $('select#locationSelect').on('change', function() {
          $(this).parents('fieldset').find(".alert").remove();
          changeSectorsSelect();
      });
@@ -49,11 +51,11 @@ $(function() {
                               Swal.fire({'title': 'Errors', 'text': data['error'], 'icon': 'error'});
                          }else{
                               Swal.fire({'position': 'top-end', 'icon': 'success', 'title': data['success'], 'showConfirmButton': false, 'timer': 1500})
-                                  .then((result) => { window.location = './eventBase.php'; });
+                                  .then((result) => { window.location.reload(true); });
                          }
                     },
                     error: function(jqXHR, exception){
-                         Swal.fire({'title': 'Errors', 'text': 'There were errors while saving the data.', 'icon': 'error'});
+                         genericErrorInAjax();
                     },
                     cache: false,
                     contentType: false,

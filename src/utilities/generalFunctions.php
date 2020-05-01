@@ -57,7 +57,7 @@
      }
 
      function getCorrectArtistName($item){
-         return isset($item["NomeDArte"]) ? $item["NomeDArte"] : $item["Nome"].$item["Cognome"];
+         return isset($item["NomeDArte"]) ? $item["NomeDArte"] : $item["Nome"]." ".$item["Cognome"];
      }
 
      function convertNumberInMonth($value){

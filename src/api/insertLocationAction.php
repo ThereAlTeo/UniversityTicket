@@ -16,7 +16,7 @@ if(isset($_POST) && $_FILES['locationImage']){
         try {
             $locationImage = "\\locationImages\\".clearNameForPathValue($locationName).".".pathinfo($_FILES['locationImage']['name'])['extension'];
             $index =  $dbh->insertLocation($locationName, $locationAddress, $locationImage);
-            if($index > 0 && copyFileInOtherDir($_FILES['locationImage']['tmp_name'], ROOT_PAHT."\\res\\images".$locationImage)){
+            if($index > 0 && copyFileInOtherDir($_FILES['locationImage']['tmp_name'], ROOT_PATH."\\res\\images".$locationImage)){
                 $msg = array("success"=> "Il luogo è stato inserito correttamente.\nBUON LAVORO!");
                 for ($i=0; $i < count($seats); $i++) {
                     if(!$dbh->insertSectorbyLocation($index, $sectorNames[$i], $seats[$i])){

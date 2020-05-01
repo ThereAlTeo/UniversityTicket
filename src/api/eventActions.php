@@ -25,35 +25,35 @@ if(isset($_POST)){
                   $eventDescription = strlen($_POST['eventDescription']) > 0 ? $_POST['eventDescription'] : null;
                   $eventID = 0;
                   try {
-                      /*
-                      * Nella funzione c'è il Rand per gestire la Recommendation. Sostituire appena possibile
-                      */
-                      $eventID = $dbh->insertEvent($eventTitle, $IDArtista, $IDLocation, $IDGenere, $eventDescription, $startEvent, $endEvent, $publicedDateEvent);
-                      if($eventID > 0){
-                          $locandinaName = "\\eventImages\\".$dbh->getResImageName($IDGenere, $IDArtista, $eventID).".".pathinfo($_FILES['locandinaImage']['name'])['extension'];
+                      if ($dbh->checkExistEvent($IDLocation, $startEvent, $endEvent)) {
+                          $msg = array("error"=> "Un altro evento è già stato programmato alla stessa ora.");
+                      } else {
+                          $eventID = $dbh->insertEvent($eventTitle, $IDArtista, $IDLocation, $IDGenere, $eventDescription, $startEvent, $endEvent, $publicedDateEvent);
+                          if($eventID){
+                              $locandinaName = "\\eventImages\\".$dbh->getResImageName($IDGenere, $IDArtista, $eventID).".".pathinfo($_FILES['locandinaImage']['name'])['extension'];
 
-                         if(!(copyFileInOtherDir($_FILES['locandinaImage']['tmp_name'], ROOT_PAHT."\\res\\images".$locandinaName) || !$dbh->upgradeEventImage($eventID, $locandinaName))){
-                              $msg = array("error"=> "Non è stato possibile gestire correttamente l'immagine caricata.\nControllare e riprovare.");
-                              throw new Exception('Immagine non copiata correttamente');
-                          }
+                              if(!(copyFileInOtherDir($_FILES['locandinaImage']['tmp_name'], ROOT_PATH."\\res\\images".$locandinaName) && $dbh->upgradeEventImage($eventID, $locandinaName))){
+                                  $msg = array("error"=> "Non è stato possibile gestire correttamente l'immagine caricata.\nControllare e riprovare.");
+                                  throw new Exception('Immagine non copiata correttamente');
+                              }
 
-                         foreach ($sectors as $key => $value) {
-                             $item = explode("-", $value);
-                             if(!$dbh->insertTariffarioEvento($eventID, $item[0], $IDLocation, $item[2], $item[1])) {
+                              foreach ($sectors as $key => $value) {
+                                  $item = explode("-", $value);
+                                  if(!$dbh->insertTariffarioEvento($eventID, $item[0], $IDLocation, $item[2], $item[1])) {
                                       $msg = array("error"=> "Non è stato possibile gestire correttamente l'immagine caricata.\nControllare e riprovare.");
                                       throw new Exception('Immagine non copiata correttamente');
+                                  }
                               }
-                          }
 
-                          $msg = array("success"=> "Evento creato correttamente!\n BUON LAVORO !!!");
-                      } else
-                        $msg = array("error"=> "Non è stato possibile creare correttamente l'evento.");
+                              $msg = array("success"=> "Evento creato correttamente!\n BUON LAVORO !!!");
+                          } else
+                          $msg = array("error"=> "Non è stato possibile creare correttamente l'evento.");
+                      }
                   } catch (Exception $e) {
-                      if(!$eventID)
+                      if($eventID)
                         $dbh->deleteEventByID($eventID);
                   }
-              }
-              else
+              } else
                   $msg = array("error"=> "Alcuni elementi del form non possono essere caricati correttamente.");
               break;
    }

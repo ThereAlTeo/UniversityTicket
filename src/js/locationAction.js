@@ -67,7 +67,7 @@ function insertLocation(e) {
                 }
            },
            error: function(jqXHR, exception){
-                Swal.fire({'title': 'Errors', 'text': 'Ci sono errori durante il salvataggio dei dati.', 'icon': 'error'});
+                genericErrorInAjax();
            },
            cache: false,
            contentType: false,

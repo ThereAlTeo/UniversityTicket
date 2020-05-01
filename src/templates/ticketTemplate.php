@@ -16,6 +16,11 @@ require_once(ROOT_DIR.'../res/config.php');
                 foreach ($config["CSS"] as $cssItem): ?>
                     <link rel="stylesheet" href="<?php echo $cssItem ?>">
           <?php endforeach;
+            endif;
+            if (isset($config["HEADJS"])):
+              foreach ($config["HEADJS"] as $scriptItem): ?>
+                <script src="<?php echo $scriptItem ?>" type="text/javascript" crossorigin="anonymous"></script>
+        <?php endforeach;
             endif; ?>
      </head>
      <body id="pageTop">

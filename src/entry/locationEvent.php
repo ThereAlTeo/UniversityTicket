@@ -11,8 +11,9 @@ $templateParams["navbar"] = "navbar.php";
 $templateParams["jumbotron"] = "homeJumbotron.php";
 $templateParams["footer"] = "footer.php";
 $templateParams["templateType"] = "common.php";
-array_unshift($config["DEFAULTJS"], "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js");
-$templateParams["js"] = array(JS_DIR."searchInput.js");
+
+array_push($config["DEFAULTJS"], JS_DIR."searchInput.js");
+array_unshift($config["HEADJS"], "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js");
 
 require TEMPLATE_DIR.'ticketTemplate.php';
 ?>
