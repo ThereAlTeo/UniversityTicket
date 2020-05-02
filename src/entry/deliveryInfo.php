@@ -4,8 +4,10 @@ require_once './../bootFiles.php';
 if(!(isset($_COOKIE["checkout"]) && getNumticketInOrder(unserialize($_COOKIE["checkout"]))))
     header("Location: bacheca.php");
 
-if (!isset($_SESSION["accountLog"]))
+if (!isset($_SESSION["accountLog"]) || $_SESSION["accountLog"]["IDAccesso"] <= 1){
     header("Location: login.php?next=deliveryInfo");
+    exit();
+}
 
 $templateParams["title"] = "University Ticket";
 $templateParams["header"] = "header.php";

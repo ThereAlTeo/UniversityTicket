@@ -20,6 +20,7 @@ function submitLogin(e) {
          success: function(data){
               if(data['error']) {
                    Swal.fire({'title': 'Errors', 'text': data['error'], 'icon': 'error'});
+                   $('#loginPassword').val("");
               }else{
                    Swal.fire({'position': 'top-end', 'icon': 'success', 'title': data['success'], 'showConfirmButton': false, 'timer': 1500})
                        .then((result) => { window.location = './' + $('#loginForm').attr('action') });

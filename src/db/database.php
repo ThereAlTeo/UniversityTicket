@@ -280,25 +280,28 @@ class DatabaseHelper{
       return $this->factoryFetchMethos($stmt);
   }
 
-  public function getLocationWithEvent($limit = 0){
-      $query = "SELECT L.IDLocation, L.Nome, L.Immagine, COUNT(E.IDEvento) AS 'EventNum', ROUND(AVG(E.Recommendation), 2) as 'Recommendation', MIN(T.Prezzounitario) AS 'Prezzounitario'
+  public function getLocationWithEvent(){
+      $query = "SELECT L.IDLocation, L.Nome, L.Immagine, COUNT(E.IDEvento) AS 'EventNum'
                 FROM location L LEFT JOIN evento E ON L.IDLocation=E.IDLocation
-				                INNER JOIN settore S ON S.IDLocation=E.IDLocation
-                                INNER JOIN tariffario T ON T.IDSettore=S.IDSettore AND T.IDEvento=E.IDEvento AND T.IDLocation=E.IDLocation
                 WHERE E.DataInizio >= CURDATE()
-                GROUP BY L.IDLocation
-                ORDER BY EventNum DESC";
-
-      if ($limit)
-          $query = $query." LIMIT ".$limit;
-
+                GROUP BY L.IDLocation ORDER BY EventNum DESC";
       $stmt = $this->db->prepare($query);
       return $this->factoryFetchMethos($stmt);
   }
 
+  public function getLocationWithEventRateInfo($IDLocation){
+      $query = "SELECT ROUND(AVG(E.Recommendation), 1) as 'Recommendation', MIN(T.Prezzounitario) AS 'Prezzounitario'
+                FROM evento E INNER JOIN tariffario T ON T.IDEvento=E.IDEvento
+                WHERE E.IDLocation = ?";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('i', $IDLocation);
+      return $this->factoryFetchMethos($stmt)[0];
+  }
+
   public function getAllLocationInfo(){
-       $stmt = $this->db->prepare("SELECT L.Nome, L.Indirizzo, COUNT(E.IDEvento) AS \"NrEventi\", ROUND(RAND()*10000) AS \"NrBiglietti\"
+       $stmt = $this->db->prepare("SELECT L.Nome, L.Indirizzo, COUNT(E.IDEvento) AS \"NrEventi\", COUNT(B.Matricola) AS \"NrBiglietti\"
                                    FROM location L LEFT JOIN evento E ON L.IDLocation=E.IDLocation
+				                                   LEFT JOIN biglietto B ON B.IDLocation=E.IDLocation
                                    GROUP BY L.IDLocation");
        return $this->factoryFetchMethos($stmt);
   }
