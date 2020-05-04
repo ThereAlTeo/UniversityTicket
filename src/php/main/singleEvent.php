@@ -30,6 +30,7 @@ else {
                 </div>
                 <div class="col-sm-9 mb-2">
                     <h2>Informazioni Generali</h2><hr>
+                    <h5><small><strong>Titolo Evento:</strong> <?php echo $info["Titolo"] ?></small></h5>
                     <h5><small><strong><?php echo $nameType ?></strong><?php echo $name ?></small></h5>
                     <h5><small><strong>Luogo: </strong><?php echo $info["Nome"].", ".$info["Indirizzo"] ?></small></h5>
                     <h5><small><strong>Data: </strong><?php echo getEventDate(date_format(date_create($info["DataInizio"]), 'Y m d H:i')) ?></small></h5>
@@ -48,13 +49,13 @@ else {
                                 $_GET["ticketSector"]["Name"] = $value["Nome"];
                                 $_GET["ticketSector"]["Price"] = $value["Prezzounitario"];
                                 $_GET["ticketSector"]["IDSettore"] = $value["IDSettore"];
-                                $_GET["ticketSector"]["Disponibilita"] = $value["Disponibilita"];
+                                $_GET["ticketSector"]["Disponibilita"] = min(5, $value["Disponibilita"], $value["Disponibilita"] - $dbh->getSectoTicketSold($value["IDEvento"]));
 
                                 include FACTORY_DIR.'buyTicketSector.php';
                             }
                         else: ?>
                         <div class="text-center text-ticketBlue m-2 p-1">
-                            <h4 class="font-weight-bolder font-italic ">Non ci sono biglietti disponibili per questo evento.</h4>
+                            <p class="font-weight-bolder font-italic h4">Non ci sono biglietti disponibili per questo evento.</p>
                         </div>
                         <?php endif; ?>
                     </div>

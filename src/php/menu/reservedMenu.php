@@ -12,11 +12,12 @@
                 <span>Dashboard</span>
             </a>
         </li>
-        <?php foreach (getMenuItem() as $key => $value): ?>
+        <?php $index=0;
+        foreach (getMenuItem() as $key => $value): ?>
             <hr class="sidebar-divider">
             <div class="sidebar-heading"><?php echo $key ?></div>
-            <?php for ($i=0; $i <count($value); $i++) : ?>
-                <li class="nav-item<?php echo (isset($templateParams["menuIndex"]) && $templateParams["menuIndex"] == $i + 1) ? " active" : ""  ?>">
+            <?php for ($i=0; $i <count($value); $i++, $index++) : ?>
+                <li class="nav-item<?php echo (isset($templateParams["menuIndex"]) && $templateParams["menuIndex"] == $index + 1) ? " active" : ""  ?>">
                     <a class="nav-link" href="<?php echo $value[$i][1] ?>">
                     <i class="<?php echo $value[$i][2] ?>"></i>
                     <span><?php echo $value[$i][0] ?></span></a>

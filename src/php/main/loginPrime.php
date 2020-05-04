@@ -11,12 +11,12 @@
                                          <h3 class="text-center">Login</h3>
                                          <hr class="mb-3">
                                          <div class="form-group">
-                                              <label for="loginEmail" class="">Username</label><br>
+                                              <label for="loginEmail" class="">Username</label>
                                               <input type="email" id="loginEmail" class="form-control formControlUser" placeholder="Inserisci E-mail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="La mail deve rispettare le convenzioni internazionali" required/>
                                               <div class="invalid-feedback"></div>
                                          </div>
                                          <div class="form-group">
-                                              <label for="loginPassword" class="">Password</label><br>
+                                              <label for="loginPassword" class="">Password</label>
                                               <input type="password" id="loginPassword" class="form-control formControlUser" placeholder="Inserisci Password" pattern=".{1,}" title="La password deve essere presente" required/>
                                               <div class="invalid-feedback"></div>
                                          </div>

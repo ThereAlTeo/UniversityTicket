@@ -26,10 +26,25 @@ class DatabaseHelper{
           return strcmp($this->factoryFetchMethos($stmt)[0]["Password"], $password) == 0;
      }
 
+     public function changePassword($newPassword, $mail){
+         $query = "UPDATE ticketuser SET Password = ? WHERE ticketuser.Email = ?";
+         $stmt = $this->db->prepare($query);
+         $stmt->bind_param('ss', $newPassword, $mail);
+         return $stmt->execute();
+     }
+
      public function getAccountAccessInfo($email){
           $stmt = $this->db->prepare("SELECT T.IDAccesso, T.IDUser FROM ticketuser T WHERE T.Email=?");
           $stmt->bind_param('s', $email);
           return $this->factoryFetchMethos($stmt)[0];
+     }
+
+     public function getPersonInfoByID($IDUser){
+         $stmt = $this->db->prepare("SELECT T.DataRegistrazione, P.Nome, P.Cognome, P.CF, P.DataNascita
+                                     FROM ticketuser T INNER JOIN persona P ON P.IDPersona=T.AnagraficaUtente
+                                     WHERE T.IDUser = ?");
+         $stmt->bind_param('i', $IDUser);
+         return $this->factoryFetchMethos($stmt);
      }
 
      private function getRecordInTable($table){
@@ -276,6 +291,8 @@ class DatabaseHelper{
                                 FROM artista A LEFT JOIN evento E ON A.IDArtista=E.IDArtista
                                                INNER JOIN persona P ON A.AnagraficaArtista=P.IDPersona
                                 WHERE A.NomeDArte LIKE "."'%".$value."%' OR A.NomeDArte LIKE "."'%".ucfirst($value)."%' ".
+                                "OR P.Nome LIKE '%".$value."%' OR P.Nome LIKE "."'%".ucfirst($value)."%' ".
+                                "OR P.Cognome LIKE '%".$value."%' OR P.Cognome LIKE "."'%".ucfirst($value)."%' ".
                                 "GROUP BY A.IDArtista ORDER BY A.AnagraficaArtista LIMIT 5");
       return $this->factoryFetchMethos($stmt);
   }
@@ -391,6 +408,14 @@ class DatabaseHelper{
                                   WHERE E.IDEvento = ? AND E.DataFine > CURDATE() ORDER BY Prezzounitario DESC");
       $stmt->bind_param('i', $IDEvent);
       return $this->factoryFetchMethos($stmt);
+  }
+
+  public function getSectoTicketSold($IDEvent){
+      $stmt = $this->db->prepare("SELECT COUNT(B.Matricola) AS 'count'
+                                  FROM biglietto B INNER JOIN settore S ON B.IDSettore=S.IDSettore
+                                  WHERE B.IDEvento = ?");
+      $stmt->bind_param('i', $IDEvent);
+      return $this->factoryFetchMethos($stmt)[0]["count"];
   }
 
   public function getGeneralInfoByIDEvent($IDEvent){
@@ -545,12 +570,15 @@ class DatabaseHelper{
   }
 
   public function getCahsTicketSold($IDManager = null){
-      $query = "SELECT SUM(A.PrezzoTotale) AS 'CashDone'
-                FROM biglietto B INNER JOIN bigliettoacquistato BA ON B.Matricola=BA.Matricola
-				                 INNER JOIN acquisto A ON BA.IDAcquisto=A.IDAcquisto";
-
-      if(isset($IDManager))
-        $query = $query." INNER JOIN evento E ON E.IDEvento=B.IDEvento WHERE E.IDOrganizzatore=".$IDManager;
+      $query = "";
+      if (isset($IDManager)) {
+          $query = "SELECT SUM(T.Prezzounitario) AS 'CashDone'
+                    FROM biglietto B INNER JOIN settore S ON S.IDSettore=B.IDSettore
+				                     INNER JOIN tariffario T ON S.IDSettore=T.IDSettore AND T.IDEvento=B.IDEvento
+                                     INNER JOIN evento E ON B.IDEvento=E.IDEvento
+                    WHERE E.IDOrganizzatore=".$IDManager;
+      } else
+          $query = "SELECT SUM(A.PrezzoTotale) AS 'CashDone' FROM acquisto A";
 
       $stmt = $this->db->prepare($query);
       $row = $this->factoryFetchMethos($stmt)[0];
@@ -559,6 +587,63 @@ class DatabaseHelper{
           return $row["CashDone"];
       else
           return "0,00";
+  }
+
+  private function joinStringFactory(){
+      return " FROM acquisto A INNER JOIN bigliettoacquistato BA ON A.IDAcquisto=BA.IDAcquisto
+                      INNER JOIN biglietto B ON BA.Matricola=B.Matricola
+                      INNER JOIN evento E ON B.IDEvento=E.IDEvento
+                      INNER JOIN artista AR ON AR.IDArtista=E.IDArtista
+                      INNER JOIN persona P ON P.IDPersona=AR.AnagraficaArtista
+                      INNER JOIN location L ON L.IDLocation=E.IDLocation
+                      WHERE A.IDUser=? ";
+  }
+
+  public function getInfoTicketBuy($IDUser){
+      $query = "SELECT COUNT(B.Matricola) AS 'NumTicket', P.Nome, P.Cognome, AR.NomeDArte, L.Nome AS 'NomeLocation', E.DataInizio, E.IDEvento".
+                $this->joinStringFactory()." GROUP BY E.IDEvento";
+
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('i', $IDUser);
+      return $this->factoryFetchMethos($stmt);
+  }
+
+  public function getNumTicketSoldByUser($IDUser){
+    $numTicket = 0;
+
+    foreach($this->getInfoTicketBuy($IDUser) as $key => $value)
+        $numTicket += $value["NumTicket"];
+
+    return $numTicket;
+  }
+
+  public function getFavouriteArtistByIDUser($IDUser){
+      $query = "SELECT COUNT(B.Matricola) AS 'NumTicket', P.Nome, P.Cognome, AR.NomeDArte".
+                $this->joinStringFactory()." GROUP BY E.IDArtista ORDER BY NumTicket DESC";
+
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('i', $IDUser);
+      return $this->factoryFetchMethos($stmt);
+  }
+
+  public function nextLocationVisited($IDUser){
+      $query = "SELECT COUNT(B.Matricola) AS 'NumTicket', P.Nome, P.Cognome, AR.NomeDArte, L.Nome AS 'NomeLocation', E.DataInizio, E.IDEvento".
+                $this->joinStringFactory()." AND CURDATE() < E.DataInizio GROUP BY E.IDEvento ORDER BY E.DataInizio";
+
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('i', $IDUser);
+      return $this->factoryFetchMethos($stmt);
+  }
+
+  public function getReviewNumByIDUser($IDUser){
+      $query = "SELECT COUNT(R.IDRecensione) AS 'reviewNum'
+                FROM recensione R INNER JOIN bigliettoacquistato BA ON BA.Matricola=R.Matricola AND BA.IDAcquisto=R.IDAcquisto
+				                  INNER JOIN acquisto A ON A.IDAcquisto=BA.IDAcquisto
+                WHERE A.IDUser=?";
+
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('i', $IDUser);
+      return $this->factoryFetchMethos($stmt)[0];
   }
 }
 ?>

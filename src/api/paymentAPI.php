@@ -7,7 +7,7 @@ try {
     $IDAcquisto = $dbh->insertAcquisto($payment, $_SESSION["ticketDelivery"]["IDDelivery"], $_SESSION["accountLog"]["IDUser"], $totPrice);
     foreach ($_SESSION["ticketGeneralInfo"] as $key => $value) {
         foreach ($value["Sector"] as $index => $item) {
-            $matricola = $payment = $value["IDLocation"]."-".$item["IDSector"]."-".$value["IDEvent"]."-".$item["Seat"];
+            $matricola = $value["IDLocation"]."-".$item["IDSector"]."-".$value["IDEvent"]."-".$item["Seat"];
             $dbh->insertTicket($matricola, $item["IDSector"], $value["IDLocation"], $value["IDEvent"]);
             if(!$dbh->insertAcquistoMultiplo($matricola, $IDAcquisto))
                 throw new Exception("Error Processing Request", 1);

@@ -12,7 +12,7 @@ if(isset($_POST)){
         if(strcmp($next, "reservedArea") == 0) {
             $_SESSION["accountLog"] = array("Mail" => $email, "IDUser" => $accountInfo["IDUser"], "IDAccesso" => $accountInfo["IDAccesso"]);
             $msg = array("success"=>"Bentornato ".$email."!");
-        } else if (strcmp($next, "deliveryInfo") == 0 &&  $accountInfo["IDAccesso"] > 1) {
+        } else if (strcmp($next, "deliveryInfo") == 0 &&  $accountInfo["IDAccesso"] > 2) {
             $_SESSION["accountLog"] = array("Mail" => $email, "IDUser" => $accountInfo["IDUser"], "IDAccesso" => $accountInfo["IDAccesso"]);
             $msg = array("success"=>"Bentornato ".$email."!");
         } else

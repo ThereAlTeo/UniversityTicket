@@ -65,7 +65,10 @@ $userInfo = $dbh->getFullUserInfo($_SESSION["accountLog"]["IDAccesso"])[0];
         </form>
     </div>
 </div>
-<div class="row d-flex flex-sm-row-reverse mt-3">
+<div class="row d-flex justify-content-sm-between align-items-center mt-3">
+    <div class="d-none d-sm-inline col-sm-6">
+        <a href="checkout.php" class="text-primary text-decoration-none text-left h6"><i class="fas fa-long-arrow-alt-left"></i> Torna indietro</a>
+    </div>
     <div class="col-sm-6">
         <a class="btn btn-outline-ticketBlue btn-block" type="submit" id="delivery" href="./payment.php" role="button">Salva e vai al pagamento</a>
     </div>

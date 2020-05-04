@@ -14,18 +14,24 @@
             <div class="row d-flex align-items-center">
                 <div class="col-6">
                     <div class="form-group d-flex align-items-center my-2">
-                        <select class="form-control" id="ticketQntSelect">
-                            <option selected value="und">Scegli quantità</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
+                        <?php if ($_GET["ticketSector"]["Disponibilita"]): ?>
+                            <select class="form-control" id="ticketQntSelect">
+                                <option selected value="und">Scegli quantità</option>
+                                <?php foreach (range(1, $_GET["ticketSector"]["Disponibilita"]) as $value): ?>
+                                    <option value="<?php echo $value ?>"><?php echo $value ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        <?php else: ?>
+                            <p class="font-weight-bolder text-danger text-uppercase h5">sold out</p>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <div class="col-6 text-right">
-                    <button type="button" class="btn btn-outline-warning orderBtn">Aggiungi <i class="fas fa-shopping-cart"></i></button>
+                    <?php if ($_GET["ticketSector"]["Disponibilita"]): ?>
+                        <button type="button" class="btn btn-outline-warning orderBtn">Aggiungi <i class="fas fa-shopping-cart"></i></button>
+                    <?php else: ?>
+                        <button type="button" class="btn btn-danger btn-sm"><i class="fas fa-shopping-cart"></i></button>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

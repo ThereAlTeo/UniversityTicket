@@ -4,7 +4,7 @@ require_once './../bootFiles.php';
 if(!(isset($_COOKIE["checkout"]) && getNumticketInOrder(unserialize($_COOKIE["checkout"]))))
     header("Location: bacheca.php");
 
-if (!isset($_SESSION["accountLog"]) || $_SESSION["accountLog"]["IDAccesso"] <= 1){
+if (!isset($_SESSION["accountLog"]) || $_SESSION["accountLog"]["IDAccesso"] <= 2){
     header("Location: login.php?next=deliveryInfo");
     exit();
 }

@@ -21,10 +21,11 @@
                case 1:
                     return array("Aggiungi" => array(array("Locale", "insertLocation.php", "fas fa-map-marker-alt"), array("Account", "userData.php", "fas fa-user-circle")));
                case 2:
-                    return array("Visualizza" => array(array("Eventi", "eventBase.php", "far fa-calendar-alt"), array("Artisti", "artistBase.php", "fas fa-user-tie")));
+                    return array("Visualizza" => array(array("Eventi", "eventBase.php", "far fa-calendar-alt"), array("Artisti", "artistBase.php", "fas fa-user-tie")), "Info" => array(array("Recensioni", "review.php", "fas fa-pen-fancy")));
                     break;
-               default:
-                    return array();
+                case 3: return array("Info" => array(array("Recensioni", "review.php", "fas fa-pen-fancy")));
+                    break;
+               default: return array();
           }
      }
 

@@ -1,4 +1,4 @@
-          <!-- Reserved Area Dashboard -->
+    <!-- Reserved Area Dashboard -->
     <div>
         <div class="d-sm-flex align-items-center justify-content-between my-4">
             <h1 class="h3 mb-0 text-ticketBlue">Dashboard</h1>
@@ -15,14 +15,19 @@
                 break;
             case 2: $infoCardValue = array("$".$dbh->getCahsTicketSold($_SESSION["accountLog"]["IDUser"]), $dbh->getEventNumByManager($_SESSION["accountLog"]["IDUser"]), $dbh->getArtistNumByManager($_SESSION["accountLog"]["IDUser"]), "$40,000");
                 break;
-            case 3: $infoCardValue = array("$40,000", "$40,000", "$40,000", "$40,000");
+            case 3:
+                $favouriteArtist = $dbh->getFavouriteArtistByIDUser($_SESSION["accountLog"]["IDUser"]);
+                $favouriteArtist = (count($favouriteArtist)) ? getCorrectArtistName($favouriteArtist[0]) : "Non disponibile";
+                $nextEvent = $dbh->nextLocationVisited($_SESSION["accountLog"]["IDUser"]);
+                $nextEvent = (count($nextEvent)) ? getCorrectArtistName($nextEvent[0])." - ".$nextEvent[0]["NomeLocation"] : "Non disponibile" ;
+                $infoCardValue = array($dbh->getNumTicketSoldByUser($_SESSION["accountLog"]["IDUser"]), $favouriteArtist, $nextEvent, $dbh->getReviewNumByIDUser($_SESSION["accountLog"]["IDUser"])["reviewNum"]);
                 break;
             default: throw new Exception("Error Processing Request", 1);
         }
 
         for ($i=0; $i < 4; $i++): ?>
             <div class="col-xl-3 col-sm-6 mb-4">
-                <div class="card border-left-<?php echo $infoCardColor[$i] ?> shadow py-2">
+                <div class="card border-left-<?php echo $infoCardColor[$i] ?> shadow py-2 h-100">
                     <div class="card-body">
                         <div class="row align-items-center">
                             <div class="col mr-2">
@@ -70,8 +75,10 @@
                             </div>
                         </div>
                     </div>
-                <?php endfor; ?>
-            <?php endif; ?>
+                <?php endfor;
+            else:
+                require(MAIN_DIR."userReservedArea.php");
+            endif; ?>
         </div>
     </div>
-          <!-- Reserved Area Dashboard -->
+    <!-- Reserved Area Dashboard -->

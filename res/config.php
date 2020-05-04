@@ -10,12 +10,12 @@ $config = array(
     "infoCardText" => array(
          1 => array("Guadagno Complessivo", "Biglietti venduti", "Nr Location", "Nr Utenti"),
          2 => array("Guadagno Complessivo", "Eventi Creati", "Nr Artisti", "Affluenza Maggiore"),
-         3 => array("Biglietti Acquistati", "Artista Preferito", "Luogo Preferito", "Ultimo Evento")
+         3 => array("Biglietti Acquistati", "Artista Preferito", "Prossimo Evento", "Recensioni Fatte")
     ),
     "infoCardIcon" => array(
          1 => array("fas fa-dollar-sign", "fas fa-ticket-alt", "fas fa-map-marked-alt", "fas fa-users"),
          2 => array("fas fa-dollar-sign", "far fa-calendar-alt", "far fa-address-card", "fas fa-map-marked-alt"),
-         3 => array("fas fa-ticket-alt", "far fa-grin-hearts", "fas fa-map-marked-alt", "fas fa-eye")
+         3 => array("fas fa-ticket-alt", "far fa-grin-hearts", "fas fa-map-marked-alt", "fas fa-pen-fancy")
     ),
     "chartCardHeader" => array(
          1 => array("Non lo so", "Prova"),
