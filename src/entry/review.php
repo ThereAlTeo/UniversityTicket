@@ -12,11 +12,15 @@ if (!isset($_SESSION["accountLog"])) {
     exit();
 } elseif ($_SESSION["accountLog"]["IDAccesso"] < 3) {
     $templateParams["menuIndex"] = 3;
-    //$templateParams["main"] = "reservedAreaDashboard.php";
+    $templateParams["main"] = "reviewManager.php";
 } else {
     $templateParams["menuIndex"] = 1;
+    $templateParams["main"] = "reviewUser.php";
 }
 
+array_push($config["DEFAULTJS"], JS_DIR."review.js");
+array_push($config["HEADJS"], "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.min.js");
+array_push($config["CSS"], "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/css/select2.min.css");
 array_unshift($config["HEADJS"], "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js");
 
 require TEMPLATE_DIR.'ticketTemplate.php';

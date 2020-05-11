@@ -103,6 +103,16 @@
   justify-content: center;
 }
 
+.rating-stars ul > li.star > i.fa {
+  color:#CCCCCC;
+}
+.rating-stars ul > li.star.hover > i.fa {
+  color:#FFD96A;
+}
+.rating-stars ul > li.star.selected > i.fa {
+  color:#FFC107;
+}
+
 .modalSteps { overflow: hidden; position: relative; margin-top: 20px; }
 .modalProgress { position: absolute; top: 24px; left: 0; width: 100%; height: 1px; background: #DDDDDD; }
 .modalProgressLine { position: absolute; top: 0; left: 0; height: 1px; }

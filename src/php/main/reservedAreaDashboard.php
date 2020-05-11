@@ -20,7 +20,7 @@
                 $favouriteArtist = (count($favouriteArtist)) ? getCorrectArtistName($favouriteArtist[0]) : "Non disponibile";
                 $nextEvent = $dbh->nextLocationVisited($_SESSION["accountLog"]["IDUser"]);
                 $nextEvent = (count($nextEvent)) ? getCorrectArtistName($nextEvent[0])." - ".$nextEvent[0]["NomeLocation"] : "Non disponibile" ;
-                $infoCardValue = array($dbh->getNumTicketSoldByUser($_SESSION["accountLog"]["IDUser"]), $favouriteArtist, $nextEvent, $dbh->getReviewNumByIDUser($_SESSION["accountLog"]["IDUser"])["reviewNum"]);
+                $infoCardValue = array($dbh->getNumTicketSoldByUser($_SESSION["accountLog"]["IDUser"]), $favouriteArtist, $nextEvent, count($dbh->getReviewDoneByIDUser($_SESSION["accountLog"]["IDUser"])));
                 break;
             default: throw new Exception("Error Processing Request", 1);
         }

@@ -63,7 +63,7 @@ function insertLocation(e) {
                      Swal.fire({'title': 'Errors', 'text': data['error'], 'icon': 'error'});
                 }else{
                      Swal.fire({'icon': 'success', 'title': data['success'], 'showConfirmButton': false, 'timer': 1000})
-                         .then((result) => { window.location = './insertLocation.php'; });
+                         .then((result) => { window.location.reload(true); });
                 }
            },
            error: function(jqXHR, exception){

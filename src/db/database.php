@@ -635,15 +635,44 @@ class DatabaseHelper{
       return $this->factoryFetchMethos($stmt);
   }
 
-  public function getReviewNumByIDUser($IDUser){
-      $query = "SELECT COUNT(R.IDRecensione) AS 'reviewNum'
-                FROM recensione R INNER JOIN bigliettoacquistato BA ON BA.Matricola=R.Matricola AND BA.IDAcquisto=R.IDAcquisto
-				                  INNER JOIN acquisto A ON A.IDAcquisto=BA.IDAcquisto
-                WHERE A.IDUser=?";
+  private function joinReviewFactory(){
+      return " FROM bigliettoacquistato BA INNER JOIN acquisto A ON BA.IDAcquisto=A.IDAcquisto
+                                  INNER JOIN biglietto B ON B.Matricola=BA.Matricola
+                                  INNER JOIN evento E ON E.IDEvento=B.IDEvento
+                                  INNER JOIN location L ON L.IDLocation=E.IDLocation
+                                  INNER JOIN artista AR ON AR.IDArtista=E.IDArtista
+                                  INNER JOIN persona P ON P.IDPersona=AR.AnagraficaArtista ";
+  }
+
+  public function getEventEnableReview($IDUser){
+      $query = "SELECT BA.*, L.Nome AS 'NomeLocation', P.Nome, P.Cognome, AR.NomeDArte".$this->joinReviewFactory().
+                "WHERE A.IDUser=? GROUP BY B.IDEvento";
 
       $stmt = $this->db->prepare($query);
       $stmt->bind_param('i', $IDUser);
-      return $this->factoryFetchMethos($stmt)[0];
+      return $this->factoryFetchMethos($stmt);
   }
+
+  public function getReviewDoneByIDUser($IDUser){
+      $query = "SELECT R.Recensione, L.Nome AS 'NomeLocation', E.DataInizio, P.Nome, P.Cognome, AR.NomeDArte, E.IDEvento".$this->joinReviewFactory().
+                "INNER JOIN recensione R ON R.Matricola=BA.Matricola AND R.IDAcquisto=BA.IDAcquisto
+                WHERE A.IDUser=? GROUP BY B.IDEvento";
+
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('i', $IDUser);
+      return $this->factoryFetchMethos($stmt);
+  }
+
+  public function getReviewDoneByIDArtista($IDArtista){
+      $query = "SELECT R.Recensione, L.Nome AS 'NomeLocation', E.DataInizio, P.Nome, P.Cognome, AR.NomeDArte, E.IDEvento, R.Recommendation".$this->joinReviewFactory().
+                "INNER JOIN recensione R ON R.Matricola=BA.Matricola AND R.IDAcquisto=BA.IDAcquisto
+                WHERE E.IDArtista=?";
+
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('i', $IDArtista);
+      return $this->factoryFetchMethos($stmt);
+  }
+
+
 }
 ?>

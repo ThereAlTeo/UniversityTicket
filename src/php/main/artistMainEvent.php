@@ -77,21 +77,28 @@ $locandinaPath = !count($locandinaPath) ? getPathImageOrDefault() : getPathImage
                         <div class="p-3 bg-ticketBlue text-white">
                             <h5 class="font-weight-bold">Recensioni</h5>
                         </div>
-                        <div class="row m-2 p-2 border-bottom border-gray">
-                            <div class="col-md-3 font-weight-bold text-left">
-                                <p>Stadio San Siro</p>
-                                <p class="small">21/09/2020</p>
+                        <?php
+                        $review = $dbh->getReviewDoneByIDArtista($_GET["IDArtist"]);
+                        if(count($review)): ?>
+                            <?php foreach ($review as $key => $value): ?>
+                                <div class="row m-2 p-2 border-bottom border-gray">
+                                    <div class="col-md-3 font-weight-bold text-left">
+                                        <p><?php echo $value["NomeLocation"] ?><br><small><?php echo date_format(date_create($value["DataInizio"]), "d/m/Y") ?></small></p>
+                                    </div>
+                                    <div class="col-md-9 text-left">
+                                        <span class="text-warning">
+                                        <?php for ($i=1; $i <= 5; $i++) {
+                                            echo $i <= floatval($value["Recommendation"]) ? "&#9733; " : "&#9734; ";
+                                        } ?></span>
+                                        <p class="h6"> <?php echo $value["Recensione"] ?></p>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <div class="text-center text-ticketBlue m-2 p-1">
+                                <p class="font-weight-bolder font-italic h5">L'artista non possiede al momento recensioni.<br>Acquista il biglietto e diventa il primo! </p>
                             </div>
-                            <div class="col-md-9 text-left">
-                                <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
-                                <p class="pb-3 mb-0 small lh-125">
-                                    Il nome d'arte "Marracash" viene addottato dall'artista perchè da piccolo, essendo di <a href="#" id="textContinue"> Continua a leggere ...</a>
-                                </p>
-                                <p class="d-none d-print-block">
-                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-                                </p>
-                            </div>
-                        </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
