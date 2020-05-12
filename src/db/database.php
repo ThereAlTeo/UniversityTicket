@@ -202,6 +202,12 @@ class DatabaseHelper{
          return $stmt->insert_id;
     }
 
+    public function deleteEvent($IDEvent){
+        $stmt = $this->db->prepare("DELETE FROM evento WHERE IDEvento = ?");
+        $stmt->bind_param('i', $IDEvent);
+        return $stmt->execute();
+    }
+
     public function upgradeEventImage($eventID, $locandinaName){
         $query = "UPDATE evento SET Locandina = ? WHERE evento.IDEvento = ?";
         $stmt = $this->db->prepare($query);
@@ -546,7 +552,7 @@ class DatabaseHelper{
   }
 
   public function getEventInfoReserved($IDManager){
-      $query = "SELECT E.Titolo, P.Nome, P.Cognome, A.NomeDArte, L.Nome AS 'NomeLocation', E.DataInizio, COUNT(B.Matricola) AS 'TicketBuy'
+      $query = "SELECT E.IDEvento, E.Titolo, P.Nome, P.Cognome, A.IDArtista, A.NomeDArte, L.Nome AS 'NomeLocation', E.DataInizio, COUNT(B.Matricola) AS 'TicketBuy'
                 FROM evento E INNER JOIN location L ON L.IDLocation=E.IDLocation
 			                  INNER JOIN artista A ON A.IDArtista=E.IDArtista
                               INNER JOIN persona P ON P.IDPersona=A.AnagraficaArtista
@@ -673,6 +679,27 @@ class DatabaseHelper{
       return $this->factoryFetchMethos($stmt);
   }
 
+  public function getReviewReceiptsByIDManager($IDManager){
+      $query = "SELECT R.Recensione, L.Nome AS 'NomeLocation', E.DataInizio, P.Nome, P.Cognome, AR.NomeDArte, E.IDEvento, R.Recommendation, E.Locandina".$this->joinReviewFactory().
+                "INNER JOIN recensione R ON R.Matricola=BA.Matricola AND R.IDAcquisto=BA.IDAcquisto
+                WHERE E.IDOrganizzatore=? ORDER BY E.DataInizio DESC";
 
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('i', $IDManager);
+      return $this->factoryFetchMethos($stmt);
+  }
+
+  public function eventInfoByIDArtist($IDArtista){
+      $query = "SELECT L.Nome AS 'LocationName', E.Titolo, E.DataInizio, E.DataFine, E.DataPubblicazione, E.IDEvento, SUM(T.Disponibilita) AS 'TotTicket', COUNT(B.Matricola) AS 'TicketBuy'
+                FROM evento E INNER JOIN location L ON E.IDLocation=L.IDLocation
+			                  INNER JOIN tariffario T ON T.IDEvento=E.IDEvento
+                              LEFT JOIN biglietto B ON B.IDEvento=E.IDEvento AND T.IDSettore=B.IDSettore
+              WHERE E.DataInizio >= CURDATE() && E.IDArtista = ?
+              GROUP BY E.IDEvento ORDER BY E.DataInizio";
+
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('i', $IDArtista);
+      return $this->factoryFetchMethos($stmt);
+  }
 }
 ?>

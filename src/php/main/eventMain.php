@@ -9,6 +9,8 @@
                require(FACTORY_DIR."reservedMenu.php");
                $templateParams["modal"] = "addEvent";
                require(FACTORY_DIR."modalItem.php");
+              $templateParams["modal"] = "modifyEvent";
+               require(FACTORY_DIR."modalItem.php");
                ?>
           </div>
                     <div class="col-12 col-lg-9">
@@ -30,7 +32,7 @@
                                              </thead>
                                              <tbody>
                                                  <?php foreach ($dbh->getEventInfoReserved($_SESSION["accountLog"]["IDUser"]) as $key => $value): ?>
-                                                 <tr>
+                                                 <tr id="<?php echo $value["IDEvento"]."-".$value["IDArtista"] ?>">
                                                      <td class="text-center"><?php echo $value["Titolo"] ?></td>
                                                      <td class="text-center"><?php echo getCorrectArtistName($value) ?></td>
                                                      <td class="text-center"><?php echo $value["NomeLocation"] ?></td>

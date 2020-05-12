@@ -1,6 +1,7 @@
+var iconPamameter = { time: "far fa-clock", date: "fas fa-calendar-alt", up: "fas fa-arrow-up", down: "fas fa-arrow-down" };
 $(function() {
-     var iconPamameter = { time: "far fa-clock", date: "fas fa-calendar-alt", up: "fas fa-arrow-up", down: "fas fa-arrow-down" };
-     $("#addEvent .modal-dialog").addClass("modal-lg");
+    $("#addEvent .modal-dialog").addClass("modal-lg");
+    $("#modifyEvent .modal-dialog").addClass("modal-lg");
 
      $('select#typeEvent').on('change', function() {
          changeSelectTypeEvent($(this).val());
@@ -9,10 +10,49 @@ $(function() {
      changeSelectTypeEvent($('select#typeEvent').val());
 
      $('select#locationSelect').select2();
+     $('select#artistEventModifySelect').select2();
 
      $('select#locationSelect').on('change', function() {
          $(this).parents('fieldset').find(".alert").remove();
          changeSectorsSelect();
+     });
+
+     $('select#artistEventModifySelect').on('change', function() {
+         $("#eventsModify .accordion").empty();
+         if (!isNaN(Number($("#artistEventModifySelect").val())))
+             modifyEventSelect();
+     });
+
+     $(document).on("click", ".btnDelete", function () {
+         Swal.mixin({
+             customClass: {
+                 confirmButton: 'btn btn-success mx-2',
+                 cancelButton: 'btn btn-light'
+             },
+             buttonsStyling: false
+         }).fire({ title: 'Sei sicuro di voler cancellare l\'evento?', icon: 'warning', showCancelButton: true,
+                     confirmButtonText: 'Si, Cancella!', cancelButtonText: 'No, annulla', reverseButtons: true,
+                  }).then((result) => {
+                      if (result.value) {
+                          $.ajax({url : './../api/eventActions.php',
+                               type : 'POST',
+                               dataType: 'JSON',
+                               data: { IDEvent: $(this).parents(".card").attr("id"), mode: "deleteEvent" },
+                               success: function(data){
+                                    if(data['error']) {
+                                         Swal.fire({'title': 'Errors', 'text': data['error'], 'icon': 'error'});
+                                    }else{
+                                        Swal.fire('Cancellatto!', data['success'], 'success')
+                                         Swal.fire({ 'icon': 'success', 'title': 'Cancellatto!', 'text': data['success'], 'showConfirmButton': false, 'timer': 1500})
+                                             .then((result) => { window.location.reload(true); });
+                                    }
+                               },
+                               error: function(jqXHR, exception){
+                                    genericErrorInAjax();
+                               }
+                          });
+                      }
+                  });
      });
 
      $('.btnSubmit').click(function(e) {
@@ -110,7 +150,6 @@ $(function() {
                $(this).find("i").removeClass("fa-eye-slash").addClass("fa-eye");
                $(this).parents(".localSectorInfo").find(".row").eq(1).find("div").fadeIn("fast");
           }
-
      });
 
      $('#startDatePicker').datetimepicker({
@@ -133,6 +172,14 @@ $(function() {
       $("#startDatePicker").on("change.datetimepicker", function (e) {
             $('#endDatePicker').datetimepicker('minDate', e.date);
             $('#publicedDatePicker').datetimepicker('maxDate', e.date);
+      });
+
+      $('#dataTable').on('click', 'tr', function () {
+          var id = tableObject().row(this).id();
+          if(id !== undefined) {
+              $("#artistEventModifySelect").val(id.split("-")[1]).trigger('change');
+              $('#modifyEvent').modal('show');
+          }
       });
 });
 
@@ -195,5 +242,66 @@ function changeSectorsSelect() {
                 $("#locationSectors").append(tr_str);
                });
           }
+     });
+}
+
+function modifyEventSelect() {
+    $.ajax({url : './../api/eventActions.php',
+         type : 'POST',
+         dataType: 'JSON',
+         data: { IDArtist: $("#artistEventModifySelect").val(), mode: "artistEventModify"},
+         success: function(data){
+              data.forEach(function(item) {
+                  var inputName = "input" + item.IDEvento;
+                  var collapseName = "collapse" + item.IDEvento;
+                  var headingID = "head" + item.IDEvento;
+                  var date = item.DataInizio.replace(" ", "T");
+                  var tr_str = ' ' +
+                  '<div class="card" id="' + item.IDEvento + '">' +
+                    '<div class="card-header" id="' + headingID + '">' +
+                        '<div class="col-9">' +
+                            '<div class="custom-control custom-radio custom-control-inline">' +
+                                '<input type="radio" id="' + inputName + '"  name="paymentRadio" class="custom-control-input" data-toggle="collapse" data-target="#' + collapseName + '" aria-expanded="false" aria-controls="' + collapseName + '">' +
+                                '<label class="custom-control-label font-weight-bold h6 text-ticketBlue" for="' + inputName + '">' + item.LocationName + " " + generalDateFormat(date) + '</label>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div id="' + collapseName + '" class="collapse" aria-labelledby="' + headingID + '" data-parent="#accordionEventsModify">' +
+                      '<div class="card-body py-sm-2">' +
+                            '<h5><small><strong>Titolo Evento: </strong>' + item.Titolo + '</small></h5>' +
+                            '<h5><small><strong>Biglietti venduti: </strong>' + item.TicketBuy + " su " + item.TotTicket +'</small></h5>' +
+                            '<div class="progress my-3">' +
+                                '<div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: ' + calculatPercet(item.TotTicket, item.TicketBuy) + '%" aria-valuenow="' + item.TicketBuy + '" aria-valuemin="0" aria-valuemax="' + item.TotTicket + '">' + item.TicketBuy + " su " + item.TotTicket +'</div>' +
+                            '</div>' +
+                            '<div class="text-right my-2">' +
+                                 '<button type="button" class="btn btn-danger btnDelete"><i class="far fa-trash-alt"></i> Cancella</button>' +
+                            '</div>' +
+                      '</div>' +
+                    '</div>' +
+                  '</div>';
+                  $("#eventsModify .accordion").append(tr_str);
+                  pickerDateFactory(item.IDEvento);
+              });
+         }
+    });
+}
+
+function pickerDateFactory(index) {
+    $('#startDateModify' + index).datetimepicker({
+         icons: iconPamameter,
+         useCurrent: false,
+         format: 'DD-MM-YYYY HH:mm'
+     });
+
+    $('#endDateModify' + index).datetimepicker({
+         useCurrent: false,
+         icons: iconPamameter,
+         format: 'DD-MM-YYYY HH:mm'
+     });
+
+    $('#publicedDateModify' + index).datetimepicker({
+         useCurrent: false,
+         icons: iconPamameter,
+         format: 'DD-MM-YYYY HH:mm'
      });
 }

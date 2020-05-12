@@ -4,16 +4,13 @@
     if(isset($templateParams["navbar"]))
         require(NAVBAR_DIR.$templateParams["navbar"]);
     ?>
-    <main>
+    <main role="main">
         <div class="container-fluid">
-            <?php
-            if (isset($templateParams["jumbotron"]))
-            require(JUMBOTRN_DIR.$templateParams["jumbotron"]);
-
+            <?php        
             if(isset($templateParams["main"]))
             require(MAIN_DIR.$templateParams["main"]);
             ?>
-        </div>        
+        </div>
     </main>
     <?php
     if(isset($templateParams["footer"]))

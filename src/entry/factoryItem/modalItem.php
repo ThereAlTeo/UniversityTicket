@@ -42,7 +42,7 @@
                                       <div class="form-group">
                                           <textarea placeholder="Inserisci Biografia." class="form-control" id="artistBiografia" required></textarea>
                                       </div>
-                                      <div class="f1-buttons text-right">
+                                      <div class="text-right">
                                            <button type="button" class="btn btn-light btnPrevious">Previous</button>
                                            <button type="button" class="btn btn-info btnNext">Next</button>
                                       </div>
@@ -54,7 +54,7 @@
                                                 <input type="text" placeholder="Inserisci Nome D'arte" class="form-control formControlUser" id="artistArtName">
                                            </div>
                                       </div>
-                                      <div class="f1-buttons text-right">
+                                      <div class="text-right">
                                            <button type="button" class="btn btn-light btnPrevious">Previous</button>
                                            <button type="submit" class="btn btn-success btnSubmit">Submit</button>
                                       </div>
@@ -123,7 +123,7 @@
                             </div>
                             <div id="locationSectors">
                             </div>
-                            <div class="f1-buttons text-right">
+                            <div class="text-right">
                                  <button type="button" class="btn btn-light btnPrevious">Previous</button>
                                  <button type="button" class="btn btn-info nextFieldset">Next</button>
                             </div>
@@ -133,7 +133,7 @@
                          <div class="form-row">
                               <div class="col-md-4 mb-3">
                                    <div class="input-group date" id="startDatePicker" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input formControlUser"  placeholder="Data Inizio" data-target="#startDatePicker" required/>
+                                        <input type="text" class="form-control datetimepicker-input formControlUser" placeholder="Data Inizio" data-target="#startDatePicker" required/>
                                          <div class="input-group-append" data-target="#startDatePicker" data-toggle="datetimepicker">
                                              <div class="input-group-text"><i class="fas fa-calendar-day"></i></div>
                                          </div>
@@ -141,7 +141,7 @@
                               </div>
                               <div class="col-md-4 mb-3">
                                    <div class="input-group date" id="endDatePicker" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input formControlUser"  placeholder="Data Fine" data-target="#endDatePicker" required/>
+                                        <input type="text" class="form-control datetimepicker-input formControlUser" placeholder="Data Fine" data-target="#endDatePicker" required/>
                                          <div class="input-group-append" data-target="#endDatePicker" data-toggle="datetimepicker">
                                              <div class="input-group-text"><i class="fas fa-calendar-day"></i></div>
                                          </div>
@@ -149,7 +149,7 @@
                               </div>
                               <div class="col-md-4 mb-3">
                                    <div class="input-group date" id="publicedDatePicker" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input formControlUser"  placeholder="Data Pubblicazione" data-target="#publicedDatePicker"/>
+                                        <input type="text" class="form-control datetimepicker-input formControlUser" placeholder="Data Pubblicazione" data-target="#publicedDatePicker"/>
                                          <div class="input-group-append" data-target="#publicedDatePicker" data-toggle="datetimepicker">
                                              <div class="input-group-text"><i class="fas fa-calendar-day"></i></div>
                                          </div>
@@ -159,12 +159,32 @@
                          <div class="form-group">
                              <textarea placeholder="Inserisci descrizione evento." class="form-control" id="eventDescription"></textarea>
                          </div>
-                         <div class="f1-buttons text-right">
+                         <div class="text-right">
                               <button type="button" class="btn btn-light btnPrevious">Previous</button>
                               <button type="submit" class="btn btn-success btnSubmit">Submit</button>
                          </div>
                        </fieldset>
                   </div>
+        <?php break;
+            case "modifyEvent": ?>
+                <h3 class="text-uppercase mb-2">Modifica evento</h3>
+                <div class="text-left">
+                    <div class="row text-left" id="artistEventModify">
+                         <div class="col-12 form-group mb-3">
+                           <label for="locationSelect">Scegli Location</label>
+                           <select class="custom-select form-control" id="artistEventModifySelect" style="width: 100%;">
+                               <option value="none"></option>
+                               <?php foreach ($dbh->getArtistByManager($_SESSION["accountLog"]["IDUser"]) as $key => $value): ?>
+                                   <option value="<?php echo $value["IDArtista"] ?>"><?php echo getCorrectArtistName($value) ?></option>
+                               <?php endforeach; ?>
+                           </select>
+                         </div>
+                    </div>
+                    <div class="text-ticketBlue" id="eventsModify">
+                        <div class="accordion" id="accordionEventsModify">
+                        </div>
+                    </div>
+                </div>
         <?php break;
               default: throw new Exception("Error Processing Request", 1);
               endswitch ?>

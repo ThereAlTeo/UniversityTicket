@@ -52,3 +52,15 @@ function getKeyValueByObject(obj) {
 function genericErrorInAjax() {
     Swal.fire({'title': 'Errors', 'text': 'Ci sono errori durante il caricamento dei dati.', 'icon': 'error', 'timer': 1500});
 }
+
+function generalDateFormat(date) {
+    const dateFormat = new Date(date);
+
+    const options = { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' };
+
+    return dateFormat.toLocaleDateString(undefined, options);
+}
+
+function calculatPercet(Tot, actual) {
+    return actual*100/Tot;
+}
