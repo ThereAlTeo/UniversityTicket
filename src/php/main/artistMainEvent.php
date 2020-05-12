@@ -9,7 +9,7 @@ $locandinaPath = !count($locandinaPath) ? getPathImageOrDefault() : getPathImage
 <div class="container text-dark">
     <div class="row mb-3">
         <div class="col-md-3 mb-3 mt-2">
-            <h2 class="mb-2"><?php echo $name ?></h2><hr>
+            <p class="mb-2 h2"><?php echo $name ?></p><hr>
             <div class="row">
                 <div class="col-md-12">
                     <div id="artistPageLegend" class="list-group">
@@ -37,7 +37,7 @@ $locandinaPath = !count($locandinaPath) ? getPathImageOrDefault() : getPathImage
                 <div class="mb-4 text-ticketBlue ticketPublicInfo" id="ticket">
                     <div class="bg-white rounded-lg shadow">
                         <div class="p-3 bg-info text-white">
-                            <h5 class="font-weight-bold">Biglietti</h5>
+                            <p class="font-weight-bold h5">Biglietti</p>
                         </div>
                         <?php
                         $artistEvent = $dbh->selectedEventsInfo($_GET["IDArtist"]);
@@ -55,7 +55,7 @@ $locandinaPath = !count($locandinaPath) ? getPathImageOrDefault() : getPathImage
                             }
                     else: ?>
                         <div class="text-center text-ticketBlue m-2 p-1">
-                            <h4 class="font-weight-bolder font-italic ">L'artista <?php echo $name  ?> al momento non ha eventi in programmazione.</h4>
+                            <p class="font-weight-bolder font-italic h4">L'artista <?php echo $name ?> al momento non ha eventi in programmazione.</p>
                         </div>
                     <?php endif; ?>
                     </div>
@@ -63,19 +63,17 @@ $locandinaPath = !count($locandinaPath) ? getPathImageOrDefault() : getPathImage
                 <div class="mb-4 text-ticketBlue" id="bio">
                     <div class="bg-white rounded-lg shadow">
                         <div class="p-3 bg-warning text-white">
-                            <h5 class="font-weight-bold">Biografia</h5>
+                            <p class="font-weight-bold h5">Biografia</p>
                         </div>
                         <div class="m-2 p-3">
-                            <p class="font-italic">
-                                <?php echo $info["Biografia"] ?>
-                            </p>
+                            <p class="font-italic"><?php echo $info["Biografia"] ?></p>
                         </div>
                     </div>
                 </div>
                 <div class="mb-4 text-ticketBlue" id="reviews">
                     <div class="bg-white rounded-lg shadow cardBoxSection">
                         <div class="p-3 bg-ticketBlue text-white">
-                            <h5 class="font-weight-bold">Recensioni</h5>
+                            <p class="font-weight-bold">Recensioni</p>
                         </div>
                         <?php
                         $review = $dbh->getReviewDoneByIDArtista($_GET["IDArtist"]);

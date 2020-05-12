@@ -6,7 +6,7 @@
           <div class="col-12 col-lg-6">
                <div class="card shadow mb-5">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                         <h6 class="m-0 font-weight-bold text-primary">Location DataTable  </h6>
+                        <p class="m-0 font-weight-bold text-primary h6">Elenco Location</p>
                     </div>
                     <div class="card-body">
                          <div class="table-responsive">
@@ -32,8 +32,7 @@
                          </div>
                          <div class="d-flex justify-content-center my-2">
                               <nav aria-label="Page navigation">
-                                   <ul class="pagination">
-                                   </ul>
+                                   <ul class="pagination"></ul>
                               </nav>
                          </div>
                     </div>
@@ -42,24 +41,24 @@
           <div class="col-12 col-lg-6">
                <div class="card shadow mb-5">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                         <h6 class="m-0 font-weight-bold text-primary">Aggiungi Nuova Location </h6>
+                        <p class="m-0 font-weight-bold text-primary h6">Aggiungi Nuova Location</p>
                     </div>
                     <div class="card-body">
                          <div class="col-md-12">
                               <form id="locationForm" action="" method="POST" class="formInvalidFB needs-validation text-ticketBlue" novalidate="">
-                                   <h4 class="mb-3">Informazioni Generali</h4>
+                                  <p class="mb-3 h4">Informazioni Generali</p>
                                    <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="firstName">Nome</label>
-                                                <input type="text" class="form-control formControlUser text-capitalize" id="name" placeholder="Stadio San Siro" pattern=".{3,}" title="Campo Nome Obbligatorio" required>
+                                                <label for="firstName" form="locationForm">Nome</label>
+                                                <input type="text" class="form-control formControlUser text-capitalize" id="name" placeholder="Stadio San Siro" pattern=".{3,}" title="Campo Nome Obbligatorio" required/>
                                                 <div class="invalid-feedback"></div>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="address">Indirizzo</label>
-                                                <input type="text" class="form-control formControlUser text-capitalize" id="address" placeholder="Piazzale Angelo Moratti, 20151" pattern=".{3,}" title="Campo Indirizzo Obbligatorio" required>
+                                                <label for="address" form="locationForm">Indirizzo</label>
+                                                <input type="text" class="form-control formControlUser text-capitalize" id="address" placeholder="Piazzale Angelo Moratti, 20151" pattern=".{3,}" title="Campo Indirizzo Obbligatorio" required/>
                                                 <div class="invalid-feedback"></div>
                                             </div>
                                         </div>
@@ -68,7 +67,7 @@
                                        <div class="col-12">
                                            <div class="form-group">
                                                <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" id="locationImage" accept="image/*" name="locationImage" title="Campo Obbligatorio" required>
+                                                    <input type="file" class="custom-file-input" id="locationImage" accept="image/*" name="locationImage" title="Campo Obbligatorio" required/>
                                                     <label class="custom-file-label" for="locationImage">Carica foto del luogo</label>
                                                     <div class="invalid-feedback"></div>
                                                </div>

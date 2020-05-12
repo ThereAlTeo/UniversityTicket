@@ -9,24 +9,27 @@
                             require ("modalProgressLine.php"); ?>
                             <div class="fieldSet text-left">
                                  <fieldset>
-                                      <h5 class="">Informazioni Personali</h5>
+                                     <p class="h5">Informazioni Personali</p>
                                       <div class="row">
                                            <div class="col-6 form-group">
+                                               <label for="artistName" form="addArtist" hidden>Nome Artista</label>
                                                 <input type="text" placeholder="Inserisci Nome" class="form-control formControlUser" id="artistName" pattern=".{2,}" title="Campo di almeno 2 caratteri" required/>
                                                 <div class="invalid-feedback"></div>
                                            </div>
                                            <div class="col-6 form-group">
+                                                <label for="artistCognome" form="addArtist" hidden>Cognome Artista</label>
                                                 <input type="text" placeholder="Inserisci Cognome" class="form-control formControlUser" id="artistCognome" required/>
                                                 <div class="invalid-feedback"></div>
                                            </div>
                                       </div>
                                       <div class="row">
                                            <div class="col-6 form-group">
+                                                <label for="artistCF" form="addArtist" hidden>CF Artista</label>
                                                 <input type="text" placeholder="Inserisci Codice Fiscale" class="form-control formControlUser" id="artistCF"/>
                                            </div>
                                            <div class="col-6 form-group">
                                                 <div class="input-group date" id="birthDatePicker" data-target-input="nearest">
-                                                     <input type="text" class="form-control datetimepicker-input formControlUser"  placeholder="Data di Nascita" data-target="#birthDatePicker"/>
+                                                     <input type="text" class="form-control datetimepicker-input formControlUser" placeholder="Data di Nascita" data-target="#birthDatePicker"/>
                                                       <div class="input-group-append" data-target="#birthDatePicker" data-toggle="datetimepicker">
                                                           <div class="input-group-text"><i class="fas fa-calendar-day"></i></div>
                                                       </div>
@@ -38,7 +41,7 @@
                                       </div>
                                  </fieldset>
                                  <fieldset>
-                                      <h5 class="text-left">Biografia</h5>
+                                     <p class="text-left h5">Biografia</p>
                                       <div class="form-group">
                                           <textarea placeholder="Inserisci Biografia." class="form-control" id="artistBiografia" required></textarea>
                                       </div>
@@ -48,9 +51,10 @@
                                       </div>
                                  </fieldset>
                                  <fieldset>
-                                      <h5 class="text-left">Informazioni Professionali</h5>
+                                     <p class="text-left h5">Informazioni Professionali</p>
                                       <div class="form-group">
                                            <div class="form-group">
+                                                <label for="artistArtName" form="addArtist" hidden>Nome d'arte</label>
                                                 <input type="text" placeholder="Inserisci Nome D'arte" class="form-control formControlUser" id="artistArtName">
                                            </div>
                                       </div>
@@ -67,13 +71,14 @@
                   ?>
                   <div class="fieldSet">
                        <fieldset>
-                            <h5 class="text-left">Informazioni Generali Evento</h5>
+                           <p class="text-left h5">Informazioni Generali Evento</p>
                             <div class="form-group">
+                                <label for="eventTitle" form="addEvent" hidden>Titolo</label>
                                  <input type="text" placeholder="Inserisci Titolo" class="form-control" id="eventTitle" required/>
                             </div>
                             <div class="row text-left">
                                  <div class="col-12 form-group mb-3">
-                                      <label>Scegli tipologia d'evento</label></br>
+                                      <label for="typeEvent" form="addEvent">Scegli tipologia d'evento</label></br>
                                       <select class="custom-select" id="typeEvent">
                                       <?php foreach ($dbh->getEventType() as $key => $value): ?>
                                           <option value="<?php echo $value["IDTipologia"] ?>"><?php echo $value["Nome"] ?></option>
@@ -83,14 +88,14 @@
                             </div>
                             <div class="row text-left" id="optionalInfo">
                                  <div class="col-12 col-md-6 form-group mb-3">
-                                     <label>Scegli genere d'vento</label>
+                                     <label for="kindMusicSelect" form="addEvent">Scegli genere d'vento</label>
                                      <select class="custom-select" id="kindMusicSelect">
                                         <optgroup label="">
                                         </optgroup>
                                    </select>
                                  </div>
                                  <div class="col-12 col-md-6 form-group mb-3">
-                                   <label>Scegli artista</label>
+                                   <label for="ArtistSelect" form="addEvent">Scegli artista</label>
                                    <select class="custom-select" id="ArtistSelect">
                                    <?php foreach ($dbh->getArtistByManager($_SESSION["accountLog"]["IDUser"]) as $key => $value): ?>
                                        <option value="<?php echo $value["IDArtista"] ?>"><?php echo getCorrectArtistName($value) ?></option>
@@ -101,7 +106,7 @@
                             <div class="input-group text-left mb-3">
                                 <div class="custom-file">
                                      <input type="file" class="custom-file-input" id="locandinaImage" accept="image/*" name="locandinaImage" required>
-                                     <label class="custom-file-label" for="locandinaImage">Carica Locandina</label>
+                                     <label class="custom-file-label" for="locandinaImage" form="addEvent">Carica Locandina</label>
                                 </div>
                             </div>
                             <div class="text-right">
@@ -112,7 +117,7 @@
                             <h5 class="text-left">Informazioni Location</h5>
                             <div class="row text-left" id="locationEvent">
                                  <div class="col-12 form-group mb-3">
-                                   <label for="locationSelect">Scegli Location</label>
+                                   <label for="locationSelect" form="addEvent">Scegli Location</label>
                                    <select class="custom-select form-control" id="locationSelect" style="width: 100%;">
                                        <option value="none"></option>
                                    <?php foreach ($dbh->getAllLocation() as $key => $value): ?>
@@ -171,7 +176,7 @@
                 <div class="text-left">
                     <div class="row text-left" id="artistEventModify">
                          <div class="col-12 form-group mb-3">
-                           <label for="locationSelect">Scegli Location</label>
+                           <label for="locationSelect" form="modifyEvent">Scegli Location</label>
                            <select class="custom-select form-control" id="artistEventModifySelect" style="width: 100%;">
                                <option value="none"></option>
                                <?php foreach ($dbh->getArtistByManager($_SESSION["accountLog"]["IDUser"]) as $key => $value): ?>

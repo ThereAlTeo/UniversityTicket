@@ -1,7 +1,7 @@
     <!-- Reserved Area Dashboard -->
     <div>
         <div class="d-sm-flex align-items-center justify-content-between my-4">
-            <h1 class="h3 mb-0 text-ticketBlue">Dashboard</h1>
+            <p class="h3 mb-0 text-ticketBlue">Dashboard</p>
         </div>
         <div class="row">
         <?php
@@ -53,7 +53,7 @@
                     <div class="col-12 col-md-<?php echo $column[$i] ?> p-2">
                         <div class="card shadow mb-4">
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <h6 class="m-0 font-weight-bold text-ticketBlue"><?php echo $headerValues[$i] ?></h6>
+                                <p class="m-0 font-weight-bold text-ticketBlue h6"><?php echo $headerValues[$i] ?></p>
                             </div>
                             <div class="card-body">
                                 <div class="<?php echo $idValues[$i] ?>">

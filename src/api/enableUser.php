@@ -5,12 +5,10 @@ $msg = "";
 if(isset($_POST)){
      $email = $_POST['email'];
 
-     if ($dbh->enableUser($email)) {
+     if ($dbh->enableUser($email))
           $msg = array("success"=>"Account abilitato correttamente!");
-     }
-     else {
+     else
           $msg = array("error"=>"Impossibile abilitare l'account.");
-     }
 }
 else {
      $msg = array("error"=>"It is not possible to access the data entered.");

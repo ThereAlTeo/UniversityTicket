@@ -1,4 +1,4 @@
-    <main role="main" class="container">
+    <div class="container">
         <div class="p-3 my-3 text-white-50 bg-info rounded shadow-sm">
             <p class="h4 mb-0 text-white">Elenco Notifiche</p>
         </div>
@@ -17,4 +17,4 @@
                 </div>
             <?php endforeach; ?>
         </div>
-    </main>
+    </div>

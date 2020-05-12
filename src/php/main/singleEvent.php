@@ -13,7 +13,7 @@ else {
 <div class="container text-dark">
     <div class="row mb-3">
         <div class="col-md-3 mb-3 mt-2">
-            <h2 class="mb-2"><?php echo $name ?></h2><hr>
+            <p class="mb-2 h2"><?php echo $name ?></p><hr>
             <div class="row">
                 <div class="col-md-12">
                     <div id="eventPageLegend" class="list-group">
@@ -40,7 +40,7 @@ else {
                 <div class="mb-4 text-ticketBlue ticketPublicInfo" id="ticket">
                     <div class="bg-white rounded-lg shadow">
                         <div class="p-3 bg-ticketBlue text-white">
-                            <h5 class="font-weight-bold">Biglietti</h5>
+                            <p class="font-weight-bold h5">Biglietti</p>
                         </div>
                         <?php
                         $sectorEvent = $dbh->getSectorInfoByEvent($_GET["IDEvent"]);
@@ -63,17 +63,15 @@ else {
                 <div class="mb-4 text-ticketBlue" id="info">
                     <div class="bg-white rounded-lg shadow">
                         <div class="p-3 bg-danger text-white">
-                            <h5 class="font-weight-bold">Info</h5>
+                            <p class="font-weight-bold h5">Info</p>
                         </div>
                         <?php if(isset($info["Info"])): ?>
                             <div class="m-2 p-3">
-                                <p class="font-italic">
-                                    <?php echo $info["Info"] ?>
-                                </p>
+                                <p class="font-italic"><?php echo $info["Info"] ?></p>
                             </div>
                         <?php else: ?>
                             <div class="text-center text-ticketBlue m-2 p-1">
-                                <h4 class="font-weight-bolder font-italic ">Non sono disponibili info rilevanti per questo evento.<br>BUON DIVERTIMENTO. </h4>
+                                <p class="font-weight-bolder font-italic h4">Non sono disponibili info rilevanti per questo evento.</br>BUON DIVERTIMENTO.</p>
                             </div>
                         <?php endif; ?>
                     </div>

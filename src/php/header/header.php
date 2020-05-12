@@ -7,7 +7,7 @@
                 </a>
             </div>
             <div class="d-none d-md-inline text-md-center col-sm-8">
-                <h1 class=""><i class="fas fa-ticket-alt"></i> UNIVERSITYTICKET <i class="fas fa-ticket-alt"></i></h1>
+                <p class="h1"><i class="fas fa-ticket-alt"></i> UNIVERSITYTICKET <i class="fas fa-ticket-alt"></i></p>
                 <p class="text-md-center mx-5">Biglietti, Concerti, Spettacolo, Sport & Cultura</p>
             </div>
             <div class="col-6 col-md-2 text-right">

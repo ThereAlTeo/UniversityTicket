@@ -1,5 +1,5 @@
 <?php if (isset($_GET["progressLineItems"])): ?>
-    <h3 class="text-uppercase mb-2"><?php echo $_GET["progressLineItems"][0] ?></h3>
+    <p class="text-uppercase mb-2 h3"><?php echo $_GET["progressLineItems"][0] ?></p>
     <div class="modalSteps">
         <div class="modalProgress">
             <div class="modalProgressLine bg-ticketBlue"></div>

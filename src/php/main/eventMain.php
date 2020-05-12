@@ -16,7 +16,7 @@
                     <div class="col-12 col-lg-9">
                          <div class="card shadow mb-5">
                               <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                   <h6 class="m-0 font-weight-bold text-primary">Account DataTable  </h6>
+                                  <p class="m-0 font-weight-bold text-primary h6">Elenco Eventi</p>
                               </div>
                               <div class="card-body">
                                    <div class="table-responsive">
@@ -45,8 +45,7 @@
                                    </div>
                                    <div class="d-flex justify-content-center my-2">
                                         <nav aria-label="Page navigation">
-                                             <ul class="pagination">
-                                             </ul>
+                                             <ul class="pagination"></ul>
                                         </nav>
                                    </div>
                               </div>

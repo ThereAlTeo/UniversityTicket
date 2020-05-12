@@ -6,15 +6,15 @@
         <div class="col-12 col-lg-5">
             <div class="card shadow mb-5">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Inserisci Recensione</h6>
+                    <p class="m-0 font-weight-bold text-primary h6">Inserisci Recensione</p>
                 </div>
                 <div class="card-body">
                     <div class="col-md-12">
                         <form id="reviewForm" action="" method="POST" class="formInvalidFB needs-validation text-ticketBlue" novalidate="">
-                            <h4 class="mb-3">Informazioni Generali</h4>
+                            <p class="mb-3 h4">Informazioni Generali</p>
                             <div class="row text-left">
                                  <div class="col-12 form-group mb-3">
-                                   <label for="locationSelect">Scegli Evento per recensione</label>
+                                   <label for="locationSelect" form="reviewForm">Scegli Evento per recensione</label>
                                    <select class="custom-select form-control" id="reviewSelect" style="width: 100%;">
                                        <option value="none"></option>
                                    <?php foreach ($dbh->getEventEnableReview($_SESSION["accountLog"]["IDUser"]) as $key => $value): ?>
@@ -24,7 +24,7 @@
                                  </div>
                             </div>
                             <div class="form-group">
-                                <label for="reviewTextArea">Inserisci la recensione</label>
+                                <label for="reviewTextArea" form="reviewForm">Inserisci la recensione</label>
                                 <textarea class="form-control" id="reviewTextArea" rows="4" placeholder="Inserisci la recensione relativa al'evento selezionato" title="Il testo della recensione è obbligatorio" required></textarea>
                                 <div class="invalid-feedback"></div>
                             </div>
@@ -52,7 +52,7 @@
              <div class="mb-4 text-ticketBlue" id="reviews">
                  <div class="bg-white rounded-lg shadow cardBoxSection">
                      <div class="p-3 bg-ticketBlue text-white">
-                         <h5 class="font-weight-bold">Elenco Recensioni</h5>
+                         <p class="font-weight-bold h5">Elenco Recensioni</p>
                      </div>
                      <?php
                      $reviews = $dbh->getReviewDoneByIDUser($_SESSION["accountLog"]["IDUser"]);

@@ -6,7 +6,8 @@
     <div class="row d-flex justify-content-center">
         <div class="col-md-6">
             <div class="form-group">
-                <input class="form-control formControlUser" id="vaucherApp"  type="text" name="vaucherApp" placeholder="Inserisci codice" pattern=".{3,}" title="Il codice deve essere di almeno 3 caratteri" required>
+                <label for="vaucherApp" form="18APPForm" hidden>Vaucher Nr.</label>
+                <input class="form-control formControlUser" id="vaucherApp"  type="text" name="vaucherApp" placeholder="Inserisci codice" pattern=".{3,}" title="Il codice deve essere di almeno 3 caratteri" required/>
                 <div class="invalid-feedback"></div>
             </div>
         </div>

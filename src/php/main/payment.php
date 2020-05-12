@@ -8,7 +8,7 @@
           <div class="card-header" id="<?php echo $headingID ?>">
               <div class="col-9">
                   <div class="custom-control custom-radio custom-control-inline">
-                      <input type="radio" id="<?php echo $paymentRadioID ?>"  name="paymentRadio" class="custom-control-input" data-toggle="collapse" data-target="#<?php echo $collapseID ?>" aria-expanded="false" aria-controls="<?php echo $collapseID ?>">
+                      <input type="radio" id="<?php echo $paymentRadioID ?>"  name="paymentRadio" class="custom-control-input" data-toggle="collapse" data-target="#<?php echo $collapseID ?>" aria-expanded="false" aria-controls="<?php echo $collapseID ?>"/>
                       <label class="custom-control-label font-weight-bold h6 text-ticketBlue" for="<?php echo $paymentRadioID ?>"><?php echo $value["Nome"] ?></label>
                   </div>
               </div>
@@ -27,7 +27,7 @@
 </div>
 <div class="row d-flex justify-content-sm-between align-items-center mt-3">
     <div class="d-none d-sm-inline col-sm-6">
-        <a href="delivery.php" class="text-primary text-decoration-none text-left h6"><i class="fas fa-long-arrow-alt-left"></i> Torna indietro</a>
+        <a href="./deliveryInfo.php" class="text-primary text-decoration-none text-left h6"><i class="fas fa-long-arrow-alt-left"></i> Torna indietro</a>
     </div>
     <div class="col-sm-6">
         <a class="btn btn-outline-ticketBlue btn-block" type="submit" id="payment" href="#" role="button">Effettua il pagamento</a>

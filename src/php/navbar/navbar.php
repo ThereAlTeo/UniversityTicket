@@ -19,9 +19,9 @@
                 </div>
             </div>
             <div class="col-6 col-sm-6 col-md-8">
-                <form method="POST">
+                <form method="POST" id="searchForm">
                     <div class="input-group">
-                        <input class="form-control" type="search" placeholder="Ricerca evento, artista o località ..." aria-label="Search" id="searchInput">
+                        <input class="form-control" type="search" placeholder="Ricerca evento, artista o località ..." aria-label="Search" id="searchInput"/>
                         <div class="input-group-append">
                             <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
                         </div>

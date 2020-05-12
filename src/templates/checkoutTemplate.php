@@ -3,7 +3,7 @@
     ?>
     <div class="container">
         <div class="py-4 text-center text-ticketBlue">
-            <h3><i class="fas fa-ticket-alt"></i> <?php echo strtoupper($templateParams["checkoutTitle"]) ?> <i class="fas fa-ticket-alt"></i></h3>
+            <p class="h3"><i class="fas fa-ticket-alt"></i> <?php echo strtoupper($templateParams["checkoutTitle"]) ?> <i class="fas fa-ticket-alt"></i></p>
         </div>
         <div class="row mb-3">
             <div class="col-lg-8 mb-3">

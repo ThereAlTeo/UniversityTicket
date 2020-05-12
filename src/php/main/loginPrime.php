@@ -8,15 +8,15 @@
                             <div class="col-md-7 col-lg-6 col-xl-5 bg-light">
                                 <div class="p-5">
                                     <form class="py-md-5 text-ticketBlue needs-validation formInvalidFB" action="<?php echo $templateParams["action"].".php"; ?>" method="POST" id="loginForm" novalidate="">
-                                         <h3 class="text-center">Login</h3>
+                                        <p class="text-center h3">Login</p>
                                          <hr class="mb-3">
                                          <div class="form-group">
-                                              <label for="loginEmail" class="">Username</label>
+                                              <label for="loginEmail" form="loginForm">Username</label>
                                               <input type="email" id="loginEmail" class="form-control formControlUser" placeholder="Inserisci E-mail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="La mail deve rispettare le convenzioni internazionali" required/>
                                               <div class="invalid-feedback"></div>
                                          </div>
                                          <div class="form-group">
-                                              <label for="loginPassword" class="">Password</label>
+                                              <label for="loginPassword" form="loginForm">Password</label>
                                               <input type="password" id="loginPassword" class="form-control formControlUser" placeholder="Inserisci Password" pattern=".{1,}" title="La password deve essere presente" required/>
                                               <div class="invalid-feedback"></div>
                                          </div>

@@ -18,13 +18,13 @@
                         <div class="col-sm-10 mb-2">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <h5><small><strong>Luogo: </strong><?php echo $value["NomeLocation"] ?></small></h5>
+                                    <p class="h5"><small><strong>Luogo: </strong><?php echo $value["NomeLocation"] ?></small></p>
                                 </div>
                                 <div class="col-md-6">
-                                    <h5><small><strong>Data: </strong><?php echo getEventDate(date_format(date_create($value["DataInizio"]), 'Y m d H:i')) ?></small></h5>
+                                    <p class="h5"><small><strong>Data: </strong><?php echo getEventDate(date_format(date_create($value["DataInizio"]), 'Y m d H:i')) ?></small></p>
                                 </div>
                             </div>
-                            <h5><small><strong>Recensione: </strong><h4><?php echo $value["Recensione"] ?></h4></small></h5>
+                            <p class="h5"><small><strong>Recensione:</strong></small><h4><?php echo $value["Recensione"] ?></h4></p>
                             <span class="text-warning">
                             <?php for ($i=1; $i <= 5; $i++) {
                                 echo $i <= floatval($value["Recommendation"]) ? "&#9733; " : "&#9734; ";
