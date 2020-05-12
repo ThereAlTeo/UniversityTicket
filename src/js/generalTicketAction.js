@@ -29,6 +29,10 @@ $(function() {
         }
     });
 
+    $(document).on('click', 'a.scroll-to-top', function(e) {        
+         $('body, html').animate({scrollTop : 0}, 800);
+    });
+
     $(window).resize(resizableWindow);
 
     resizableWindow();
