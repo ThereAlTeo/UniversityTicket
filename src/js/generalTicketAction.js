@@ -19,6 +19,11 @@ $(function() {
             $('.sidebar .collapse').collapse('hide');
         };
     });
+    $(".accountDisabled").click(function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        Swal.fire('Account Disabilitato!', 'L\'admin deve ancora valutare il tuo account e abilitarti.', 'warning');
+    });
 
     $(document).on('scroll', function() {
     var scrollDistance = $(this).scrollTop();
@@ -29,7 +34,7 @@ $(function() {
         }
     });
 
-    $(document).on('click', 'a.scroll-to-top', function(e) {        
+    $(document).on('click', 'a.scroll-to-top', function(e) {
          $('body, html').animate({scrollTop : 0}, 800);
     });
 

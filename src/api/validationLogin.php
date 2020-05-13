@@ -9,14 +9,15 @@ if(isset($_POST)){
         $accountInfo = $dbh->getAccountAccessInfo($email);
         $next = substr($_POST['next'], 0, strrpos($_POST['next'], '.', 0));
 
+        $_SESSION["accountLog"] = array("Mail" => $email, "IDUser" => $accountInfo["IDUser"], "IDAccesso" => $accountInfo["IDAccesso"], "AccountAbilitato" => $accountInfo["AccountAbilitato"]);
         if(strcmp($next, "reservedArea") == 0) {
-            $_SESSION["accountLog"] = array("Mail" => $email, "IDUser" => $accountInfo["IDUser"], "IDAccesso" => $accountInfo["IDAccesso"]);
             $msg = array("success"=>"Bentornato ".$email."!");
+        } elseif (strcmp($next, "deliveryInfo") == 0 && !$accountInfo["AccountAbilitato"]) {
+            $msg = array("warning"=> "Account ancora disabilitato.");
         } else if (strcmp($next, "deliveryInfo") == 0 &&  $accountInfo["IDAccesso"] > 2) {
-            $_SESSION["accountLog"] = array("Mail" => $email, "IDUser" => $accountInfo["IDUser"], "IDAccesso" => $accountInfo["IDAccesso"]);
             $msg = array("success"=>"Bentornato ".$email."!");
         } else
-            $msg = array("error"=>"I suoi permessi non le concedono l'accesso.");
+            $msg = array("warning"=>"I suoi permessi non Le concedono l'accesso.");
     } else {
         $msg = array("error"=>"Credenziali inserite non corrette.");
     }

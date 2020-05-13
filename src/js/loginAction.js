@@ -21,7 +21,10 @@ function submitLogin(e) {
               if(data['error']) {
                    Swal.fire({'title': 'Errors', 'text': data['error'], 'icon': 'error'});
                    $('#loginPassword').val("");
-              }else{
+              } else if (data['warning']) {
+                  Swal.fire({'title': 'Errors', 'text': data['warning'], 'icon': 'warning', 'showConfirmButton': false, 'timer': 1500})
+                      .then((result) => { window.location = './reservedArea.php' });
+              } else {
                    Swal.fire({'position': 'top-end', 'icon': 'success', 'title': data['success'], 'showConfirmButton': false, 'timer': 1500})
                        .then((result) => { window.location = './' + $('#loginForm').attr('action') });
               }

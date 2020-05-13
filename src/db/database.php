@@ -34,7 +34,7 @@ class DatabaseHelper{
      }
 
      public function getAccountAccessInfo($email){
-          $stmt = $this->db->prepare("SELECT T.IDAccesso, T.IDUser FROM ticketuser T WHERE T.Email=?");
+          $stmt = $this->db->prepare("SELECT T.IDAccesso, T.IDUser, T.AccountAbilitato FROM ticketuser T WHERE T.Email=?");
           $stmt->bind_param('s', $email);
           return $this->factoryFetchMethos($stmt)[0];
      }

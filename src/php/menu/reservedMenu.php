@@ -17,7 +17,13 @@
             <hr class="sidebar-divider">
             <div class="sidebar-heading"><?php echo $key ?></div>
             <?php for ($i=0; $i <count($value); $i++, $index++) : ?>
-                <li class="nav-item<?php echo (isset($templateParams["menuIndex"]) && $templateParams["menuIndex"] == $index + 1) ? " active" : ""  ?>">
+            <?php $liClassValue = "";
+                if(isset($templateParams["menuIndex"]) && $templateParams["menuIndex"] == $index + 1)
+                    $liClassValue = "active";
+                if(!$_SESSION["accountLog"]["AccountAbilitato"])
+                    $liClassValue = $liClassValue." accountDisabled";
+                 ?>
+                <li class="nav-item <?php echo $liClassValue ?>">
                     <a class="nav-link" href="<?php echo $value[$i][1] ?>">
                     <i class="<?php echo $value[$i][2] ?>"></i>
                     <span><?php echo $value[$i][0] ?></span></a>

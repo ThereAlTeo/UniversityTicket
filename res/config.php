@@ -18,8 +18,8 @@ $config = array(
          3 => array("fas fa-ticket-alt", "far fa-grin-hearts", "fas fa-map-marked-alt", "fas fa-pen-fancy")
     ),
     "chartCardHeader" => array(
-         1 => array("Non lo so", "Prova"),
-         2 => array("", "")
+         1 => array("Concerti in programmazione", "Manager più attivi"),
+         2 => array("Andamento incassi", "Artisti più attivi")
     ),
     "infoCardColor" => array("primary", "success", "info", "warning"),
     "pageIcon" => ROOT_DIR."../res/images/logoForse.png",
