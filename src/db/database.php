@@ -14,6 +14,12 @@ class DatabaseHelper{
          $result = $stmt->get_result();
          return $result->fetch_all(MYSQLI_ASSOC);
      }
+
+     public function getAllUser(){
+         $stmt = $this->db->prepare("SELECT T.* FROM ticketuser T WHERE T.IDAccesso = 1");
+         return $this->factoryFetchMethos($stmt);
+     }
+
      public function AccountExistInDB($email){
           $stmt = $this->db->prepare("SELECT COUNT(*) as rowNum FROM ticketuser T WHERE T.Email=?");
           $stmt->bind_param('s', $email);

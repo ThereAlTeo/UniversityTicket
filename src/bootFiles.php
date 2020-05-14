@@ -22,6 +22,10 @@ define("ROOT_PATH", substr(__DIR__, 0, strrpos(__DIR__, '\\', -1)));
 
 require_once(ROOT_DIR.'../res/config.php');
 require_once(ROOT_DIR."utilities/generalFunctions.php");
+require_once(ROOT_DIR."utilities/notificationManager.php");
 require_once(ROOT_DIR."db/database.php");
+require_once(ROOT_DIR."mail/MailSender.php");
 $dbh = new DatabaseHelper("localhost", "root", "", "ticket");
+$mail = new MailSender();
+$notificationManager = new NotificationManager($dbh);
 ?>
