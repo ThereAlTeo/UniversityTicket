@@ -15,8 +15,10 @@ if(isset($_POST)){
     }
 
     if ($alreadyDone) {
-        if ($dbh->insertRecensione($matricola, $IDAcquisto, $reviewTextArea, $rate))
+        if ($dbh->insertRecensione($matricola, $IDAcquisto, $reviewTextArea, $rate)){
+            $notificationManager->insertNewReview($dbh->getMailMangerByticketID($matricola));
             $msg = array("success"=>"Recensione inserita con successo");
+        }
     } else
         $msg = array("error"=>"Non è possibile inserire 2 volte una recensione per lo stesso evento.");
 }

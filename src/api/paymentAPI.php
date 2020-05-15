@@ -1,5 +1,16 @@
 <?php
 require_once './../bootFiles.php';
+
+function checkSoldOutSector($IDEvent, $IDSector) {
+    if(intval($dbh->getSectoTicketSold($IDEvent, $IDSector)) == intval($dbh->getSectoTotalTicket($IDEvent, $IDSector)))
+        $notificationManager->sectorSoldOut($IDEvent, $IDSector);
+}
+
+function checkSoldOutEvent($IDEvent) {
+    if(intval($dbh->getEventTicketSold($IDEvent)) == intval($dbh->getEventTotalTicket($IDEvent)))
+        $notificationManager->eventSoldOut($IDEvent);
+}
+
 $msg = array();
 try {
     $payment = substr($_POST['IDPayment'], -1);
@@ -11,7 +22,10 @@ try {
             $dbh->insertTicket($matricola, $item["IDSector"], $value["IDLocation"], $value["IDEvent"]);
             if(!$dbh->insertAcquistoMultiplo($matricola, $IDAcquisto))
                 throw new Exception("Error Processing Request", 1);
+
+            checkSoldOutSector($value["IDEvent"], $item["IDSector"]);
         }
+        checkSoldOutEvent($value["IDEvent"]);
     }
 
     setcookie("checkout", null, time() - 3600, "/");

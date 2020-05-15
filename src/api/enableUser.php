@@ -5,8 +5,10 @@ $msg = "";
 if(isset($_POST)){
      $email = $_POST['email'];
 
-     if ($dbh->enableUser($email))
-          $msg = array("success"=>"Account abilitato correttamente!");
+     if ($dbh->enableUser($email)){
+         $notificationManager->notifyUserEnable($email);
+         $msg = array("success"=>"Account abilitato correttamente!");
+     }
      else
           $msg = array("error"=>"Impossibile abilitare l'account.");
 }

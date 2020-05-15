@@ -11,11 +11,15 @@ class NotificationManager {
             array_push($this->adminMails, $value["Email"]);
     }
 
-    public function notifyNewUserRegistration($IDnewUser){
+    private function insertNewMessageInSecretary($IDUser, $Message){
+        $this->dbh->insertNewMessageInSecretary($IDUser, $Message);
+    }
+
+    public function notifyNewUserRegistration($MailnewUser){
         // code...
     }
 
-    public function notifyUserEnable($IDUser){
+    public function notifyUserEnable($MailUser){
         // code...
     }
 
@@ -23,11 +27,11 @@ class NotificationManager {
         // code...
     }
 
-    public function sectorSoldOut($IDManager, $IDSector){
+    public function sectorSoldOut($IDEvent, $IDSector){
         // code...
     }
 
-    public function eventSoldOut($IDManager, $IDSector){
+    public function eventSoldOut($IDEvent){
         // code...
     }
 

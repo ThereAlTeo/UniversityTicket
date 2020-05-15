@@ -16,8 +16,10 @@ if(isset($_POST)){
             $msg = $dbh->eventInfoByIDArtist($_POST['IDArtist']);
         break;
         case "deleteEvent":
-            if ($dbh->deleteEvent($_POST['IDEvent']))
+            if ($dbh->deleteEvent($_POST['IDEvent'])){
+                $notificationManager->eventDeleted($_POST['IDEvent']);
                 $msg = array("success" => "L'evento è stato ufficialmente cancellato!");
+            }
             else
                 $msg = array("error" => "Non è stato possibile elimanare correttamente l'evento.");
         break;

@@ -49,7 +49,7 @@ else {
                                 $_GET["ticketSector"]["Name"] = $value["Nome"];
                                 $_GET["ticketSector"]["Price"] = $value["Prezzounitario"];
                                 $_GET["ticketSector"]["IDSettore"] = $value["IDSettore"];
-                                $_GET["ticketSector"]["Disponibilita"] = min(5, $value["Disponibilita"], $value["Disponibilita"] - $dbh->getSectoTicketSold($value["IDEvento"]));
+                                $_GET["ticketSector"]["Disponibilita"] = min(5, $value["Disponibilita"], $value["Disponibilita"] - $dbh->getSectoTicketSold($value["IDEvento"], $value["IDSettore"]));
 
                                 include FACTORY_DIR.'buyTicketSector.php';
                             }

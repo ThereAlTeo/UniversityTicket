@@ -15,6 +15,15 @@ class DatabaseHelper{
          return $result->fetch_all(MYSQLI_ASSOC);
      }
 
+     public function getMailMangerByticketID($Matricola){
+          $stmt = $this->db->prepare("SELECT U.Email
+                                      FROM biglietto B INNER JOIN evento E ON B.IDEvento=E.IDEvento
+                                                       INNER JOIN ticketuser U ON U.IDUser=E.IDOrganizzatore
+                                      WHERE B.Matricola = ?");
+          $stmt->bind_param('s', $Matricola);
+          return $this->factoryFetchMethos($stmt)[0]["Email"];
+     }
+
      public function getAllUser(){
          $stmt = $this->db->prepare("SELECT T.* FROM ticketuser T WHERE T.IDAccesso = 1");
          return $this->factoryFetchMethos($stmt);
@@ -422,12 +431,30 @@ class DatabaseHelper{
       return $this->factoryFetchMethos($stmt);
   }
 
-  public function getSectoTicketSold($IDEvent){
+  public function getEventTicketSold($IDEvent){
+      $stmt = $this->db->prepare("SELECT COUNT(B.Matricola) AS 'TicketSold' FROM biglietto B WHERE B.IDEvento=? GROUP BY B.IDEvento");
+      $stmt->bind_param('i', $IDEvent);
+      return $this->factoryFetchMethos($stmt)[0]["TicketSold"];
+  }
+
+  public function getEventTotalTicket($IDEvent){
+      $stmt = $this->db->prepare("SELECT SUM(T.Disponibilita) AS 'TotalTicket' FROM tariffario T WHERE T.IDEvento=? GROUP BY T.IDEvento");
+      $stmt->bind_param('i', $IDEvent);
+      return $this->factoryFetchMethos($stmt)[0]["TotalTicket"];
+  }
+
+  public function getSectoTicketSold($IDEvent, $IDSettore){
       $stmt = $this->db->prepare("SELECT COUNT(B.Matricola) AS 'count'
                                   FROM biglietto B INNER JOIN settore S ON B.IDSettore=S.IDSettore
-                                  WHERE B.IDEvento = ?");
-      $stmt->bind_param('i', $IDEvent);
+                                  WHERE B.IDEvento = ? AND S.IDSettore = ?");
+      $stmt->bind_param('ii', $IDEvent, $IDSettore);
       return $this->factoryFetchMethos($stmt)[0]["count"];
+  }
+
+  public function getSectoTotalTicket($IDEvent, $IDSettore){
+      $stmt = $this->db->prepare("SELECT T.Disponibilita FROM tariffario T WHERE T.IDEvento=? AND T.IDSettore=?");
+      $stmt->bind_param('ii', $IDEvent, $IDSettore);
+      return $this->factoryFetchMethos($stmt)[0]["Disponibilita"];
   }
 
   public function getGeneralInfoByIDEvent($IDEvent){
@@ -706,6 +733,13 @@ class DatabaseHelper{
       $stmt = $this->db->prepare($query);
       $stmt->bind_param('i', $IDArtista);
       return $this->factoryFetchMethos($stmt);
+  }
+
+  public function insertNewMessageInSecretary($IDUser, $Message){
+      $query = "INSERT INTO segreteriamessaggi(IDMessaggio, IDUser, Contenuto, DataMessaggio) VALUES (IDMessaggio, ?, ?, NOW())";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('is', $IDUser, $Message);
+      return $stmt->execute();
   }
 }
 ?>

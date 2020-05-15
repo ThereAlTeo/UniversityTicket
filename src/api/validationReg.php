@@ -12,8 +12,10 @@ if(isset($_POST)){
 
 	if($dbh->AccountExistInDB($email))
 		$msg = array("error"=>"L'account esiste già.");
-	elseif ($dbh->insertNewTicketUser($firstname, $lastname, $fiscalCode, $birth, $email, $password, parseUserPermission($userType)))
+	elseif ($dbh->insertNewTicketUser($firstname, $lastname, $fiscalCode, $birth, $email, $password, parseUserPermission($userType))){
+		$notificationManager->notifyNewUserRegistration($email);
 		$msg = array("success"=>"L'account è stato creato correttamente.\nE' possibile utilizzarlo.");
+	}
 	else
 		$msg = array("error"=>"Ci scusiamo. Non è stato possibile creare correttamente l'account.");
 } else{
