@@ -141,8 +141,4 @@
             default: throw new Exception("Error Processing Request", 1);
         }
     }
-
-    function getCarouselItem(){
-        return array("Emma.jpg", "MarcoMengoni.jpg", "Salmo.jpg", "TizianoFerro.jpg");
-    }
 ?>

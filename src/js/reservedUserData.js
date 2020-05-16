@@ -9,6 +9,9 @@ $(function() {
             changePassword(e);
         $("#changePasswordForm").addClass('was-validated');
     });
+
+    if(parseInt($("#alertsDropdown span.badge-counter").html()))
+        Swal.fire({'position': 'top-end', 'icon': 'success', 'title': "Hai " + $("#alertsDropdown span.badge-counter").html() + " messaggi da leggere!", 'showConfirmButton': false, 'timer': 1500});
 });
 
 function changePassword(e) {

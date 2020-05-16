@@ -49,7 +49,7 @@ class DatabaseHelper{
      }
 
      public function getAccountAccessInfo($email){
-          $stmt = $this->db->prepare("SELECT T.IDAccesso, T.IDUser, T.AccountAbilitato FROM ticketuser T WHERE T.Email=?");
+          $stmt = $this->db->prepare("SELECT T.* FROM ticketuser T WHERE T.Email=?");
           $stmt->bind_param('s', $email);
           return $this->factoryFetchMethos($stmt)[0];
      }
@@ -560,6 +560,14 @@ class DatabaseHelper{
       return $stmt->insert_id;
   }
 
+  public function updateSegreteria($ID, $updateAll=false){
+      $query = "UPDATE segreteriamessaggi SET Lettura = 1 WHERE segreteriamessaggi.".(($updateAll) ? "IDUser = ?" : "IDMessaggio = ?");
+
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('i', $ID);
+      return $stmt->execute();
+  }
+
   public function getMessageByIDUser($IDUser, $toRead = false){
       $query = "SELECT * FROM segreteriamessaggi S WHERE S.IDUser = ?";
       if ($toRead)
@@ -740,6 +748,17 @@ class DatabaseHelper{
       $stmt = $this->db->prepare($query);
       $stmt->bind_param('is', $IDUser, $Message);
       return $stmt->execute();
+  }
+
+  public function getAllParticipantsByEvent($IDEvent){
+      $query = "SELECT DISTINCT T.*
+                FROM biglietto B INNER JOIN bigliettoacquistato BA ON BA.Matricola=B.Matricola
+				                 INNER JOIN acquisto A ON BA.IDAcquisto=A.IDAcquisto INNER JOIN ticketuser T ON T.IDUser=A.IDUser
+                WHERE B.IDEvento = ?";
+
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('i', $IDEvent);
+      return $this->factoryFetchMethos($stmt);
   }
 }
 ?>

@@ -19,6 +19,7 @@ $(function() {
             $('.sidebar .collapse').collapse('hide');
         };
     });
+
     $(".accountDisabled").click(function(e) {
         e.preventDefault();
         e.stopPropagation();
@@ -41,6 +42,26 @@ $(function() {
     $(window).resize(resizableWindow);
 
     resizableWindow();
+
+    $("#alertsDropdown").click(function(e) {
+        try {
+            if(parseInt($(this + "span.badge-counter").html())){
+                $("#alertsDropdown span.badge-counter").remove();
+                var notifyIDs = [];
+                $("div.dropdownMenu a").each(function( index ) {
+                    if(parseInt($(this).attr("id")))
+                        notifyIDs.push($(this).prop("id"));
+                });
+
+                $.ajax({url : './../api/notificationCenter.php',
+                     type : 'POST',
+                     dataType: 'JSON',
+                     data: { notifyIDs: notifyIDs },
+                     success: function(data){ }
+                });
+            }
+        } catch (exc) { }
+    });
 });
 
 function resizableWindow() {

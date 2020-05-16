@@ -13,7 +13,7 @@
                         <span class="badge badge-danger badge-counter"><?php echo $badge ?></span>
                     <?php endif; ?>
                 </a>
-                <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+                <div class="dropdown-list dropdown-menu dropdownMenu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
                     <h6 class="dropdown-header">
                         Notifiche
                     </h6>
@@ -22,7 +22,7 @@
                     if (count($message)):
                         foreach (range(0, 2) as $value):
                             if (isset($message[$value])): ?>
-                            <a class="dropdown-item d-flex align-items-center">
+                            <a class="dropdown-item d-flex align-items-center" id="<?php echo $message[$value]["IDMessaggio"] ?>">
                                 <div class="mr-3">
                                     <div class="iconCircle bg-<?php echo getNoticeColor($value) ?>">
                                     </div>
@@ -36,7 +36,7 @@
                         endforeach; ?>
                     <a class="dropdown-item text-center small text-gray-500" href="./notificationCenter.php">Leggi tutti i messaggi</a>
                 <?php else: ?>
-                    <a class="dropdown-item d-flex align-items-center">                        
+                    <a class="dropdown-item d-flex align-items-center">
                         <div>
                             <span class="font-weight-bold">Non ci sono ancora notifiche.</span>
                         </div>

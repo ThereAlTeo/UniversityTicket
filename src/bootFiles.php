@@ -27,5 +27,5 @@ require_once(ROOT_DIR."db/database.php");
 require_once(ROOT_DIR."mail/MailSender.php");
 $dbh = new DatabaseHelper("localhost", "root", "", "ticket");
 $mail = new MailSender();
-$notificationManager = new NotificationManager($dbh);
+$notificationManager = new NotificationManager($dbh, $mail);
 ?>
