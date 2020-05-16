@@ -38,7 +38,7 @@
                                     Non registrata
                                     <?php endif; ?>
                                     </td>
-                                    <td class="text-center"><?php echo $value["ConcertDone"] ?></td>
+                                    <td class="text-center"><?php echo $value["EventNum"] ?></td>
                                     <td class="text-center"><?php echo $value["TicketBuy"] ?></td>
                                 </tr>
                             <?php endforeach; ?>

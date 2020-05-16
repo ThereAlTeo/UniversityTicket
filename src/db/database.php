@@ -580,12 +580,12 @@ class DatabaseHelper{
   }
 
   public function getArtistWorkInfo($IDManager){
-      $query = "SELECT P.Nome, P.Cognome, A.NomeDArte, P.DataNascita, COUNT(E.IDEvento) AS 'ConcertDone', COUNT(B.Matricola) AS 'TicketBuy'
+      $query = "SELECT P.Nome, P.Cognome, A.NomeDArte, P.DataNascita, COUNT(E.IDEvento) AS 'EventNum', COUNT(B.Matricola) AS 'TicketBuy'
                 FROM artista A LEFT JOIN evento E ON E.IDArtista=A.IDArtista
 			                   INNER JOIN persona P ON P.IDPersona=A.AnagraficaArtista
                                LEFT JOIN biglietto B ON B.IDEvento=E.IDEvento
                 WHERE A.IDReferente=?
-                GROUP BY A.IDArtista";
+                GROUP BY A.IDArtista ORDER BY EventNum DESC";
 
       $stmt = $this->db->prepare($query);
       $stmt->bind_param('i', $IDManager);
@@ -759,6 +759,39 @@ class DatabaseHelper{
       $stmt = $this->db->prepare($query);
       $stmt->bind_param('i', $IDEvent);
       return $this->factoryFetchMethos($stmt);
+  }
+
+  public function getMonthlyRevenue(){
+      $query = "SELECT YEAR(A.Data) AS 'acquistoYear', MONTH(A.Data) AS 'acquistoMonth', SUM(A.PrezzoTotale) AS 'TotalRevenue'
+                FROM  acquisto A
+                GROUP BY acquistoYear, acquistoMonth ORDER BY acquistoYear DESC, acquistoMonth DESC LIMIT 12";
+
+      $stmt = $this->db->prepare($query);
+      return $this->factoryFetchMethos($stmt);
+  }
+
+  public function getMonthlyEvent($IDManager){
+      $query = "SELECT YEAR(E.DataInizio) AS 'eventoYear', MONTH(E.DataInizio) AS 'eventoMonth', COUNT(E.IDEvento) AS 'EventNum'
+                FROM evento E
+                WHERE E.IDOrganizzatore = ? GROUP BY eventoYear, eventoMonth ORDER BY eventoYear DESC, eventoMonth DESC LIMIT 12";
+
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('i', $IDManager);
+      return $this->factoryFetchMethos($stmt);
+  }
+
+  public function getMajorManager(){
+      $query = "SELECT COUNT(E.IDEvento) AS 'EventNum', T.*, P.*
+                FROM ticketuser T LEFT JOIN evento E ON E.IDOrganizzatore=T.IDUser
+                                  INNER JOIN persona P ON P.IDPersona=T.AnagraficaUtente
+                WHERE T.IDAccesso=2 GROUP BY T.IDUser ORDER BY Num DESC LIMIT 3";
+
+      $stmt = $this->db->prepare($query);
+      return $this->factoryFetchMethos($stmt);
+  }
+
+  public function getMajorArtistByIDManager($IDManager){
+      return $this->getArtistWorkInfo($IDManager);
   }
 }
 ?>

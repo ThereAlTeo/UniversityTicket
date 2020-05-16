@@ -141,4 +141,109 @@
             default: throw new Exception("Error Processing Request", 1);
         }
     }
+
+    function circularMonthList($direction = false){
+        $circularList = array();
+        $actualMonth = date("m");
+
+        for ($i=0; $i < 12; $i++){
+            array_push($circularList, $actualMonth);
+
+            if ($actualMonth == 1 && !$direction)
+                $actualMonth = 13;
+            elseif ($actualMonth == 12 && $direction)
+                $actualMonth = 0;
+
+            if ($direction)
+                $actualMonth++;
+            else
+                $actualMonth--;
+        }
+
+        return $circularList;
+    }
+
+    function convertListNumberInListMonth($MonthValue){
+        $convertValue = array();
+
+        foreach ($MonthValue as $key => $value)
+            array_push($convertValue, convertNumberInMonth($value));
+
+        return $convertValue;
+    }
+
+    function mapMonthString($MonthValue){
+        return "\"".$MonthValue."\"";
+    }
+
+    function mapMonthlyRevenue($MonthlyRevenue){
+        $convertValue = array();
+
+        foreach (circularMonthList() as $key => $value) {
+            $insertDone = false;
+
+            foreach ($MonthlyRevenue as $item) {
+                if($item["acquistoMonth"] == $value){
+                    array_push($convertValue, intval($item["TotalRevenue"]));
+                    $insertDone = true;
+                }
+            }
+
+            if (!$insertDone)
+                array_push($convertValue, 0);
+        }
+
+        return $convertValue;
+    }
+
+    function mapMonthlyEvent($MonthlyEvent){
+        $convertValue = array();
+
+        foreach (circularMonthList(true) as $key => $value) {
+            $insertDone = false;
+
+            foreach ($MonthlyEvent as $item) {
+                if($item["eventoMonth"] == $value){
+                    array_push($convertValue, intval($item["EventNum"]));
+                    $insertDone = true;
+                }
+            }
+
+            if (!$insertDone)
+                array_push($convertValue, 0);
+        }
+
+        return $convertValue;
+    }
+
+    function mapPieValues($pieValues){
+        $pie = array();
+
+        foreach (range(0, 2) as $value) {
+            if(isset($pieValues[$value]))
+                array_push($pie, array("Text" => getCorrectArtistName($pieValues[$value]), "Value" => $pieValues[$value]["EventNum"]));
+            else
+                array_push($pie, array("Text" => "Nan", "Value" => 0));
+        }
+
+        return $pie;
+    }
+
+    function convertPieValues($pieUserValues){
+        $pieValues = array();
+
+        foreach ($pieUserValues as $key => $value)
+            array_push($pieValues, $value["Value"]);
+
+        return $pieValues;
+    }
+
+    function mapPieTexts($pieUserValues){
+        $pieTexts = array();
+
+        foreach ($pieUserValues as $key => $value)
+            array_push($pieTexts, "\"".$value["Text"]."\"");
+
+        return $pieTexts;
+    }
 ?>

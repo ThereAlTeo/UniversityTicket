@@ -1,3 +1,11 @@
+<?php require_once './../bootFiles.php';
+$infoPielegend = array();
+
+if ($_SESSION["accountLog"]["IDAccesso"] == 1)
+    $infoPielegend = mapPieValues($dbh->getMajorManager());
+else
+    $infoPielegend = mapPieValues($dbh->getMajorArtistByIDManager($_SESSION["accountLog"]["IDUser"]));    
+?>
 <script type="text/javascript">
 $(function() {
      // Set new default font family and font color to mimic Bootstrap's default styling
@@ -9,9 +17,9 @@ $(function() {
      var myPieChart = new Chart(ctx, {
           type: 'doughnut',
           data: {
-               labels: ["Direct", "Referral", "Social"],
+               labels: [<?php echo join(", ", mapPieTexts($infoPielegend)) ?>],
                datasets: [{
-                    data: [55, 30, 15],
+                    data: [<?php echo join(", ", convertPieValues($infoPielegend)) ?>],
                     backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
                     hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
                     hoverBorderColor: "rgba(234, 236, 244, 1)",

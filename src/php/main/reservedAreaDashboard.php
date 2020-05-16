@@ -9,11 +9,14 @@
         $infoCardColor = $config['infoCardColor'];
         $infoCardIcon = $config['infoCardIcon'][$_SESSION["accountLog"]["IDAccesso"]];
         $infoCardValue = array();
+        $infoPielegend = array();
 
         switch ($_SESSION["accountLog"]["IDAccesso"]) {
             case 1: $infoCardValue = array("$".$dbh->getCahsTicketSold(), $dbh->getNumTicketSold(), $dbh->getLocationRecordNumber(), $dbh->getAccountRecordNumber());
+                    $infoPielegend = mapPieValues($dbh->getMajorManager());
                 break;
             case 2: $infoCardValue = array("$".$dbh->getCahsTicketSold($_SESSION["accountLog"]["IDUser"]), $dbh->getEventNumByManager($_SESSION["accountLog"]["IDUser"]), $dbh->getArtistNumByManager($_SESSION["accountLog"]["IDUser"]), "$40,000");
+                    $infoPielegend = mapPieValues($dbh->getMajorArtistByIDManager($_SESSION["accountLog"]["IDUser"]));                    
                 break;
             case 3:
                 $favouriteArtist = $dbh->getFavouriteArtistByIDUser($_SESSION["accountLog"]["IDUser"]);
@@ -62,13 +65,13 @@
                                 <?php if (strcmp($idValues[$i], $idValues[1]) === 0): ?>
                                     <div class="mt-4 text-center small">
                                         <span class="mr-2">
-                                            <i class="fas fa-circle text-primary"></i> Direct
+                                            <i class="fas fa-circle text-primary"></i> <?php echo $infoPielegend[0]["Text"] ?>
                                         </span>
                                         <span class="mr-2">
-                                            <i class="fas fa-circle text-success"></i> Social
+                                            <i class="fas fa-circle text-success"></i> <?php echo $infoPielegend[1]["Text"] ?>
                                         </span>
                                         <span class="mr-2">
-                                            <i class="fas fa-circle text-info"></i> Referral
+                                            <i class="fas fa-circle text-info"></i> <?php echo $infoPielegend[2]["Text"] ?>
                                         </span>
                                     </div>
                                 <?php endif; ?>
