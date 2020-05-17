@@ -599,7 +599,7 @@ class DatabaseHelper{
                               INNER JOIN persona P ON P.IDPersona=A.AnagraficaArtista
                               LEFT JOIN biglietto B ON E.IDEvento=B.IDEvento
                 WHERE A.IDReferente=?
-                GROUP BY E.IDEvento";
+                GROUP BY E.IDEvento ORDER BY TicketBuy DESC";
 
       $stmt = $this->db->prepare($query);
       $stmt->bind_param('i', $IDManager);

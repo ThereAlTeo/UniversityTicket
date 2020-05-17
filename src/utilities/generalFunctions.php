@@ -246,4 +246,11 @@
 
         return $pieTexts;
     }
+
+    function getMajorManagerAffluence($eventList){
+        if(count($eventList))
+            return $eventList[0]["Titolo"]." di ".getCorrectArtistName($eventList[0]);
+
+        return "Non disponibile";
+    }
 ?>

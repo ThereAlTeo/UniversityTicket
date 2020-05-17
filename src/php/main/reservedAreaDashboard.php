@@ -15,8 +15,8 @@
             case 1: $infoCardValue = array("$".$dbh->getCahsTicketSold(), $dbh->getNumTicketSold(), $dbh->getLocationRecordNumber(), $dbh->getAccountRecordNumber());
                     $infoPielegend = mapPieValues($dbh->getMajorManager());
                 break;
-            case 2: $infoCardValue = array("$".$dbh->getCahsTicketSold($_SESSION["accountLog"]["IDUser"]), $dbh->getEventNumByManager($_SESSION["accountLog"]["IDUser"]), $dbh->getArtistNumByManager($_SESSION["accountLog"]["IDUser"]), "$40,000");
-                    $infoPielegend = mapPieValues($dbh->getMajorArtistByIDManager($_SESSION["accountLog"]["IDUser"]));                    
+            case 2: $infoCardValue = array("$".$dbh->getCahsTicketSold($_SESSION["accountLog"]["IDUser"]), $dbh->getEventNumByManager($_SESSION["accountLog"]["IDUser"]), $dbh->getArtistNumByManager($_SESSION["accountLog"]["IDUser"]), getMajorManagerAffluence($dbh->getEventInfoReserved($_SESSION["accountLog"]["IDUser"])));
+                    $infoPielegend = mapPieValues($dbh->getMajorArtistByIDManager($_SESSION["accountLog"]["IDUser"]));
                 break;
             case 3:
                 $favouriteArtist = $dbh->getFavouriteArtistByIDUser($_SESSION["accountLog"]["IDUser"]);
