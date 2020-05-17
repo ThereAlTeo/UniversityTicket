@@ -19,7 +19,7 @@ $config = array(
     ),
     "chartCardHeader" => array(
          1 => array("Andamento incassi", "Manager più attivi"),
-         2 => array("Concerti in programmazione", "Artisti più attivi")
+         2 => array("Eventi in programmazione", "Artisti più attivi")
     ),
     "infoCardColor" => array("primary", "success", "info", "warning"),
     "pageIcon" => ROOT_DIR."../res/images/logoForse.png",

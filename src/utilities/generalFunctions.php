@@ -30,7 +30,7 @@
      }
 
      function getPairEventElement(){
-         return array(array(1, 6), array(4, 6), array(2, 6), array(3, 6));
+         return array(array(1, 6), array(4, 6), array(3, 6));
      }
 
      function copyFileInOtherDir($tmpFile, $newPathFile){

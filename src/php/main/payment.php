@@ -1,3 +1,4 @@
+<?php var_dump($_SESSION["ticketGeneralInfo"]) ?>
 <div class="accordion" id="accordionPayment">
     <?php foreach ($dbh->getPaymentMode() as $key => $value):
         $paymentRadioID = "paymentRadio".$value["IDPayment"];

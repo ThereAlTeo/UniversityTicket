@@ -14,7 +14,7 @@
         <div class="col-12 col-lg-9">
             <div class="card shadow mb-5">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <p class="m-0 font-weight-bold text-primary h6">Elenco Artisti</p>
+                    <p class="m-0 font-weight-bold text-primary h6">Elenco Artisti o Compagnia</p>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">

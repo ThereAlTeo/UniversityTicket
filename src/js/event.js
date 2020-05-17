@@ -132,6 +132,10 @@ $(function() {
                consumerCheckElement($(this).val(), this);
           });
 
+          if(!Number.isInteger($("#locationSelect").val())){
+              modal.setGoToNext(false);
+          }
+
           nextFieldset(this);
           if(!modal.canGoToNext())
               $(this).parents("form.formInvalidFB").addClass('was-validated');

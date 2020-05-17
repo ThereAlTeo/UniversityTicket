@@ -96,7 +96,7 @@
                                  </div>
                                  <div class="col-12 col-md-6 form-group mb-3">
                                    <label for="ArtistSelect" form="addEvent">Scegli artista</label>
-                                   <select class="custom-select" id="ArtistSelect">
+                                   <select class="custom-select" id="ArtistSelect" required>
                                    <?php foreach ($dbh->getArtistByManager($_SESSION["accountLog"]["IDUser"]) as $key => $value): ?>
                                        <option value="<?php echo $value["IDArtista"] ?>"><?php echo getCorrectArtistName($value) ?></option>
                                    <?php endforeach; ?>

@@ -43,7 +43,7 @@ foreach ($_SESSION["ticketGeneralInfo"] as $key => $value) {
     }
 }
 
-$_SESSION["ticketFinalPrice"]["Prevendita"] = $_SESSION["ticketFinalPrice"]["SubTotal"] * RATE_PREVENDITA;
+$_SESSION["ticketFinalPrice"]["Prevendita"] = round($_SESSION["ticketFinalPrice"]["SubTotal"] * RATE_PREVENDITA, 2);
 
 require TEMPLATE_DIR.'ticketTemplate.php';
 ?>

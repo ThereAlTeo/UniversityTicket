@@ -784,7 +784,7 @@ class DatabaseHelper{
       $query = "SELECT COUNT(E.IDEvento) AS 'EventNum', T.*, P.*
                 FROM ticketuser T LEFT JOIN evento E ON E.IDOrganizzatore=T.IDUser
                                   INNER JOIN persona P ON P.IDPersona=T.AnagraficaUtente
-                WHERE T.IDAccesso=2 GROUP BY T.IDUser ORDER BY Num DESC LIMIT 3";
+                WHERE T.IDAccesso=2 GROUP BY T.IDUser ORDER BY EventNum DESC LIMIT 3";
 
       $stmt = $this->db->prepare($query);
       return $this->factoryFetchMethos($stmt);

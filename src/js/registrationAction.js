@@ -48,7 +48,7 @@ function submitRegistration(e) {
             }
         },
         error: function(jqXHR, exception){
-            genericErrorInAjax();            
+            genericErrorInAjax();
         }
     });
 }
