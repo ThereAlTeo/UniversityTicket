@@ -20,7 +20,8 @@ try {
         if(intval($dbh->getEventTicketSold($value["IDEvent"])) == intval($dbh->getEventTotalTicket($value["IDEvent"])))
             $notificationManager->eventSoldOut($value["IDEvent"]);
     }
-
+    
+    $notificationManager->notifyTicketPurchased();
     setcookie("checkout", null, time() - 3600, "/");
     $msg = array("success"=> "successo");
 } catch (Exception $e) {

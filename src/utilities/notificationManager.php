@@ -85,5 +85,22 @@ class NotificationManager {
                 $this->notifyFactory($value["IDUser"], $value["Email"], $message."\nA breve riceverai info in merito al rimborso.\nGRAZIE!");
         }
     }
+
+    public function notifyTicketPurchased(){
+        $event = $this->dbh->getGeneralInfoByIDEvent($_SESSION["accountLog"]["Mail"]);
+        $message = "Ciao ".$_SESSION["accountLog"]["Mail"].",\n";
+        $message = $message."Il resoconto del tuo acquisto è il seguente:\n";
+        foreach ($_SESSION["ticketGeneralInfo"] as $key => $value){
+            $numTicket = $totPrice = 0;
+            foreach ($value["Sector"] as $index => $item){
+                $numTicket++;
+                $totPrice += $item["Price"];
+            }
+            $message = $message.$numTicket."x".$value["Title"].": ".$totPrice."\n";
+        }
+
+        $message = $message."Ti ringraziamo per aver utilizziato il nostro servizio e ti invitiamo a farci visita di nuovo.\n";
+
+    }
 }
 ?>

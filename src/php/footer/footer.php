@@ -12,7 +12,8 @@
                   </div>
                   <div class="col-md-4">
                        <p class="text-center small font-italic <?php if(isset($templateParams["templateType"]) && strcmp($templateParams["templateType"], "dashboard.php") === 0) echo " font-weight-bold"; ?>">
-                            © 2020 Copyright - Tutti i diritti riservati.
+                            © 2020 Copyright - Tutti i diritti riservati. </br>
+                            <a href="./privacyPolicy.php" class="text-decoration-none text-warning">Informativa COOKIE</a>
                        </p>
                   </div>
                   <div class="col-md-4">
