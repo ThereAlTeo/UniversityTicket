@@ -5,10 +5,10 @@
     ?>
     <div class="container">
         <div class="p-3 my-3 text-white-50 bg-info rounded shadow-sm">
-            <p class="h4 mb-0 text-white">Elenco Recensioni</p>
+            <h4 class="mb-0 text-white">Elenco Recensioni</h4>
         </div>
         <div class="my-3 p-3 bg-white rounded shadow-sm">
-            <p class="border-bottom border-gray pb-2 mb-0 h5">Recensioni recenti</p>
+            <h5 class="border-bottom border-gray pb-2 mb-0">Recensioni recenti</h5>
             <?php if (count($reviews)): ?>
                 <?php foreach ($reviews as $key => $value): ?>
                     <div class="row text-muted mx-1 pt-3 d-flex align-items-between border-bottom border-gray">

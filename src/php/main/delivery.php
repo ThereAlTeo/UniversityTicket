@@ -1,5 +1,5 @@
 <div class="card mb-4 shadow-sm text-ticketBlue">
-    <p class="card-header font-weight-bold h5 text-white bg-info">METODO DI SPEDIZIONE</p>
+    <h5 class="card-header font-weight-bold text-white bg-info">METODO DI SPEDIZIONE</h5>
     <div class="card-body">
         <?php foreach ($dbh->getDeliveryMode() as $key => $value): ?>
             <div class="row my-1">
@@ -62,7 +62,7 @@ $userInfo = $dbh->getFullUserInfo($_SESSION["accountLog"]["IDAccesso"])[0];
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label for="cap" form="deliveryForm" hidden>CAP</label>                                                                                                                        
+                        <label for="cap" form="deliveryForm" hidden>CAP</label>
                         <input class="form-control formControlUser" id="cap" type="text" name="CAP" placeholder="Inserisci CAP" pattern="[0-9]{2,}" title="CAP di almeno 2 caratteri" required/>
                         <div class="invalid-feedback"></div>
                     </div>

@@ -8,7 +8,7 @@
                             <div class="col-md-7 col-lg-6 col-xl-5 bg-light">
                                 <div class="p-5">
                                     <form class="py-md-5 text-ticketBlue needs-validation formInvalidFB" action="<?php echo $templateParams["action"].".php"; ?>" method="POST" id="loginForm" novalidate="">
-                                        <p class="text-center h3">Login</p>
+                                        <h3 class="text-center">Login</h3>
                                          <hr class="mb-3">
                                          <div class="form-group">
                                               <label for="loginEmail" form="loginForm">Username</label>

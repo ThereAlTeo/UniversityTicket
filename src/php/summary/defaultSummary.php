@@ -1,5 +1,5 @@
 <div class="card mb-4 shadow-sm border-ticketBlue text-ticketBlue">
-    <p class="card-header font-weight-bold h5 text-white bg-ticketBlue">Riepilogo</p>
+    <h5 class="card-header font-weight-bold text-white bg-ticketBlue">Riepilogo</h5>
     <div class="card-body">
         <?php
         foreach ($_SESSION["ticketGeneralInfo"] as $key => $value):

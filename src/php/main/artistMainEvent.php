@@ -9,7 +9,7 @@ $locandinaPath = !count($locandinaPath) ? getPathImageOrDefault() : getPathImage
 <div class="container text-dark">
     <div class="row mb-3">
         <div class="col-md-3 mb-3 mt-2">
-            <p class="mb-2 h2"><?php echo $name ?></p><hr>
+            <h2 class="mb-2"><?php echo $name ?></h2><hr>
             <div class="row">
                 <div class="col-md-12">
                     <div id="artistPageLegend" class="list-group">
@@ -37,7 +37,7 @@ $locandinaPath = !count($locandinaPath) ? getPathImageOrDefault() : getPathImage
                 <div class="mb-4 text-ticketBlue ticketPublicInfo" id="ticket">
                     <div class="bg-white rounded-lg shadow">
                         <div class="p-3 bg-info text-white">
-                            <p class="font-weight-bold h5">Biglietti</p>
+                            <h5 class="font-weight-bold">Biglietti</h5>
                         </div>
                         <?php
                         $artistEvent = $dbh->selectedEventsInfo($_GET["IDArtist"]);

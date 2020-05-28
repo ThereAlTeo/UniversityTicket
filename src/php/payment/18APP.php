@@ -2,7 +2,7 @@
     $formID = str_replace(" ", "", $_GET["paymentCardBody"]["Nome"])."Form";
 ?>
 <form class="text-center text-ticketBlue py-md-2 needs-validation formInvalidFB" id="<?php echo $formID ?>" action="" method="POST" novalidate="">
-    <p class="font-weight-bold h4 mb-4">Inserisci il codice del buono in tuo possesso</p>
+    <h4 class="font-weight-bold mb-4">Inserisci il codice del buono in tuo possesso</h4>
     <div class="row d-flex justify-content-center">
         <div class="col-md-6">
             <div class="form-group">

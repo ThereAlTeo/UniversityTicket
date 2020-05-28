@@ -1,7 +1,7 @@
 <?php if (isset($_GET["backHome"])): ?>
     <div class="text-center text-ticketBlue">
-        <p class="display-1 text-uppercase font-weight-bold mt-5 h1"><?php echo $_GET["backHome"]["Section"] ?></p>
-        <p class="font-weight-light mb-5 h3"><?php echo $_GET["backHome"]["Text"] ?></p>
+        <h1 class="display-1 text-uppercase font-weight-bold mt-5"><?php echo $_GET["backHome"]["Section"] ?></h1>
+        <h3 class="font-weight-light mb-5 h3"><?php echo $_GET["backHome"]["Text"] ?></h3>
         <p class="my-2">
             <a href="./bacheca.php" class="my-2">&larr; Torna alla HOMEPAGE</a>
         </p>

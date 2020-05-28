@@ -9,7 +9,7 @@
                             require ("modalProgressLine.php"); ?>
                             <div class="fieldSet text-left">
                                  <fieldset>
-                                     <p class="h5">Informazioni Personali</p>
+                                     <h5>Informazioni Personali</h5>
                                       <div class="row">
                                            <div class="col-6 form-group">
                                                <label for="artistName" form="addArtist" hidden>Nome Artista</label>
@@ -41,7 +41,7 @@
                                       </div>
                                  </fieldset>
                                  <fieldset>
-                                     <p class="text-left h5">Biografia</p>
+                                     <h5 class="text-left">Biografia</h5>
                                       <div class="form-group">
                                           <textarea placeholder="Inserisci Biografia." class="form-control" id="artistBiografia" required></textarea>
                                       </div>
@@ -51,7 +51,7 @@
                                       </div>
                                  </fieldset>
                                  <fieldset>
-                                     <p class="text-left h5">Informazioni Professionali</p>
+                                     <h5 class="text-left">Informazioni Professionali</h5>
                                       <div class="form-group">
                                            <div class="form-group">
                                                 <label for="artistArtName" form="addArtist" hidden>Nome d'arte</label>
@@ -71,7 +71,7 @@
                   ?>
                   <div class="fieldSet">
                        <fieldset>
-                           <p class="text-left h5">Informazioni Generali Evento</p>
+                           <h5 class="text-left">Informazioni Generali Evento</h5>
                             <div class="form-group">
                                 <label for="eventTitle" form="addEvent" hidden>Titolo</label>
                                  <input type="text" placeholder="Inserisci Titolo" class="form-control" id="eventTitle" required/>

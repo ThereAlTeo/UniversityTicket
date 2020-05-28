@@ -1,7 +1,7 @@
 <div class="col-md-8">
     <div class="card shadow mb-4">
         <a href="#collapseCardTicketSold" class="d-block card-header py-3 d-flex flex-row align-items-center justify-content-between" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardTicketSold">
-            <p class="m-0 font-weight-bold text-primary h6">Biglietti Acquistati</p>
+            <h6 class="m-0 font-weight-bold text-primary">Biglietti Acquistati</h6>
         </a>
         <div class="collapse show" id="collapseCardTicketSold">
             <div class="card-body">
@@ -39,7 +39,7 @@
 <div class="col-md-4">
     <div class="card shadow mb-4">
         <a href="#collapseCardPersonalData" class="d-block card-header py-3 d-flex flex-row align-items-center justify-content-between" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardPersonalData">
-            <p class="m-0 font-weight-bold text-info h6">Dati Personali</p>
+            <h6 class="m-0 font-weight-bold text-info">Dati Personali</h6>
         </a>
         <div class="collapse show" id="collapseCardPersonalData">
             <div class="card-body">
@@ -54,7 +54,7 @@
     </div>
     <div class="card shadow mb-4">
         <a href="#collapseCardPassword" class="d-block card-header py-3 d-flex flex-row align-items-center justify-content-between" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardPassword">
-            <p class="m-0 font-weight-bold text-warning h6">Modifica password</p>
+            <h6 class="m-0 font-weight-bold text-warning">Modifica password</h6>
         </a>
         <div class="collapse show" id="collapseCardPassword">
             <div class="card-body">
@@ -76,7 +76,7 @@
     </div>
     <div class="card shadow mb-4">
         <a href="#collapseCardHelp" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardHelp">
-            <p class="m-0 font-weight-bold text-danger h6">Help e contatti</p>
+            <h6 class="m-0 font-weight-bold text-danger">Help e contatti</h6>
         </a>
         <div class="collapse show" id="collapseCardHelp">
             <div class="card-body">

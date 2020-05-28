@@ -6,12 +6,12 @@
         <div class="col-12 col-lg-5">
             <div class="card shadow mb-5">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <p class="m-0 font-weight-bold text-primary h6">Inserisci Recensione</p>
+                    <h6 class="m-0 font-weight-bold text-primary">Inserisci Recensione</h6>
                 </div>
                 <div class="card-body">
                     <div class="col-md-12">
                         <form id="reviewForm" action="" method="POST" class="formInvalidFB needs-validation text-ticketBlue" novalidate="">
-                            <p class="mb-3 h4">Informazioni Generali</p>
+                            <h4 class="mb-3">Informazioni Generali</h4>
                             <div class="row text-left">
                                  <div class="col-12 form-group mb-3">
                                    <label for="locationSelect" form="reviewForm">Scegli Evento per recensione</label>
@@ -52,7 +52,7 @@
              <div class="mb-4 text-ticketBlue" id="reviews">
                  <div class="bg-white rounded-lg shadow cardBoxSection">
                      <div class="p-3 bg-ticketBlue text-white">
-                         <p class="font-weight-bold h5">Elenco Recensioni</p>
+                         <h5 class="font-weight-bold">Elenco Recensioni</h5>
                      </div>
                      <?php
                      $reviews = $dbh->getReviewDoneByIDUser($_SESSION["accountLog"]["IDUser"]);

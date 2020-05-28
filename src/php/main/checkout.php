@@ -6,7 +6,7 @@
                     <img class="img-fluid img-thumbnail rounded mx-auto mb-4" src="<?php echo $value["Image"] ?>" alt="">
                 </div>
                 <div class="col-sm-9 mb-2 text-secondary">
-                    <p class="text-uppercase mb-3 text-ticketBlue h3"><?php echo $value["Title"] ?></p>
+                    <h3 class="text-uppercase mb-3 text-ticketBlue"><?php echo $value["Title"] ?></h3>
                     <div class="row">
                         <div class="col-sm-4">
                             <p class="h5"><?php echo $value["LocationName"] ?></p>
@@ -15,7 +15,7 @@
                             <p class="h5 mb-3"><?php echo $value["Date"] ?></p>
                         </div>
                     </div>
-                    <p class="h6"><small>Organizzato da: <?php echo $value["ManagerMail"] ?></small></p>
+                    <h6><small>Organizzato da: <?php echo $value["ManagerMail"] ?></small></h6>
                 </div>
             </div>
             <div class="ticketEventSectorInfo">

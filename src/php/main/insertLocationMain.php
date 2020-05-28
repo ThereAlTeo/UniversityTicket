@@ -6,7 +6,7 @@
           <div class="col-12 col-lg-6">
                <div class="card shadow mb-5">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <p class="m-0 font-weight-bold text-primary h6">Elenco Location</p>
+                        <h6 class="m-0 font-weight-bold text-primary">Elenco Location</h6>
                     </div>
                     <div class="card-body">
                          <div class="table-responsive">
@@ -41,12 +41,12 @@
           <div class="col-12 col-lg-6">
                <div class="card shadow mb-5">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <p class="m-0 font-weight-bold text-primary h6">Aggiungi Nuova Location</p>
+                        <h6 class="m-0 font-weight-bold text-primary">Aggiungi Nuova Location</h6>
                     </div>
                     <div class="card-body">
                          <div class="col-md-12">
                               <form id="locationForm" action="" method="POST" class="formInvalidFB needs-validation text-ticketBlue" novalidate="">
-                                  <p class="mb-3 h4">Informazioni Generali</p>
+                                  <h4 class="mb-3">Informazioni Generali</h4>
                                    <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">

@@ -1,6 +1,6 @@
 <div class="container-fluid text-ticketBlue my-3">
-    <p class="h2 font-weight-bold text-uppercase">COOKIE POLICY</p>
-    <p class="h3 font-weight-bold">Che cosa sono i cookie e a che cosa servono</p>
+    <h2 class="font-weight-bold text-uppercase">COOKIE POLICY</h2>
+    <h3 class="font-weight-bold">Che cosa sono i cookie e a che cosa servono</h3>
     <p class="h5">Un cookie è un file di testo che un sito web visitato dall’utente invia al suo terminale dove viene memorizzato per essere poi ritrasmesso a tale sito in occasione di una visita successiva.</p>
     <p class="h5">I cookie vengono distinti come segue:</p>
     <ul class="h5">

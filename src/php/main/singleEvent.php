@@ -40,7 +40,7 @@ else {
                 <div class="mb-4 text-ticketBlue ticketPublicInfo" id="ticket">
                     <div class="bg-white rounded-lg shadow">
                         <div class="p-3 bg-ticketBlue text-white">
-                            <p class="font-weight-bold h5">Biglietti</p>
+                            <h5 class="font-weight-bold h5">Biglietti</h5>
                         </div>
                         <?php
                         $sectorEvent = $dbh->getSectorInfoByEvent($_GET["IDEvent"]);
@@ -55,7 +55,7 @@ else {
                             }
                         else: ?>
                         <div class="text-center text-ticketBlue m-2 p-1">
-                            <p class="font-weight-bolder font-italic h4">Non ci sono biglietti disponibili per questo evento.</p>
+                            <h4 class="font-weight-bolder font-italic">Non ci sono biglietti disponibili per questo evento.</h4>
                         </div>
                         <?php endif; ?>
                     </div>
