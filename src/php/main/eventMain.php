@@ -23,21 +23,21 @@
                                         <table class="table table-bordered table-striped table-hover" id="dataTable" width="100%" cellspacing="0">
                                              <thead>
                                                   <tr>
-                                                       <th class="text-center">Nome evento</th>
-                                                       <th class="text-center">Artista partecipante</th>
-                                                       <th class="text-center">Luogo</th>
-                                                       <th class="text-center">Data evento</th>
-                                                       <th class="text-center">Biglietti venduti</th>
+                                                       <th class="text-center" id="EventName">Nome evento</th>
+                                                       <th class="text-center" id="ArtitName">Artista partecipante</th>
+                                                       <th class="text-center" id="EventLocation">Luogo</th>
+                                                       <th class="text-center" id="EventDate">Data evento</th>
+                                                       <th class="text-center" id="EventTicket">Biglietti venduti</th>
                                                   </tr>
                                              </thead>
                                              <tbody>
                                                  <?php foreach ($dbh->getEventInfoReserved($_SESSION["accountLog"]["IDUser"]) as $key => $value): ?>
                                                  <tr id="<?php echo $value["IDEvento"]."-".$value["IDArtista"] ?>">
-                                                     <td class="text-center"><?php echo $value["Titolo"] ?></td>
-                                                     <td class="text-center"><?php echo getCorrectArtistName($value) ?></td>
-                                                     <td class="text-center"><?php echo $value["NomeLocation"] ?></td>
-                                                     <td class="text-center"><?php echo date_format(date_create($value["DataInizio"]), "d/m/Y H:i") ?></td>
-                                                     <td class="text-center"><?php echo $value["TicketBuy"] ?></td>
+                                                     <td class="text-center" headers="EventName"><?php echo $value["Titolo"] ?></td>
+                                                     <td class="text-center" headers="ArtitName"><?php echo getCorrectArtistName($value) ?></td>
+                                                     <td class="text-center" headers="EventLocation"><?php echo $value["NomeLocation"] ?></td>
+                                                     <td class="text-center" headers="EventDate"><?php echo date_format(date_create($value["DataInizio"]), "d/m/Y H:i") ?></td>
+                                                     <td class="text-center" headers="EventTicket"><?php echo $value["TicketBuy"] ?></td>
                                                  </tr>
                                                  <?php endforeach; ?>
                                              </tbody>

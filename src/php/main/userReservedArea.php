@@ -9,19 +9,19 @@
                       <table class="table table-bordered table-striped table-hover" id="dataTable" width="100%" cellspacing="0">
                            <thead>
                                 <tr>
-                                     <th class="text-center">Artista</th>
-                                     <th class="text-center">Luogo</th>
-                                     <th class="text-center">Data evento</th>
-                                     <th class="text-center">Biglietti acquistati</th>
+                                     <th class="text-center" id="TicketArtist">Artista</th>
+                                     <th class="text-center" id="TicketLocation">Luogo</th>
+                                     <th class="text-center" id="TicketDate">Data evento</th>
+                                     <th class="text-center" id="TicketBuy">Biglietti acquistati</th>
                                 </tr>
                            </thead>
                            <tbody>
                                <?php foreach ($dbh->getInfoTicketBuy($_SESSION["accountLog"]["IDUser"]) as $key => $value): ?>
                                <tr>
-                                   <td class="text-center"><?php echo getCorrectArtistName($value) ?></td>
-                                   <td class="text-center"><?php echo $value["NomeLocation"] ?></td>
-                                   <td class="text-center"><?php echo date_format(date_create($value["DataInizio"]), "d/m/Y H:i") ?></td>
-                                   <td class="text-center"><?php echo $value["NumTicket"] ?></td>
+                                   <td class="text-center" headers="TicketArtist"><?php echo getCorrectArtistName($value) ?></td>
+                                   <td class="text-center" headers="TicketLocation"><?php echo $value["NomeLocation"] ?></td>
+                                   <td class="text-center" headers="TicketDate"><?php echo date_format(date_create($value["DataInizio"]), "d/m/Y H:i") ?></td>
+                                   <td class="text-center" headers="TicketBuy"><?php echo $value["NumTicket"] ?></td>
                                </tr>
                                <?php endforeach; ?>
                            </tbody>

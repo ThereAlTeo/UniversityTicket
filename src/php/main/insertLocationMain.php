@@ -13,18 +13,19 @@
                               <table class="table table-bordered table-striped table-hover" id="dataTable" width="100%" cellspacing="0">
                                    <thead>
                                         <tr>
-                                             <th class="text-center">Nome</th>
-                                             <th class="text-center">Indirizzo</th>
-                                             <th class="text-center">Nr Eventi</th>
-                                             <th class="text-center">Biglietti venduti</th>
+                                             <th class="text-center" id="LocationNome">Nome</th>
+                                             <th class="text-center" id="LocationIndirizzo">Indirizzo</th>
+                                             <th class="text-center" id="LocationEvent">Nr Eventi</th>
+                                             <th class="text-center" id="EventTicket">Biglietti venduti</th>
                                         </tr>
                                    </thead>
                                    <tbody>
                                    <?php foreach ($dbh->getAllLocationInfo() as $key => $value): ?>
                                        <tr>
-                                       <?php foreach ($value as $index => $item): ?>
-                                           <td class="text-center"><?php echo $item ?></td>
-                                       <?php endforeach; ?>
+                                           <td class="text-center" headers="NoLocationNomeme"><?php echo $value["Nome"] ?></td>
+                                           <td class="text-center" headers="LocationIndirizzo"><?php echo $value["Indirizzo"] ?></td>
+                                           <td class="text-center" headers="LocationEvent"><?php echo $value["NrEventi"] ?></td>
+                                           <td class="text-center" headers="EventTicket"><?php echo $value["NrBiglietti"] ?></td>                                      
                                        </tr>
                                    <?php endforeach; ?>
                                    </tbody>

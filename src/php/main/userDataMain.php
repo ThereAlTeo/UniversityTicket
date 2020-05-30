@@ -13,32 +13,31 @@ require(FACTORY_DIR."reservedPagesHeader.php");
                 <table class="table table-bordered table-striped table-hover" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th class="text-center">Nome</th>
-                            <th class="text-center">Cognome</th>
-                            <th class="text-center">E-mail</th>
-                            <th class="text-center">Registrazione</th>
-                            <th class="text-center">Tipologia</th>
-                            <th class="text-center">Approvato</th>
+                            <th class="text-center" id="UserName">Nome</th>
+                            <th class="text-center" id="UserLastName">Cognome</th>
+                            <th class="text-center" id="UserMail">E-mail</th>
+                            <th class="text-center" id="UserRegistration">Registrazione</th>
+                            <th class="text-center" id="UserType">Tipologia</th>
+                            <th class="text-center" id="UserEnable">Approvato</th>
                         </tr>
                     </thead>
                     <tbody>
                     <?php foreach ($dbh->getAllUsersInfo() as $key => $value): ?>
                         <tr>
-                        <?php foreach ($value as $index => $item):
-                            if (strcmp($index, "AccountAbilitato") == 0):
-                                if (strcmp($value["AccountAbilitato"], "FALSE") == 0): ?>
-                                    <td class="text-center">
-                                        <button type="button" class="btn btn-outline-danger enable btn-sm" title="Click per abilitare">
-                                            <i class="fa fa-user-times"></i>
-                                        </button>
-                                    </td>
-                                <?php else: ?>
-                                    <td class="text-center text-success"><i class="fa fa-user-plus"></i></td>
-                                <?php endif; ?>
+                            <td class="text-center" headers="UserName"><?php echo $value["Nome"] ?></td>
+                            <td class="text-center" headers="UserLastName"><?php echo $value["Cognome"] ?></td>
+                            <td class="text-center" headers="UserMail"><?php echo $value["Email"] ?></td>
+                            <td class="text-center" headers="UserRegistration"><?php echo $value["DataRegistrazione"] ?></td>
+                            <td class="text-center" headers="UserType"><?php echo $value["Descrizione"] ?></td>
+                            <?php if (strcmp($value["AccountAbilitato"], "FALSE") == 0): ?>
+                                <td class="text-center" headers="UserEnable">
+                                    <button type="button" class="btn btn-outline-danger enable btn-sm" title="Click per abilitare">
+                                        <i class="fa fa-user-times"></i>
+                                    </button>
+                                </td>
                             <?php else: ?>
-                                <td class="text-center"><?php echo $item ?></td>
+                                <td class="text-center text-success" headers="UserEnable"><i class="fa fa-user-plus"></i></td>
                             <?php endif; ?>
-                        <?php endforeach; ?>
                         </tr>
                     <?php endforeach; ?>
                     </tbody>
