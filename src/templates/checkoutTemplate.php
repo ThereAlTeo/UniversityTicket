@@ -13,10 +13,12 @@
                 ?>
             </div>
             <div class="col-lg-4 mb-4">
-                <?php
-                if(isset($templateParams["summary"]))
-                    require(SUMMARY_DIR.$templateParams["summary"]);
-                ?>
+                <aside class="">
+                    <?php
+                    if(isset($templateParams["summary"]))
+                        require(SUMMARY_DIR.$templateParams["summary"]);
+                    ?>
+                </aside>
             </div>
         </div>
     </div>

@@ -100,7 +100,7 @@ class NotificationManager {
         }
 
         $message = $message."Ti ringraziamo per aver utilizziato il nostro servizio e ti invitiamo a farci visita di nuovo.\n";
-
+        $this->notifyFactory($_SESSION["accountLog"]["IDUser"], $_SESSION["accountLog"]["Mail"], $message);
     }
 }
 ?>
