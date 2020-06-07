@@ -35,7 +35,7 @@ class NotificationManager {
 
     public function notifyUserEnable($MailUser){
         $user = $this->dbh->getAccountAccessInfo($MailUser);
-        $this->notifyFactory($user["IDUser"], $user["Email"], "Sei stato abilitato dall'admin.\nPuò ora usufruire di tutti i servizi a tua disposizione.");
+        $this->notifyFactory($user["IDUser"], $user["Email"], "Sei stato abilitato dall'admin.\nPuoi ora usufruire di tutti i servizi a tua disposizione.");
     }
 
     public function insertNewReview($IDManager){

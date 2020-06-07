@@ -773,7 +773,7 @@ class DatabaseHelper{
   public function getMonthlyEvent($IDManager){
       $query = "SELECT YEAR(E.DataInizio) AS 'eventoYear', MONTH(E.DataInizio) AS 'eventoMonth', COUNT(E.IDEvento) AS 'EventNum'
                 FROM evento E
-                WHERE E.IDOrganizzatore = ? GROUP BY eventoYear, eventoMonth ORDER BY eventoYear DESC, eventoMonth DESC LIMIT 12";
+                WHERE E.IDOrganizzatore = ? AND E.DataFine >= NOW() GROUP BY eventoYear, eventoMonth ORDER BY eventoYear DESC, eventoMonth DESC LIMIT 12";
 
       $stmt = $this->db->prepare($query);
       $stmt->bind_param('i', $IDManager);
